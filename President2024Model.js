@@ -88,10 +88,7 @@ document.getElementById('President 2024 Data').addEventListener('change', functi
     }
 });
 */
-const file = ElectionModelData.csv
-if (file) {
-    
-    Papa.parse(file, {
+    Papa.parse('ElectionModelData.csv', {
         header: true, // Treat the first row as headers
         dynamicTyping: true, // Convert types automatically
         skipEmptyLines: true, // Skip empty lines
@@ -105,7 +102,8 @@ if (file) {
             console.error('Error parsing CSV:', error);
         }
     });
-}
+
+
 
 //Run the model on the csv imported by the 2024 data identifer
 function process2024States(states){
