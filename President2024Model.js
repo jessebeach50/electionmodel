@@ -1,5 +1,6 @@
 const statesArray = [];
-
+const output = document.getElementById('output');
+output.textContent = "Test"; // Format JSON for readability
 
 //Look for the President 2024 Data identifier, when it changes, assuming you load the correct file it will display the information
 //This is a basic function to take the data csv and put it into values I can actually use
