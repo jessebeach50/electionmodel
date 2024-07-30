@@ -63,7 +63,7 @@ window.onmousemove = function (e) {
 
 
 
-//Run the model on the csv imported by the 2024 data identifer
+//Run the model on the csv imported for 2024
 function process2024States(states){
     var pollingAverage = -.14;
     var pollingErrorInMonth = 3;
@@ -142,8 +142,8 @@ function process2024States(states){
         var maxR = e2020Results - 4;
         
         while(maxR < (maxD + .1)){
-            var maxDNat = maxDPopularVote;
-            var maxRNat = maxRPopularVote;
+            var maxDNat = 3;
+            var maxRNat = -3;
             while(maxRNat < (maxDNat + .1)){
                 var outcome = maxR + maxRNat;
                 outcomesArray.push(outcome);
@@ -227,6 +227,204 @@ function process2024States(states){
         //output.textContent = JSON.stringify(statesArray, null, 2); // Format JSON for readability
     });
 }
+
+// This function will be executed when the button is clicked
+function handleClick() {
+    //alert('Button was clicked!');
+    //DATA
+    const csvUrl = 'https://raw.githubusercontent.com/jessebeach50/electionmodel/main/ElectionModelData.csv';
+    statesArray.length = 0;
+    // Use Papa Parse to fetch and parse the CSV file
+    Papa.parse(csvUrl, {
+        download: true,
+        header: true, // Set to false if the CSV doesn't have headers
+        dynamicTyping: true, // Convert types automatically
+        skipEmptyLines: true, // Skip empty lines
+        complete: function(results) {
+            process2020States(results.data);
+            setColorBasedOnChance();
+        },
+        error: function(error) {
+            console.error("Error parsing CSV:", error);
+        }
+    });
+}
+
+// Adding an event listener to the button
+document.addEventListener('DOMContentLoaded', (event) => {
+    const button = document.getElementById('2020 Model');
+    button.addEventListener('click', handleClick);
+});
+
+
+
+
+//Run the model on the csv imported for 2020
+function process2020States(states){
+    var pollingAverage = 8.4;
+    var pollingErrorInMonth = 0;
+    var standardPollingError = 3;
+
+    var maxDPopularVote = pollingAverage + pollingErrorInMonth + standardPollingError;
+    var maxRPopularVote = pollingAverage - pollingErrorInMonth - standardPollingError;
+
+    //cycle through every state and parse the data as needed
+    states.forEach(s => {
+
+        var stateName = s.State
+
+        //get all state results by year
+        var e2000Results = Number(s.zeroresults);
+        var e2004Results = Number(s.fourresults);
+        var e2008Results = Number(s.eightresults);
+        var e2012Results = Number(s.twelveresults);
+        var e2016Results = Number(s.sixteenresults);
+        var e2020Results = Number(s.twentyresults);
+
+        //adjust states for popular vote to get what they would be in a neutral year
+        var neutral2000 = e2000Results - 0.5;
+        var neutral2004 = e2004Results + 2.4;
+        var neutral2008 = e2008Results - 7.2;
+        var neutral2012 = e2012Results - 3.9;
+        var neutral2016 = e2016Results - 2.1;
+
+        //Get average state shift to see what the projected neutral environment will be in 2024
+        var neutral2020ProjectedOnShift = neutral2016 + (((neutral2016 - neutral2012) + (neutral2012 - neutral2008)) / 2);
+
+        //Compare national polls and state polls to see what the polls think the neutral environment of the state will be in 2024
+        var neutral2020ProjectedOnPolls = s.Polls2020 - pollingAverage;
+
+        //Average the above
+        var neutral2020Projected = (neutral2020ProjectedOnPolls + neutral2020ProjectedOnShift) / 2
+
+        
+        //---------------------------------------Election Model Portion-------------------------------------------------------------
+        var outcomesArray = [];
+
+        //Basic Model using the polling average, account for state poll inaccuracyy by +- 4
+        //We'll need to account for polling error in states and nationally to get result so we do a nested for loop
+        var maxD = neutral2020ProjectedOnPolls + pollingErrorInMonth + 4;
+        var maxR = neutral2020ProjectedOnPolls - pollingErrorInMonth - 4;
+        
+        while(maxR < (maxD + .1)){
+            var maxDNat = maxDPopularVote;
+            var maxRNat = maxRPopularVote;
+            while(maxRNat < (maxDNat + .1)){
+                var outcome = maxR + maxRNat;
+                outcomesArray.push(outcome);
+                maxRNat = maxRNat + .5;
+            }
+            maxR = maxR + .5;
+        } 
+
+        //Basic Model using the expected shift
+        var maxD = neutral2020ProjectedOnShift + 5;
+        var maxR = neutral2020ProjectedOnShift - 5;
+        
+        while(maxR < (maxD + .1)){
+            var maxDNat = maxDPopularVote;
+            var maxRNat = maxRPopularVote;
+            while(maxRNat < (maxDNat + .1)){
+                var outcome = maxR + maxRNat;
+                outcomesArray.push(outcome);
+                maxRNat = maxRNat + .5;
+            }
+            maxR = maxR + .5;
+        } 
+
+        //Basic Model using the last election 
+        var maxD = e2016Results + 4;
+        var maxR = e2016Results - 4;
+        
+        while(maxR < (maxD + .1)){
+            var maxDNat = 3;
+            var maxRNat = -3;
+            while(maxRNat < (maxDNat + .1)){
+                var outcome = maxR + maxRNat;
+                outcomesArray.push(outcome);
+                maxRNat = maxRNat + .5;
+            }
+            maxR = maxR + .5;
+        } 
+
+
+        //sort array and count number of times Dem wins to get a percentage and median outcome
+        var numDWins = 0;
+        
+        var i = 0;
+        while (i < outcomesArray.length){
+            var result = outcomesArray[i];
+            if (result > 0){
+                numDWins = numDWins + 1;
+            }
+            i = i + 1;
+        }
+
+        //sort array
+        outcomesArray.sort((a, b) => {
+            if (a < b) {
+              return -1;
+            }
+            if (a > b) {
+              return 1;
+            }
+            return 0;
+          }); 
+
+
+
+        if(stateName == 'National'){
+            console.log(stateName);
+            console.log(outcomesArray.length);       
+
+        }
+
+        //Get Percent chance and median outcome
+        var percentDWin = numDWins / outcomesArray.length;
+        var medianN = ~~(outcomesArray.length / 2);
+        console.log(medianN);
+        var median = outcomesArray[medianN];      
+
+        //String that will show when state is hovered over
+        infoBoxString = s.State + "\n Actual Election 2020 Results: " + e2020Results + "\nProjected 2020 Result: " + median + "\nDemocrat Win %: " + percentDWin;
+
+        //This is the state data obbject that is put into the array-------------------------------------------------------
+        let stateData ={
+            State: stateName,
+            StateAbbreviation: s.Abbr,
+            Election2000Results: e2000Results,
+            Election2004Results: e2004Results,
+            Election2008Results: e2008Results,
+            Election2012Results: e2012Results,
+            Election2016Results: e2016Results,
+            Election2020Results: e2020Results,
+
+            Election2000ResultsNeutral: neutral2000,
+            Election2004ResultsNeutral: neutral2004,
+            Election2008ResultsNeutral: neutral2008,
+            Election2012ResultsNeutral: neutral2012,
+            Election2016ResultsNeutral: neutral2016,
+            //Election2020ResultsNeutral: neutral2020,
+
+            Election2024NeutralProjectedShift: neutral2020ProjectedOnShift,
+            Election2024NeutralProjectedPolls: neutral2020ProjectedOnPolls,
+            Election2024NeutralProjected: neutral2020Projected, 
+
+            ChanceOfDWin: percentDWin,
+            MedianOutcome: median,
+
+            InfoBoxString: infoBoxString
+        };
+
+        statesArray.push(stateData);
+
+        //const output = document.getElementById('output');
+        //output.textContent = JSON.stringify(statesArray, null, 2); // Format JSON for readability
+    });
+}
+
+
+
 
 //Set the colors to the 2020 result
 function setColorsBasedOnResults(){
