@@ -423,6 +423,33 @@ function process2020States(states){
     });
 }
 
+// Shade map by 2020 colors
+function handleClick2020() {
+    //alert('Button was clicked!');
+    //DATA
+    const csvUrl = 'https://raw.githubusercontent.com/jessebeach50/electionmodel/main/ElectionModelData.csv';
+    statesArray.length = 0;
+    // Use Papa Parse to fetch and parse the CSV file
+    Papa.parse(csvUrl, {
+        download: true,
+        header: true, // Set to false if the CSV doesn't have headers
+        dynamicTyping: true, // Convert types automatically
+        skipEmptyLines: true, // Skip empty lines
+        complete: function(results) {
+            process2020States(results.data);
+            setColorsBasedOnResults();
+        },
+        error: function(error) {
+            console.error("Error parsing CSV:", error);
+        }
+    });
+}
+
+// Adding an event listener to the button
+document.addEventListener('DOMContentLoaded', (event) => {
+    const button = document.getElementById('2020 Actual Results');
+    button.addEventListener('click', handleClick2020);
+});
 
 
 
