@@ -65,7 +65,7 @@ window.onmousemove = function (e) {
 
 //Run the model on the csv imported by the 2024 data identifer
 function process2024States(states){
-    var pollingAverage = -.47;
+    var pollingAverage = -.14;
     var pollingErrorInMonth = 3;
     var standardPollingError = 3;
 
