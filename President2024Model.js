@@ -88,31 +88,24 @@ document.getElementById('President 2024 Data').addEventListener('change', functi
     }
 });
 */
+const file = ElectionModelData.csv
+if (file) {
+    
+    Papa.parse(file, {
+        header: true, // Treat the first row as headers
+        dynamicTyping: true, // Convert types automatically
+        skipEmptyLines: true, // Skip empty lines
+        complete: function(results) {
+            process2024States(results.data);
+            setColorBasedOnChance();
+            //setColorsBasedOnResults(); 
+        },
 
-/*
-
-
-    const file = ElectionModelData.csv
-    if (file) {
-        
-        Papa.parse(file, {
-            header: true, // Treat the first row as headers
-            dynamicTyping: true, // Convert types automatically
-            skipEmptyLines: true, // Skip empty lines
-            complete: function(results) {
-                process2024States(results.data);
-                setColorBasedOnChance();
-                //setColorsBasedOnResults(); 
-            },
-
-            error: function(error) {
-                console.error('Error parsing CSV:', error);
-            }
-        });
-    }
-
-
-
+        error: function(error) {
+            console.error('Error parsing CSV:', error);
+        }
+    });
+}
 
 //Run the model on the csv imported by the 2024 data identifer
 function process2024States(states){
