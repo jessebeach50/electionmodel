@@ -1,69 +1,6 @@
+//Array with state data 
 const statesArray = [];
 
-
-/*
-// Update the current slider value (each time you drag the slider handle)
-
-var slider = document.getElementById("myRange");
-var slidervalue = document.getElementById("slidervalue");
-slidervalue.innerHTML = slider.value; // Display the default slider value
-
-slider.oninput = function() {
-    slidervalue.innerHTML = this.value;
-    console.log("I am here")
-    console.log(this.value)
-
-    if(this.value > 50){
-        console.log("Value greater than 50")  
-        slidervalue.style.color='red';
-    }
-    if(this.value < 50){
-      console.log("Value less than 50")  
-      slidervalue.style.color='blue';
-      MN.style.fill='blue';
-  }
-}
-*/
-
-// Hover box displays info about state when hovered over
-
-var tooltipSpan = document.getElementById('details-box');
-
-document.addEventListener('mouseover', function (e) {
-    if (e.target.tagName == 'path') {
-        
-        var stateName = e.target.dataset.name;
-        var stateAbbr = e.target.dataset.id;
-        
-        var hoveredState = null;
-        //console.log(stateName);
-        var found = false;
-        for(var i = 0; i < statesArray.length; i++) {
-            if (statesArray[i].State == stateName) {
-                hoveredState = statesArray[i];
-                found = true;
-            break;
-            }
-        }
-      
-        //document.getElementById("details-box").innerHTML = stateName + "\n" + stateAbbr + "\n2020 Result: " + hoveredState.Election2020Results;
-        document.getElementById("details-box").innerHTML = hoveredState.InfoBoxString;
-        document.getElementById("details-box").style.opacity = "100%"; 
-    }
-    else {
-        document.getElementById("details-box").style.opacity = "0%";
-    }
-});
-
-window.onmousemove = function (e) {
-    var x = e.clientX,
-        y = e.clientY;
-    tooltipSpan.style.top = (y + 20) + 'px';
-    tooltipSpan.style.left = (x) + 'px';
-};
-
-
-//Look for the President 2024 Data identifier, when it changes, assuming you load the correct file it will display the information
 //This is a basic function to take the data csv and put it into values I can actually use
 
 document.getElementById('President 2024 Data').addEventListener('change', function(event) {
@@ -86,6 +23,42 @@ document.getElementById('President 2024 Data').addEventListener('change', functi
         });
     }
 });
+
+
+//Tool tip when hovering
+var tooltipSpan = document.getElementById('details-box');
+
+document.addEventListener('mouseover', function (e) {
+    if (e.target.tagName == 'path') {
+        
+        var stateName = e.target.dataset.name;
+        var stateAbbr = e.target.dataset.id;
+        
+        var hoveredState = null;
+        var found = false;
+        for(var i = 0; i < statesArray.length; i++) {
+            if (statesArray[i].State == stateName) {
+                hoveredState = statesArray[i];
+                found = true;
+            break;
+            }
+        }
+      
+        document.getElementById("details-box").innerHTML = hoveredState.InfoBoxString;
+        document.getElementById("details-box").style.opacity = "100%"; 
+    }
+    else {
+        document.getElementById("details-box").style.opacity = "0%";
+    }
+});
+
+window.onmousemove = function (e) {
+    var x = e.clientX,
+        y = e.clientY;
+    tooltipSpan.style.top = (y + 20) + 'px';
+    tooltipSpan.style.left = (x) + 'px';
+};
+
 
 
 //Run the model on the csv imported by the 2024 data identifer
