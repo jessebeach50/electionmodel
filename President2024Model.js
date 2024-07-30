@@ -38,7 +38,8 @@ document.addEventListener('mouseover', function (e) {
             if (statesArray[i].State == stateName) {
                 hoveredState = statesArray[i];
                 found = true;
-            break;
+                console.log(statesArray[i]);
+                break;
             }
         }
       
@@ -61,14 +62,29 @@ window.onmousemove = function (e) {
 };
 
 
+// Adding an event listener to the buttons
+document.addEventListener('DOMContentLoaded', (event) => {
+    const button = document.getElementById('2020 Actual Results');
+    button.addEventListener('click', handleClick2020);
+    
+    const button2024 = document.getElementById('2024 Model');
+    button2024.addEventListener('click', handleClick2024);
+
+    const button2020r = document.getElementById('2020 Model');
+    button2020r.addEventListener('click', handleClick2020r);
+
+    const button2016 = document.getElementById('2016 Model');
+    button2016.addEventListener('click', handleClick2016);
+
+    const button2016r = document.getElementById('2016 Actual Results');
+    button2016r.addEventListener('click', handleClick2016r);
+});
+
 
 //2024--------------------------------------------------------------------------------------------------------------------------
 
-// This function will be executed when the button is clicked
+// This function will be executed when the 2024 Model button is clicked
 function handleClick2024() {
-    //alert('Button was clicked!');
-    //DATA
-    const csvUrl = 'https://raw.githubusercontent.com/jessebeach50/electionmodel/main/ElectionModelData.csv';
     statesArray.length = 0;
     // Use Papa Parse to fetch and parse the CSV file
     Papa.parse(csvUrl, {
@@ -85,15 +101,6 @@ function handleClick2024() {
         }
     });
 }
-
-// Adding an event listener to the button
-document.addEventListener('DOMContentLoaded', (event) => {
-    const button = document.getElementById('2024 Model');
-    button.addEventListener('click', handleClick2024);
-});
-
-
-
 
 //Run the model on the csv imported for 2024
 function process2024States(states){
@@ -126,7 +133,10 @@ function process2024States(states){
         var neutral2020 = e2020Results - 4.5;
 
         //Get average state shift to see what the projected neutral environment will be in 2024
-        var neutral2024ProjectedOnShift = neutral2020 + (((neutral2020 - neutral2016) + (neutral2016 - neutral2012)) / 2);
+        var shift1 = neutral2020 - neutral2016
+        var shift2 = neutral2016 - neutral2012
+        
+        var neutral2024ProjectedOnShift = neutral2020 + ((shift1 + shift2) / 2);
 
         //Compare national polls and state polls to see what the polls think the neutral environment of the state will be in 2024
         var neutral2024ProjectedOnPolls = s.Polls - pollingAverage;
@@ -149,6 +159,7 @@ function process2024States(states){
             while(maxRNat < (maxDNat + .1)){
                 var outcome = maxR + maxRNat;
                 outcomesArray.push(outcome);
+                outcomesArray.push(outcome);
                 maxRNat = maxRNat + .5;
             }
             maxR = maxR + .5;
@@ -164,10 +175,12 @@ function process2024States(states){
             while(maxRNat < (maxDNat + .1)){
                 var outcome = maxR + maxRNat;
                 outcomesArray.push(outcome);
+                outcomesArray.push(outcome);
                 maxRNat = maxRNat + .5;
             }
             maxR = maxR + .5;
         } 
+
 
         //Basic Model using the last election 
         var maxD = e2020Results + 4;
@@ -178,6 +191,21 @@ function process2024States(states){
             var maxRNat = -3;
             while(maxRNat < (maxDNat + .1)){
                 var outcome = maxR + maxRNat;
+                outcomesArray.push(outcome);
+                maxRNat = maxRNat + .5;
+            }
+            maxR = maxR + .5;
+        } 
+        //Basic Model using the expected shift
+        var maxD = neutral2024Projected + 12;
+        var maxR = neutral2024Projected - 12;
+        
+        while(maxR < (maxD + .1)){
+            var maxDNat = maxDPopularVote + 4;
+            var maxRNat = maxRPopularVote - 4;
+            while(maxRNat < (maxDNat + .1)){
+                var outcome = maxR + maxRNat;
+                outcomesArray.push(outcome);
                 outcomesArray.push(outcome);
                 maxRNat = maxRNat + .5;
             }
@@ -223,7 +251,7 @@ function process2024States(states){
         var median = outcomesArray[medianN];      
 
         //String that will show when state is hovered over
-        infoBoxString = s.State + "\nElection 2020 Results: " + e2020Results + "\nProjected2024Result: " + median + "\nDemocrat Win %: " + percentDWin;
+        infoBoxString = s.State + "\nElection 2020 Results: " + e2020Results + "\nProjected2024Result: " + median + "\nDemocrat Win %: " + percentDWin + "\n2024 Polling Average: " + s.Polls;
 
         //This is the state data obbject that is put into the array-------------------------------------------------------
         let stateData ={
@@ -318,10 +346,7 @@ function setColorBasedOnChance(){
 //2020----------------------------------------------------------------------------------------------------------------------------------------------------------
 
 // This function will be executed when the button is clicked
-function handleClick() {
-    //alert('Button was clicked!');
-    //DATA
-    const csvUrl = 'https://raw.githubusercontent.com/jessebeach50/electionmodel/main/ElectionModelData.csv';
+function handleClick2020r() {
     statesArray.length = 0;
     // Use Papa Parse to fetch and parse the CSV file
     Papa.parse(csvUrl, {
@@ -338,14 +363,6 @@ function handleClick() {
         }
     });
 }
-
-// Adding an event listener to the button
-document.addEventListener('DOMContentLoaded', (event) => {
-    const button = document.getElementById('2020 Model');
-    button.addEventListener('click', handleClick);
-});
-
-
 
 
 //Run the model on the csv imported for 2020
@@ -378,7 +395,10 @@ function process2020States(states){
         var neutral2016 = e2016Results - 2.1;
 
         //Get average state shift to see what the projected neutral environment will be in 2024
-        var neutral2020ProjectedOnShift = neutral2016 + (((neutral2016 - neutral2012) + (neutral2012 - neutral2008)) / 2);
+        var shift1 = neutral2016 - neutral2012
+        var shift2 = neutral2012 - neutral2008
+        
+        var neutral2020ProjectedOnShift = neutral2016 + ((shift1 + shift2) / 2);
 
         //Compare national polls and state polls to see what the polls think the neutral environment of the state will be in 2024
         var neutral2020ProjectedOnPolls = s.Polls2020 - pollingAverage;
@@ -401,6 +421,7 @@ function process2020States(states){
             while(maxRNat < (maxDNat + .1)){
                 var outcome = maxR + maxRNat;
                 outcomesArray.push(outcome);
+                outcomesArray.push(outcome);
                 maxRNat = maxRNat + .5;
             }
             maxR = maxR + .5;
@@ -415,6 +436,7 @@ function process2020States(states){
             var maxRNat = maxRPopularVote;
             while(maxRNat < (maxDNat + .1)){
                 var outcome = maxR + maxRNat;
+                outcomesArray.push(outcome);
                 outcomesArray.push(outcome);
                 maxRNat = maxRNat + .5;
             }
@@ -436,6 +458,22 @@ function process2020States(states){
             maxR = maxR + .5;
         } 
 
+        //Wider Variance
+
+        var maxD = neutral2020Projected + 12;
+        var maxR = neutral2020Projected - 12;
+        
+        while(maxR < (maxD + .1)){
+            var maxDNat = maxDPopularVote + 4;
+            var maxRNat = maxRPopularVote - 4;
+            while(maxRNat < (maxDNat + .1)){
+                var outcome = maxR + maxRNat;
+                outcomesArray.push(outcome);
+                outcomesArray.push(outcome);
+                maxRNat = maxRNat + .5;
+            }
+            maxR = maxR + .5;
+        }
 
         //sort array and count number of times Dem wins to get a percentage and median outcome
         var numDWins = 0;
@@ -475,7 +513,7 @@ function process2020States(states){
         var median = outcomesArray[medianN];      
 
         //String that will show when state is hovered over
-        infoBoxString = s.State + "\n Actual Election 2020 Results: " + e2020Results + "\nProjected 2020 Result: " + median + "\nDemocrat Win %: " + percentDWin;
+        infoBoxString = s.State + "\n Actual Election 2020 Results: " + e2020Results + "\nProjected 2020 Result: " + median + "\nDemocrat Win %: " + percentDWin + "\n2020 Polling Average: " + s.Polls2020;
 
         //This is the state data obbject that is put into the array-------------------------------------------------------
         let stateData ={
@@ -514,9 +552,6 @@ function process2020States(states){
 
 // Shade map by 2020 colors
 function handleClick2020() {
-    //alert('Button was clicked!');
-    //DATA
-    const csvUrl = 'https://raw.githubusercontent.com/jessebeach50/electionmodel/main/ElectionModelData.csv';
     statesArray.length = 0;
     // Use Papa Parse to fetch and parse the CSV file
     Papa.parse(csvUrl, {
@@ -534,11 +569,6 @@ function handleClick2020() {
     });
 }
 
-// Adding an event listener to the button
-document.addEventListener('DOMContentLoaded', (event) => {
-    const button = document.getElementById('2020 Actual Results');
-    button.addEventListener('click', handleClick2020);
-});
 
 
 
@@ -599,9 +629,6 @@ function setColorsBasedOnResults2020(){
 
 // This function will be executed when the button is clicked
 function handleClick2016() {
-    //alert('Button was clicked!');
-    //DATA
-    const csvUrl = 'https://raw.githubusercontent.com/jessebeach50/electionmodel/main/ElectionModelData.csv';
     statesArray.length = 0;
     // Use Papa Parse to fetch and parse the CSV file
     Papa.parse(csvUrl, {
@@ -619,11 +646,6 @@ function handleClick2016() {
     });
 }
 
-// Adding an event listener to the button
-document.addEventListener('DOMContentLoaded', (event) => {
-    const button = document.getElementById('2016 Model');
-    button.addEventListener('click', handleClick2016);
-});
 
 
 //Run the model on the csv imported for 2016
@@ -656,7 +678,12 @@ function process2016States(states){
         var neutral2016 = e2016Results - 2.1;
 
         //Get average state shift to see what the projected neutral environment will be in 2024
-        var neutral2016ProjectedOnShift = neutral2012 + (((neutral2012 - neutral2008) + (neutral2008 - neutral2004)) / 2);
+        var shift1 = neutral2012 - neutral2008
+        var shift2 = neutral2008 - neutral2004
+        
+        var neutral2016ProjectedOnShift = neutral2012 + ((shift1 + shift2) / 2);
+
+
 
         //Compare national polls and state polls to see what the polls think the neutral environment of the state will be in 2024
         var neutral2016ProjectedOnPolls = s.Polls2016 - pollingAverage;
@@ -679,6 +706,7 @@ function process2016States(states){
             while(maxRNat < (maxDNat + .1)){
                 var outcome = maxR + maxRNat;
                 outcomesArray.push(outcome);
+                outcomesArray.push(outcome);
                 maxRNat = maxRNat + .5;
             }
             maxR = maxR + .5;
@@ -694,10 +722,13 @@ function process2016States(states){
             while(maxRNat < (maxDNat + .1)){
                 var outcome = maxR + maxRNat;
                 outcomesArray.push(outcome);
+                outcomesArray.push(outcome);
                 maxRNat = maxRNat + .5;
             }
             maxR = maxR + .5;
         } 
+
+
 
         //Basic Model using the last election 
         var maxD = e2012Results + 4;
@@ -713,6 +744,25 @@ function process2016States(states){
             }
             maxR = maxR + .5;
         } 
+
+
+        //Wider Variance
+
+        var maxD = neutral2016Projected + 12;
+        var maxR = neutral2016Projected - 12;
+        
+        while(maxR < (maxD + .1)){
+            var maxDNat = maxDPopularVote + 4;
+            var maxRNat = maxRPopularVote - 4;
+            while(maxRNat < (maxDNat + .1)){
+                var outcome = maxR + maxRNat;
+                outcomesArray.push(outcome);
+                outcomesArray.push(outcome);
+                maxRNat = maxRNat + .5;
+            }
+            maxR = maxR + .5;
+        }
+
 
 
         //sort array and count number of times Dem wins to get a percentage and median outcome
@@ -753,7 +803,7 @@ function process2016States(states){
         var median = outcomesArray[medianN];      
 
         //String that will show when state is hovered over
-        infoBoxString = s.State + "\n Actual Election 2016 Results: " + e2016Results + "\nProjected 2016 Result: " + median + "\nDemocrat Win %: " + percentDWin + "\nProjectedNeutral: " + neutral2016Projected + "\n2012 Neutral: " + neutral2012 + "\nActual Neutral " + neutral2016;
+        infoBoxString = s.State + "\n Actual Election 2016 Results: " + e2016Results + "\nProjected 2016 Result: " + median + "\nDemocrat Win %: " + percentDWin + "\n2016 Polling Average: " + s.Polls2016;
 
         //This is the state data obbject that is put into the array-------------------------------------------------------
         let stateData ={
@@ -792,9 +842,6 @@ function process2016States(states){
 
 // Shade map by 2016 colors
 function handleClick2016r() {
-    //alert('Button was clicked!');
-    //DATA
-    const csvUrl = 'https://raw.githubusercontent.com/jessebeach50/electionmodel/main/ElectionModelData.csv';
     statesArray.length = 0;
     // Use Papa Parse to fetch and parse the CSV file
     Papa.parse(csvUrl, {
@@ -812,11 +859,6 @@ function handleClick2016r() {
     });
 }
 
-// Adding an event listener to the button
-document.addEventListener('DOMContentLoaded', (event) => {
-    const button = document.getElementById('2016 Actual Results');
-    button.addEventListener('click', handleClick2016r);
-});
 
 
 
