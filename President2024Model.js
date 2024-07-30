@@ -1,37 +1,40 @@
 const statesArray = [];
 
 
-/*
-// Update the current slider value (each time you drag the slider handle)
+//Look for the President 2024 Data identifier, when it changes, assuming you load the correct file it will display the information
+//This is a basic function to take the data csv and put it into values I can actually use
 
-var slider = document.getElementById("myRange");
-var slidervalue = document.getElementById("slidervalue");
-slidervalue.innerHTML = slider.value; // Display the default slider value
+function test(){
+    console.log("This doing anything?");
 
-slider.oninput = function() {
-    slidervalue.innerHTML = this.value;
-    console.log("I am here")
-    console.log(this.value)
+const fileinput = 'ElectionModelData.csv'
+Papa.parse(fileinput.files[0], {
+    header: true, // Treat the first row as headers
+    dynamicTyping: true, // Convert types automatically
+    skipEmptyLines: true, // Skip empty lines
+    complete: function(results) {
+        process2024States(results.data);
+        setColorBasedOnChance();
+        //setColorsBasedOnResults(); 
+    },
 
-    if(this.value > 50){
-        console.log("Value greater than 50")  
-        slidervalue.style.color='red';
+        error: function(error) {
+        console.error('Error parsing CSV:', error);
     }
-    if(this.value < 50){
-      console.log("Value less than 50")  
-      slidervalue.style.color='blue';
-      MN.style.fill='blue';
-  }
-}
-*/
 
-// Hover box displays info about state when hovered over
+});
+
+
+}
+//Hoverbox
 
 var tooltipSpan = document.getElementById('details-box');
 
 document.addEventListener('mouseover', function (e) {
+   
     if (e.target.tagName == 'path') {
-        
+
+        test();
         var stateName = e.target.dataset.name;
         var stateAbbr = e.target.dataset.id;
         
@@ -62,46 +65,6 @@ window.onmousemove = function (e) {
     tooltipSpan.style.left = (x) + 'px';
 };
 
-
-//Look for the President 2024 Data identifier, when it changes, assuming you load the correct file it will display the information
-//This is a basic function to take the data csv and put it into values I can actually use
-
-/*
-document.getElementById('President 2024 Data').addEventListener('change', function(event) {
-    const file = event.target.files[0];
-    if (file) {
-        
-        Papa.parse(file, {
-            header: true, // Treat the first row as headers
-            dynamicTyping: true, // Convert types automatically
-            skipEmptyLines: true, // Skip empty lines
-            complete: function(results) {
-                process2024States(results.data);
-                setColorBasedOnChance();
-                //setColorsBasedOnResults(); 
-            },
-
-            error: function(error) {
-                console.error('Error parsing CSV:', error);
-            }
-        });
-    }
-});
-*/
-    Papa.parse('ElectionModelData.csv', {
-        header: true, // Treat the first row as headers
-        dynamicTyping: true, // Convert types automatically
-        skipEmptyLines: true, // Skip empty lines
-        complete: function(results) {
-            process2024States(results.data);
-            setColorBasedOnChance();
-            //setColorsBasedOnResults(); 
-        },
-
-        error: function(error) {
-            console.error('Error parsing CSV:', error);
-        }
-    });
 
 
 
