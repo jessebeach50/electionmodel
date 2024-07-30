@@ -1,11 +1,11 @@
-//Array with state data 
+//Array for 2024 State Data
 const statesArray = [];
 
 
+//DATA
+const csvUrl = 'https://raw.githubusercontent.com/jessebeach50/electionmodel/main/ElectionModelData.csv';
 
 // Use Papa Parse to fetch and parse the CSV file
-
-const csvUrl = 'https://raw.githubusercontent.com/jessebeach50/electionmodel/main/ElectionModelData.csv';
 Papa.parse(csvUrl, {
     download: true,
     header: true, // Set to false if the CSV doesn't have headers
@@ -21,8 +21,8 @@ Papa.parse(csvUrl, {
 });
 
 
+// Hover box displays info about state when hovered over
 
-//Tool tip when hovering
 var tooltipSpan = document.getElementById('details-box');
 
 document.addEventListener('mouseover', function (e) {
@@ -32,6 +32,7 @@ document.addEventListener('mouseover', function (e) {
         var stateAbbr = e.target.dataset.id;
         
         var hoveredState = null;
+        //console.log(stateName);
         var found = false;
         for(var i = 0; i < statesArray.length; i++) {
             if (statesArray[i].State == stateName) {
@@ -41,6 +42,7 @@ document.addEventListener('mouseover', function (e) {
             }
         }
       
+        //document.getElementById("details-box").innerHTML = stateName + "\n" + stateAbbr + "\n2020 Result: " + hoveredState.Election2020Results;
         document.getElementById("details-box").innerHTML = hoveredState.InfoBoxString;
         document.getElementById("details-box").style.opacity = "100%"; 
     }
@@ -49,12 +51,15 @@ document.addEventListener('mouseover', function (e) {
     }
 });
 
+
+
 window.onmousemove = function (e) {
     var x = e.clientX,
         y = e.clientY;
     tooltipSpan.style.top = (y + 20) + 'px';
     tooltipSpan.style.left = (x) + 'px';
 };
+
 
 
 
