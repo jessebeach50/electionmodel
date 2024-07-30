@@ -1,34 +1,11 @@
 //Array with state data 
 const statesArray = [];
 
-//This is a basic function to take the data csv and put it into values I can actually use
 
-/*
-document.getElementById('President 2024 Data').addEventListener('change', function(event) {
-    const file = event.target.files[0];
-    if (file) {
-        
-        Papa.parse(file, {
-            header: true, // Treat the first row as headers
-            dynamicTyping: true, // Convert types automatically
-            skipEmptyLines: true, // Skip empty lines
-            complete: function(results) {
-                process2024States(results.data);
-                setColorBasedOnChance();
-                //setColorsBasedOnResults(); 
-            },
-
-            error: function(error) {
-                console.error('Error parsing CSV:', error);
-            }
-        });
-    }
-});
-*/
-
-const csvUrl = 'https://raw.githubusercontent.com/jessebeach50/electionmodel/main/ElectionModelData.csv';
 
 // Use Papa Parse to fetch and parse the CSV file
+
+const csvUrl = 'https://raw.githubusercontent.com/jessebeach50/electionmodel/main/ElectionModelData.csv';
 Papa.parse(csvUrl, {
     download: true,
     header: true, // Set to false if the CSV doesn't have headers
