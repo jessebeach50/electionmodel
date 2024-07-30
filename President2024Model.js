@@ -121,7 +121,38 @@ function process2024States(states){
             }
             maxR = maxR + .5;
         } 
+
+        //Basic Model using the expected shift
+        var maxD = neutral2024ProjectedOnShift + 5;
+        var maxR = neutral2024ProjectedOnShift - 5;
         
+        while(maxR < (maxD + .1)){
+            var maxDNat = maxDPopularVote;
+            var maxRNat = maxRPopularVote;
+            while(maxRNat < (maxDNat + .1)){
+                var outcome = maxR + maxRNat;
+                outcomesArray.push(outcome);
+                maxRNat = maxRNat + .5;
+            }
+            maxR = maxR + .5;
+        } 
+
+        //Basic Model using the last election 
+        var maxD = e2020Results + 4;
+        var maxR = e2020Results - 4;
+        
+        while(maxR < (maxD + .1)){
+            var maxDNat = maxDPopularVote;
+            var maxRNat = maxRPopularVote;
+            while(maxRNat < (maxDNat + .1)){
+                var outcome = maxR + maxRNat;
+                outcomesArray.push(outcome);
+                maxRNat = maxRNat + .5;
+            }
+            maxR = maxR + .5;
+        } 
+
+
         //sort array and count number of times Dem wins to get a percentage and median outcome
         var numDWins = 0;
         
@@ -134,6 +165,7 @@ function process2024States(states){
             i = i + 1;
         }
 
+        //sort array
         outcomesArray.sort((a, b) => {
             if (a < b) {
               return -1;
@@ -144,15 +176,15 @@ function process2024States(states){
             return 0;
           }); 
 
-        i = 0;
+
+
         if(stateName == 'National'){
             console.log(stateName);
-            while (i < outcomesArray.length){
-                console.log(outcomesArray[i]);       
-                i = i + 1;
-            }
+            console.log(outcomesArray.length);       
+
         }
 
+        //Get Percent chance and median outcome
         var percentDWin = numDWins / outcomesArray.length;
         var medianN = ~~(outcomesArray.length / 2);
         console.log(medianN);
