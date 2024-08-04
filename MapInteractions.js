@@ -1,22 +1,26 @@
-document.addEventListener('mouseover', function (event) {
-    let hoveredElement = event.target;
-    if (hoveredElement.tagName.toLowerCase() === 'path') {
-        let hoveredElement = event.target;
-        // Find center of BBox of path, used in CSS for hover
-        let bbox = hoveredElement.getBBox();
-        let centerX = bbox.x + bbox.width / 2;
-        let centerY = bbox.y + bbox.height / 2;
-        hoveredElement.style.setProperty('--center-x', `${centerX}px`);
-        hoveredElement.style.setProperty('--center-y', `${centerY}px`);
-    }
+// STATE LAYERING FIX
+
+const statePaths = document.querySelectorAll('path');
+
+function handleMouseOver(event) {
+  const stateElement = event.target;
+  d3.select(stateElement).raise();
+  stateElement.classList.add('hovered');
+}
+
+function handleMouseOut(event) {
+  const stateElement = event.target;
+  stateElement.classList.remove('hovered');
+}
+
+statePaths.forEach(path => {
+  path.addEventListener('mouseover', handleMouseOver);
+  path.addEventListener('mouseout', handleMouseOut);
 });
 
-document.addEventListener('mouseover', function (event) {
-    let hoveredElement = event.target;
-    if (hoveredElement.tagName.toLowerCase() === 'path') {
-        // Layering fix
-        d3.selectAll("path").on("mouseleave", function () {
-            d3.select(this).raise()
-        })
-    }
-});
+function bringStateToFront(stateAbbr) {
+  const stateElement = document.getElementById(stateAbbr);
+  if (stateElement) {
+    d3.select(stateElement).raise();
+  }
+}
