@@ -232,6 +232,11 @@ path:hover {
     }
     .bottom-right {
         order: 4;
+        margin-bottom: 100px;
+    }
+
+    #details-box {
+        font-size: 14px;
     }
 }
 
