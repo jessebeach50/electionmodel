@@ -1,9 +1,9 @@
 /* Global Theme */
 
 :root {
---maincolor: rgb(100, 100, 100);
---seccolor: rgb(255, 255, 255);
---shadecolor: rgba(0, 0, 0, 0.1);
+    --maincolor: rgb(100, 100, 100);
+    --seccolor: rgb(255, 255, 255);
+    --shadecolor: rgba(0, 0, 0, 0.1);
 }
 
 /* General Flex & Grid Formatting */
@@ -36,6 +36,7 @@ body {
     box-shadow: 0 5px 5px rgba(0, 0, 0, 0.15);
     padding: 15px 25px 15px 25px;
     overflow: auto;
+    position: relative;
 }
 
 .top-left {
@@ -118,7 +119,7 @@ button {
     background-color: var(--maincolor);
     border-radius: 5px;
     box-shadow:
-    0px 5px 5px rgba(0, 0, 0, 0.15);
+        0px 5px 5px rgba(0, 0, 0, 0.15);
     padding: 10px 35px;
     margin: 10px 5px 15px 5px;
 }
@@ -126,9 +127,9 @@ button {
 button:hover {
     cursor: pointer;
     -webkit-text-fill-color: rgba(255, 255, 255, 0);
-    text-shadow: 0 3px 0 var(--seccolor); 
+    text-shadow: 0 3px 0 var(--seccolor);
     box-shadow:
-    0px 5px 10px rgba(0, 0, 0, 0.3) inset;
+        0px 5px 10px rgba(0, 0, 0, 0.3) inset;
 }
 
 button:active {
@@ -136,7 +137,7 @@ button:active {
     -webkit-text-fill-color: rgba(255, 255, 255, 0);
     text-shadow: 0 3px 0 var(--seccolor);
     box-shadow:
-    0px 5px 10px rgba(0, 0, 0, 0.6) inset;
+        0px 5px 10px rgba(0, 0, 0, 0.6) inset;
 }
 
 button.pressed {
@@ -144,7 +145,32 @@ button.pressed {
     -webkit-text-fill-color: rgba(255, 255, 255, 0);
     text-shadow: 0 3px 0 var(--seccolor);
     box-shadow:
-    0px 5px 10px rgba(0, 0, 0, 0.6) inset;
+        0px 5px 10px rgba(0, 0, 0, 0.6) inset;
+}
+
+.buttonbox {
+    margin-left: 5px;
+    margin-top: 3px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 5;
+    padding: 0;
+    text-align: center;
+    align-items: flex-start;
+    align-self: start;
+}
+
+button.ZoomButton {
+    align-items: flex-start;
+    background-color: var(--shadecolor);
+    border-radius: 10px;
+    box-shadow:
+        0px 5px 5px rgba(0, 0, 0, 0.35);
+    width: 45px;
+    height: 45px;
+    margin: 5px;
+    padding: 0px;
 }
 
 /* State paths */
@@ -157,7 +183,7 @@ path {
     fill: var(--shadecolor);
     stroke: black;
     stroke-width: 1.5;
-    transition: 0.5s; 
+    transition: 0.5s;
     position: absolute;
 }
 
@@ -180,7 +206,8 @@ path:hover {
     position: fixed;
     background-color: rgba(0, 0, 0, 0.5);
     color: white;
-    font-family: Verdana, sans-serif;;
+    font-family: Verdana, sans-serif;
+    ;
     width: fit-content;
     transform: translateX(-50%);
     transition: opacity .4s ease;
@@ -224,12 +251,15 @@ path:hover {
     .top-left {
         order: 1;
     }
+
     .bottom-left {
         order: 2;
     }
+
     .top-right {
         order: 3;
     }
+
     .bottom-right {
         order: 4;
         margin-bottom: 100px;
@@ -240,6 +270,11 @@ path:hover {
     }
 }
 
+@media screen and (max-width: 650px) {
+    button {
+        padding: 10px 12px;
+    }
+}
 /* Idk if we actually need any of this */
 
 /*Slider*/
