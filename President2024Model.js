@@ -1,6 +1,7 @@
 //Array for 2024 State Data
 const statesArray = [];
 var pollingAverage = 0;
+setBackgroundColor();
 
 //DATA
 const csvUrl = 'https://raw.githubusercontent.com/jessebeach50/electionmodel/main/ElectionModelData.csv';
@@ -11,11 +12,11 @@ Papa.parse(csvUrl, {
     header: true, // Set to false if the CSV doesn't have headers
     dynamicTyping: true, // Convert types automatically
     skipEmptyLines: true, // Skip empty lines
-    complete: function(results) {
+    complete: function (results) {
         processStates(results.data, '2024');
         setColorBasedOnChance();
     },
-    error: function(error) {
+    error: function (error) {
         console.error("Error parsing CSV:", error);
     }
 });
@@ -26,13 +27,13 @@ var tooltipSpan = document.getElementById('details-box');
 
 document.addEventListener('mouseover', function (e) {
     if (e.target.tagName == 'path') {
-        
+
         var stateName = e.target.dataset.name;
         var stateAbbr = e.target.dataset.id;
-        
+
         var hoveredState = null;
         var found = false;
-        for(var i = 0; i < statesArray.length; i++) {
+        for (var i = 0; i < statesArray.length; i++) {
             if (statesArray[i].State == stateName) {
                 hoveredState = statesArray[i];
                 found = true;
@@ -40,10 +41,10 @@ document.addEventListener('mouseover', function (e) {
                 break;
             }
         }
-      
+
         //document.getElementById("details-box").innerHTML = stateName + "\n" + stateAbbr + "\n2020 Result: " + hoveredState.Election2020Results;
         document.getElementById("details-box").innerHTML = hoveredState.InfoBoxString;
-        document.getElementById("details-box").style.opacity = "100%"; 
+        document.getElementById("details-box").style.opacity = "100%";
     }
     else {
         document.getElementById("details-box").style.opacity = "0%";
@@ -95,11 +96,12 @@ function handleClick2024() {
         header: true, // Set to false if the CSV doesn't have headers
         dynamicTyping: true, // Convert types automatically
         skipEmptyLines: true, // Skip empty lines
-        complete: function(results) {
+        complete: function (results) {
             processStates(results.data, '2024');
             setColorBasedOnChance();
+            setBackgroundColor(pollingAverage)
         },
-        error: function(error) {
+        error: function (error) {
             console.error("Error parsing CSV:", error);
         }
     });
@@ -115,33 +117,35 @@ function handleClick2020Model() {
         header: true, // Set to false if the CSV doesn't have headers
         dynamicTyping: true, // Convert types automatically
         skipEmptyLines: true, // Skip empty lines
-        complete: function(results) {
+        complete: function (results) {
             processStates(results.data, '2020');
             setColorBasedOnChance();
+            setBackgroundColor(pollingAverage)
         },
-        error: function(error) {
+        error: function (error) {
             console.error("Error parsing CSV:", error);
         }
     });
 }
-function handleClickResults2020(){
+function handleClickResults2020() {
     console.log("Here");
     statesArray.length = 0;
+    document.documentElement.style.cssText = "--maincolor: rgb(50, 50, 100)";
     // Use Papa Parse to fetch and parse the CSV file
     Papa.parse(csvUrl, {
         download: true,
         header: true, // Set to false if the CSV doesn't have headers
         dynamicTyping: true, // Convert types automatically
         skipEmptyLines: true, // Skip empty lines
-        complete: function(results) {
+        complete: function (results) {
             processStates(results.data, '2020');
             setColorsBasedOnResults('2020');
         },
-        error: function(error) {
+        error: function (error) {
             console.error("Error parsing CSV:", error);
         }
     });
-    
+
 }
 
 
@@ -155,33 +159,35 @@ function handleClick2016Model() {
         header: true, // Set to false if the CSV doesn't have headers
         dynamicTyping: true, // Convert types automatically
         skipEmptyLines: true, // Skip empty lines
-        complete: function(results) {
+        complete: function (results) {
             processStates(results.data, '2016');
             setColorBasedOnChance();
+            setBackgroundColor(pollingAverage);
         },
-        error: function(error) {
+        error: function (error) {
             console.error("Error parsing CSV:", error);
         }
     });
 }
-function handleClickResults2016(){
+function handleClickResults2016() {
     console.log("Here");
     statesArray.length = 0;
+    document.documentElement.style.cssText = "--maincolor: rgb(100, 50, 50)";
     // Use Papa Parse to fetch and parse the CSV file
     Papa.parse(csvUrl, {
         download: true,
         header: true, // Set to false if the CSV doesn't have headers
         dynamicTyping: true, // Convert types automatically
         skipEmptyLines: true, // Skip empty lines
-        complete: function(results) {
+        complete: function (results) {
             processStates(results.data, '2016');
             setColorsBasedOnResults('2016');
         },
-        error: function(error) {
+        error: function (error) {
             console.error("Error parsing CSV:", error);
         }
     });
-    
+
 }
 
 //2012 Model Click--------------------------------------------------------------------------------------------------------------------------
@@ -194,94 +200,96 @@ function handleClick2012Model() {
         header: true, // Set to false if the CSV doesn't have headers
         dynamicTyping: true, // Convert types automatically
         skipEmptyLines: true, // Skip empty lines
-        complete: function(results) {
+        complete: function (results) {
             processStates(results.data, '2012');
             setColorBasedOnChance();
+            setBackgroundColor();
         },
-        error: function(error) {
+        error: function (error) {
             console.error("Error parsing CSV:", error);
         }
     });
 }
 
-function handleClickResults2012(){
+function handleClickResults2012() {
     console.log("Here");
     statesArray.length = 0;
+    document.documentElement.style.cssText = "--maincolor: rgb(50, 50, 100)";
     // Use Papa Parse to fetch and parse the CSV file
     Papa.parse(csvUrl, {
         download: true,
         header: true, // Set to false if the CSV doesn't have headers
         dynamicTyping: true, // Convert types automatically
         skipEmptyLines: true, // Skip empty lines
-        complete: function(results) {
+        complete: function (results) {
             processStates(results.data, '2012');
             setColorsBasedOnResults('2012');
         },
-        error: function(error) {
+        error: function (error) {
             console.error("Error parsing CSV:", error);
         }
     });
-    
+
 }
 
 
 //Set the colors to results
-function setColorsBasedOnResults(year){
-    for(var i = 0; i < statesArray.length; i++) {
-        if(year == '2020'){
+function setColorsBasedOnResults(year) {
+    for (var i = 0; i < statesArray.length; i++) {
+        if (year == '2020') {
             var stater = statesArray[i].Election2020Results;
         }
-        if(year == '2016'){
+        if (year == '2016') {
             var stater = statesArray[i].Election2016Results;
         }
-        if(year == '2012'){
+        if (year == '2012') {
             var stater = statesArray[i].Election2012Results;
         }
         var stateAbbr = statesArray[i].StateAbbreviation;
         svgState = document.getElementById(stateAbbr);
-        if (stater > 25){
-            try{svgState.style.fill='#040275';}catch{}
+        if (stater > 25) {
+            try { svgState.style.fill = '#040275'; } catch { }
         }
-        else if(stater > 20){
-            try{svgState.style.fill='#0300c4';}catch{}
-        } 
-        else if(stater > 15){
-            try{svgState.style.fill='#2b28f7';}catch{}
-        }    
-        else if(stater > 10){
-            try{svgState.style.fill='#605df5';}catch{}
-        } 
-        else if(stater > 5){
-            try{svgState.style.fill='#8a88fc';}catch{}
-        } 
-        else if(stater > 1){
-            try{svgState.style.fill='#c6c5fa';}catch{}
-        } 
-        else if(stater > 0){
-            try{svgState.style.fill='#e4e4f5';}catch{}
+        else if (stater > 20) {
+            try { svgState.style.fill = '#0300c4'; } catch { }
         }
-        else if(stater > -1){
-            try{svgState.style.fill='#fce8ea';}catch{}
+        else if (stater > 15) {
+            try { svgState.style.fill = '#2b28f7'; } catch { }
         }
-        else if(stater > -5){
-            try{svgState.style.fill='#f0afb4';}catch{}
-        }  
-        else if(stater > -10){
-            try{svgState.style.fill='#db7f87';}catch{}
-        }  
-        else if(stater > -15){
-            try{svgState.style.fill='#cf515b';}catch{}
-        }  
-        else if(stater > -20){
-            try{svgState.style.fill='#eb2334';}catch{}
-        }  
-        else if(stater > -25){
-            try{svgState.style.fill='#de0417';}catch{}
-        }         
-        else{
-            try{svgState.style.fill='#a80210';}catch{}
-        }                 
-        
+        else if (stater > 10) {
+            try { svgState.style.fill = '#605df5'; } catch { }
+        }
+        else if (stater > 5) {
+            try { svgState.style.fill = '#8a88fc'; } catch { }
+        }
+        else if (stater > 1) {
+            try { svgState.style.fill = '#c6c5fa'; } catch { }
+        }
+        else if (stater > 0) {
+            try { svgState.style.fill = '#e4e4f5'; } catch { }
+        }
+        else if (stater > -1) {
+            try { svgState.style.fill = '#fce8ea'; } catch { }
+        }
+        else if (stater > -5) {
+            try { svgState.style.fill = '#f0afb4'; } catch { }
+        }
+        else if (stater > -10) {
+            try { svgState.style.fill = '#db7f87'; } catch { }
+        }
+        else if (stater > -15) {
+            try { svgState.style.fill = '#cf515b'; } catch { }
+        }
+        else if (stater > -20) {
+            try { svgState.style.fill = '#eb2334'; } catch { }
+        }
+        else if (stater > -25) {
+            try { svgState.style.fill = '#de0417'; } catch { }
+        }
+        else {
+            try { svgState.style.fill = '#a80210'; } catch { }
+        }
+
     }
 }
 
@@ -290,36 +298,36 @@ function setColorsBasedOnResults(year){
 
 
 //Process states and model----
-function processStates(states, year){   
+function processStates(states, year) {
     //cycle through every state and parse the data as needed
     states.forEach(s => {
         var stateName = s.State
 
-        if(stateName == 'National' && year == '2024'){
+        if (stateName == 'National' && year == '2024') {
             pollingAverage = s.Polls;
-            
+
         }
-        else if(stateName == 'National' && year == '2020'){
+        else if (stateName == 'National' && year == '2020') {
             pollingAverage = 8.4;
         }
-        else if(stateName == 'National' && year == '2016'){
+        else if (stateName == 'National' && year == '2016') {
             pollingAverage = 3.9;
         }
-        else if(stateName == 'National' && year == '2012'){
+        else if (stateName == 'National' && year == '2012') {
             pollingAverage = .7;
         }
 
-        if(year == '2024'){
+        if (year == '2024') {
             var pollingErrorInMonth = 3;
         }
-        else{
+        else {
             var pollingErrorInMonth = 0;
         }
 
         var standardPollingError = 3;
-    
+
         var maxDPopularVote = pollingAverage + pollingErrorInMonth + standardPollingError;
-        var maxRPopularVote = pollingAverage - pollingErrorInMonth - standardPollingError;      
+        var maxRPopularVote = pollingAverage - pollingErrorInMonth - standardPollingError;
 
         //get all state results by year
         var e2000Results = Number(s.zeroresults);
@@ -336,12 +344,12 @@ function processStates(states, year){
         var neutral2012 = e2012Results - 3.9;
         var neutral2016 = e2016Results - 2.1;
         var neutral2020 = e2020Results - 4.5;
-        
-        if (year == '2024'){
+
+        if (year == '2024') {
             //Get average state shift to see what the projected neutral environment will be in 2024
             var shift1 = neutral2020 - neutral2016
             var shift2 = neutral2016 - neutral2012
-        
+
             var neutralProjectedOnShift = neutral2020 + ((shift1 + shift2) / 2);
 
             //Compare national polls and state polls to see what the polls think the neutral environment of the state will be in 2024
@@ -351,11 +359,11 @@ function processStates(states, year){
             var neutralProjected = (neutralProjectedOnPolls + neutralProjectedOnShift) / 2
         }
 
-        if (year == '2020'){
+        if (year == '2020') {
             //Get average state shift to see what the projected neutral environment will be in 2024
             var shift1 = neutral2016 - neutral2012
             var shift2 = neutral2012 - neutral2008
-        
+
             var neutralProjectedOnShift = neutral2016 + ((shift1 + shift2) / 2);
 
             //Compare national polls and state polls to see what the polls think the neutral environment of the state will be in 2024
@@ -364,11 +372,11 @@ function processStates(states, year){
             //Average the above
             var neutralProjected = (neutralProjectedOnPolls + neutralProjectedOnShift) / 2
         }
-        if (year == '2016'){
+        if (year == '2016') {
             //Get average state shift to see what the projected neutral environment will be in 2024
             var shift1 = neutral2012 - neutral2008
             var shift2 = neutral2008 - neutral2004
-        
+
             var neutralProjectedOnShift = neutral2012 + ((shift1 + shift2) / 2);
 
             //Compare national polls and state polls to see what the polls think the neutral environment of the state will be in 2024
@@ -377,11 +385,11 @@ function processStates(states, year){
             //Average the above
             var neutralProjected = (neutralProjectedOnPolls + neutralProjectedOnShift) / 2
         }
-        if (year == '2012'){
+        if (year == '2012') {
             //Get average state shift to see what the projected neutral environment will be in 2024
             var shift1 = neutral2008 - neutral2004
             var shift2 = neutral2004 - neutral2000
-        
+
             var neutralProjectedOnShift = neutral2008 + ((shift1 + shift2) / 2);
 
             //Compare national polls and state polls to see what the polls think the neutral environment of the state will be in 2024
@@ -398,122 +406,122 @@ function processStates(states, year){
         //We'll need to account for polling error in states and nationally to get result so we do a nested for loop
         var maxD = neutralProjectedOnPolls + pollingErrorInMonth + 6;
         var maxR = neutralProjectedOnPolls - pollingErrorInMonth - 6;
-        
-        if(polls2012 == null && year == '2012'){
 
-        }else{
-        while(maxR < (maxD + .1)){
-            var maxDNat = maxDPopularVote;
-            var maxRNat = maxRPopularVote;
-            while(maxRNat < (maxDNat + .1)){
-                var outcome = maxR + maxRNat;
-                outcomesArray.push(outcome);
-                outcomesArray.push(outcome);
-                maxRNat = maxRNat + .5;
+        if (polls2012 == null && year == '2012') {
+
+        } else {
+            while (maxR < (maxD + .1)) {
+                var maxDNat = maxDPopularVote;
+                var maxRNat = maxRPopularVote;
+                while (maxRNat < (maxDNat + .1)) {
+                    var outcome = maxR + maxRNat;
+                    outcomesArray.push(outcome);
+                    outcomesArray.push(outcome);
+                    maxRNat = maxRNat + .5;
+                }
+                maxR = maxR + .5;
             }
-            maxR = maxR + .5;
-        } 
         }
         //Basic Model using the expected shift
         var maxD = neutralProjectedOnShift + 6;
         var maxR = neutralProjectedOnShift - 6;
-        
-        while(maxR < (maxD + .1)){
+
+        while (maxR < (maxD + .1)) {
             var maxDNat = maxDPopularVote;
             var maxRNat = maxRPopularVote;
-            while(maxRNat < (maxDNat + .1)){
+            while (maxRNat < (maxDNat + .1)) {
                 var outcome = maxR + maxRNat;
                 outcomesArray.push(outcome);
                 outcomesArray.push(outcome);
                 maxRNat = maxRNat + .5;
             }
             maxR = maxR + .5;
-        } 
+        }
 
         //Basic Model using the last election 
-        if (year == "2024"){         
+        if (year == "2024") {
             var maxD = e2020Results + 4;
             var maxR = e2020Results - 4;
-        
-            while(maxR < (maxD + .1)){
+
+            while (maxR < (maxD + .1)) {
                 var maxDNat = 3;
                 var maxRNat = -3;
-                while(maxRNat < (maxDNat + .1)){
+                while (maxRNat < (maxDNat + .1)) {
                     var outcome = maxR + maxRNat;
                     outcomesArray.push(outcome);
                     maxRNat = maxRNat + .5;
                 }
                 maxR = maxR + .5;
-            } 
+            }
         }
-        if (year == "2020"){         
+        if (year == "2020") {
             var maxD = e2016Results + 4;
             var maxR = e2016Results - 4;
-        
-            while(maxR < (maxD + .1)){
+
+            while (maxR < (maxD + .1)) {
                 var maxDNat = 3;
                 var maxRNat = -3;
-                while(maxRNat < (maxDNat + .1)){
+                while (maxRNat < (maxDNat + .1)) {
                     var outcome = maxR + maxRNat;
                     outcomesArray.push(outcome);
                     maxRNat = maxRNat + .5;
                 }
                 maxR = maxR + .5;
-            } 
+            }
         }
-        if (year == "2016"){         
+        if (year == "2016") {
             var maxD = e2012Results + 4;
             var maxR = e2012Results - 4;
-        
-            while(maxR < (maxD + .1)){
+
+            while (maxR < (maxD + .1)) {
                 var maxDNat = 3;
                 var maxRNat = -3;
-                while(maxRNat < (maxDNat + .1)){
+                while (maxRNat < (maxDNat + .1)) {
                     var outcome = maxR + maxRNat;
                     outcomesArray.push(outcome);
                     maxRNat = maxRNat + .5;
                 }
                 maxR = maxR + .5;
-            } 
+            }
         }
-        if (year == "2012"){         
+        if (year == "2012") {
             var maxD = e2008Results + 4;
             var maxR = e2008Results - 4;
-        
-            while(maxR < (maxD + .1)){
+
+            while (maxR < (maxD + .1)) {
                 var maxDNat = 3;
                 var maxRNat = -3;
-                while(maxRNat < (maxDNat + .1)){
+                while (maxRNat < (maxDNat + .1)) {
                     var outcome = maxR + maxRNat;
                     outcomesArray.push(outcome);
                     maxRNat = maxRNat + .5;
                 }
                 maxR = maxR + .5;
-            } 
+            }
         }
         //Basic Model using the expected shift
         var maxD = neutralProjected + 12;
         var maxR = neutralProjected - 12;
-        
-        while(maxR < (maxD + .1)){
+
+        while (maxR < (maxD + .1)) {
             var maxDNat = maxDPopularVote + 4;
             var maxRNat = maxRPopularVote - 4;
-            while(maxRNat < (maxDNat + .1)){
+            while (maxRNat < (maxDNat + .1)) {
                 var outcome = maxR + maxRNat;
                 outcomesArray.push(outcome);
                 outcomesArray.push(outcome);
                 maxRNat = maxRNat + .5;
             }
             maxR = maxR + .5;
-        } 
+        }
 
         //sort array and count number of times Dem wins to get a percentage and median outcome
         var numDWins = 0;
-        
+
         var i = 0;
-        while (i < outcomesArray.length){
+        while (i < outcomesArray.length) {
             var result = outcomesArray[i];
-            if (result > 0){
+            if (result > 0) {
                 numDWins = numDWins + 1;
             }
             i = i + 1;
@@ -528,28 +536,28 @@ function processStates(states, year){
                 return 1;
             }
             return 0;
-        }); 
+        });
 
         //Get Percent chance and median outcome
         var percentDWin = numDWins / outcomesArray.length;
         var medianN = ~~(outcomesArray.length / 2);
-        var median = outcomesArray[medianN];      
+        var median = outcomesArray[medianN];
 
         //String that will show when state is hovered over
-        if (year == '2024'){
+        if (year == '2024') {
             infoBoxString = s.State + "\nElection 2020 Results: " + e2020Results + "\nProjected2024Result: " + median + "\nDemocrat Win %: " + percentDWin + "\n2024 Polling Average: " + s.Polls;
         }
-        if (year == '2020'){
+        if (year == '2020') {
             infoBoxString = s.State + "\nActual 2020 Results: " + e2020Results + "\nProjected2020Result: " + median + "\nDemocrat Win %: " + percentDWin + "\n2020 Polling Average: " + s.Polls2020;
         }
-        if (year == '2016'){
+        if (year == '2016') {
             infoBoxString = s.State + "\nActual 2016 Results: " + e2016Results + "\nProjected2016Result: " + median + "\nDemocrat Win %: " + percentDWin + "\n2016 Polling Average: " + s.Polls2016;
         }
-        if (year == '2012'){
+        if (year == '2012') {
             infoBoxString = s.State + "\nActual 2012 Results: " + e2012Results + "\nProjected2012Result: " + median + "\nDemocrat Win %: " + percentDWin + "\n2012 Polling Average: " + s.Polls2012;
         }
         //This is the state data obbject that is put into the array-------------------------------------------------------
-        let stateData ={
+        let stateData = {
             State: stateName,
             StateAbbreviation: s.Abbr,
             Election2000Results: e2000Results,
@@ -568,7 +576,7 @@ function processStates(states, year){
 
             ElectionNeutralProjectedShift: neutralProjectedOnShift,
             ElectionNeutralProjectedPolls: neutralProjectedOnPolls,
-            ElectionNeutralProjected: neutralProjected, 
+            ElectionNeutralProjected: neutralProjected,
 
             ChanceOfDWin: percentDWin,
             MedianOutcome: median,
@@ -580,55 +588,98 @@ function processStates(states, year){
 }
 
 //Set the colors based on 2024 result
-function setColorBasedOnChance(){
-    for(var i = 0; i < statesArray.length; i++) {
+function setColorBasedOnChance() {
+    for (var i = 0; i < statesArray.length; i++) {
         var statePercent = statesArray[i].ChanceOfDWin;
         var stateAbbr = statesArray[i].StateAbbreviation;
         svgState = document.getElementById(stateAbbr);
 
-        if (statePercent > .99){
-            try{svgState.style.fill='#040275';}catch{}
+        if (statePercent > .99) {
+            try { svgState.style.fill = '#040275'; } catch { }
         }
-        else if(statePercent > .95){
-            try{svgState.style.fill='#0300c4';}catch{}
-        } 
-        else if(statePercent > .9){
-            try{svgState.style.fill='#2b28f7';}catch{}
-        }    
-        else if(statePercent > .8){
-            try{svgState.style.fill='#605df5';}catch{}
-        } 
-        else if(statePercent > .7){
-            try{svgState.style.fill='#8a88fc';}catch{}
-        } 
-        else if(statePercent > .6){
-            try{svgState.style.fill='#c6c5fa';}catch{}
-        } 
-        else if(statePercent > .5){
-            try{svgState.style.fill='#e4e4f5';}catch{}
+        else if (statePercent > .95) {
+            try { svgState.style.fill = '#0300c4'; } catch { }
         }
-        else if(statePercent > .4){
-            try{svgState.style.fill='#fce8ea';}catch{}
+        else if (statePercent > .9) {
+            try { svgState.style.fill = '#2b28f7'; } catch { }
         }
-        else if(statePercent > .3){
-            try{svgState.style.fill='#f0afb4';}catch{}
-        }  
-        else if(statePercent > .2){
-            try{svgState.style.fill='#db7f87';}catch{}
-        }  
-        else if(statePercent > .1){
-            try{svgState.style.fill='#cf515b';}catch{}
-        }  
-        else if(statePercent > .05){
-            try{svgState.style.fill='#eb2334';}catch{}
-        }  
-        else if(statePercent > .01){
-            try{svgState.style.fill='#de0417';}catch{}
-        }         
-        else{
-            try{svgState.style.fill='#a80210';}catch{}
-        }                 
-        
+        else if (statePercent > .8) {
+            try { svgState.style.fill = '#605df5'; } catch { }
+        }
+        else if (statePercent > .7) {
+            try { svgState.style.fill = '#8a88fc'; } catch { }
+        }
+        else if (statePercent > .6) {
+            try { svgState.style.fill = '#c6c5fa'; } catch { }
+        }
+        else if (statePercent > .5) {
+            try { svgState.style.fill = '#e4e4f5'; } catch { }
+        }
+        else if (statePercent > .4) {
+            try { svgState.style.fill = '#fce8ea'; } catch { }
+        }
+        else if (statePercent > .3) {
+            try { svgState.style.fill = '#f0afb4'; } catch { }
+        }
+        else if (statePercent > .2) {
+            try { svgState.style.fill = '#db7f87'; } catch { }
+        }
+        else if (statePercent > .1) {
+            try { svgState.style.fill = '#cf515b'; } catch { }
+        }
+        else if (statePercent > .05) {
+            try { svgState.style.fill = '#eb2334'; } catch { }
+        }
+        else if (statePercent > .01) {
+            try { svgState.style.fill = '#de0417'; } catch { }
+        }
+        else {
+            try { svgState.style.fill = '#a80210'; } catch { }
+        }
+
     }
 }
 
+//Set the colors based on 2024 result
+function setBackgroundColor() {
+    if (pollingAverage > 15) {
+        try { document.documentElement.style.cssText = "--maincolor: rgb(50, 50, 150)"; } catch { }
+    }
+    else if (pollingAverage > 10) {
+        try { document.documentElement.style.cssText = "--maincolor: rgb(50, 50, 100)"; } catch { }
+    }
+    else if (pollingAverage > 8) {
+        try { document.documentElement.style.cssText = "--maincolor: rgb(55, 50, 95)"; } catch { }
+    }
+    else if (pollingAverage > 6) {
+        try { document.documentElement.style.cssText = "--maincolor: rgb(60, 50, 90)"; } catch { }
+    }
+    else if (pollingAverage > 4) {
+        try { document.documentElement.style.cssText = "--maincolor: rgb(65, 50, 85)"; } catch { }
+    }
+    else if (pollingAverage > 2) {
+        try { document.documentElement.style.cssText = "--maincolor: rgb(70, 50, 80)"; } catch { }
+    }
+    else if (pollingAverage > 0) {
+        try { document.documentElement.style.cssText = "--maincolor: rgb(75, 50, 75)"; } catch { }
+    }
+    else if (pollingAverage > -2) {
+        try { document.documentElement.style.cssText = "--maincolor: rgb(80, 50, 70)"; } catch { }
+    }
+    else if (pollingAverage > -4) {
+        try { document.documentElement.style.cssText = "--maincolor: rgb(85, 50, 65)"; } catch { }
+    }
+    else if (pollingAverage > -6) {
+        try { document.documentElement.style.cssText = "--maincolor: rgb(90, 50, 60)"; } catch { }
+    }
+    else if (pollingAverage > -8) {
+        try { document.documentElement.style.cssText = "--maincolor: rgb(95, 50, 55)"; } catch { }
+    }
+    else if (pollingAverage > -10) {
+        try { document.documentElement.style.cssText = "--maincolor: rgb(100, 50, 50)"; } catch { }
+    }
+    else {
+        try { document.documentElement.style.cssText = "--maincolor: rgb(150, 50, 50)"; } catch { }
+    }
+
+}
