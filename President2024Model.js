@@ -345,6 +345,8 @@ function processStates(states, year) {
         var neutral2016 = e2016Results - 2.1;
         var neutral2020 = e2020Results - 4.5;
 
+        var polls = null;
+
         if (year == '2024') {
             //Get average state shift to see what the projected neutral environment will be in 2024
             var shift1 = neutral2020 - neutral2016
@@ -353,10 +355,17 @@ function processStates(states, year) {
             var neutralProjectedOnShift = neutral2020 + ((shift1 + shift2) / 2);
 
             //Compare national polls and state polls to see what the polls think the neutral environment of the state will be in 2024
-            var neutralProjectedOnPolls = s.Polls - pollingAverage;
+            polls = s.Polls;
+            var neutralProjectedOnPolls = polls - pollingAverage;
 
             //Average the above
-            var neutralProjected = (neutralProjectedOnPolls + neutralProjectedOnShift) / 2
+            console.log(polls);
+            if (polls != null){
+                var neutralProjected = (neutralProjectedOnPolls + neutralProjectedOnShift) / 2
+            }
+            else{
+                var neutralProjected = neutralProjectedOnShift;
+            }
         }
 
         if (year == '2020') {
@@ -367,7 +376,8 @@ function processStates(states, year) {
             var neutralProjectedOnShift = neutral2016 + ((shift1 + shift2) / 2);
 
             //Compare national polls and state polls to see what the polls think the neutral environment of the state will be in 2024
-            var neutralProjectedOnPolls = s.Polls2020 - pollingAverage;
+            polls = s.Polls2020;
+            var neutralProjectedOnPolls = polls - pollingAverage;
 
             //Average the above
             var neutralProjected = (neutralProjectedOnPolls + neutralProjectedOnShift) / 2
@@ -380,7 +390,8 @@ function processStates(states, year) {
             var neutralProjectedOnShift = neutral2012 + ((shift1 + shift2) / 2);
 
             //Compare national polls and state polls to see what the polls think the neutral environment of the state will be in 2024
-            var neutralProjectedOnPolls = s.Polls2016 - pollingAverage;
+            polls = s.Polls2016
+            var neutralProjectedOnPolls = polls - pollingAverage;
 
             //Average the above
             var neutralProjected = (neutralProjectedOnPolls + neutralProjectedOnShift) / 2
@@ -393,7 +404,8 @@ function processStates(states, year) {
             var neutralProjectedOnShift = neutral2008 + ((shift1 + shift2) / 2);
 
             //Compare national polls and state polls to see what the polls think the neutral environment of the state will be in 2024
-            var neutralProjectedOnPolls = s.Polls2012 - pollingAverage;
+            var polls = s.Polls2012;
+            var neutralProjectedOnPolls = polls - pollingAverage;
 
             //Average the above
             var neutralProjected = (neutralProjectedOnPolls + neutralProjectedOnShift) / 2
@@ -407,7 +419,7 @@ function processStates(states, year) {
         var maxD = neutralProjectedOnPolls + pollingErrorInMonth + 6;
         var maxR = neutralProjectedOnPolls - pollingErrorInMonth - 6;
 
-        if (polls2012 == null && year == '2012') {
+        if (polls == null) {
 
         } else {
             while (maxR < (maxD + .1)) {
