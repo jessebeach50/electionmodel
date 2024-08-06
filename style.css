@@ -1,7 +1,7 @@
 /* Global Theme */
 
 :root {
-    --maincolor: rgb(100, 100, 100);
+    --maincolor: rgb(75, 75, 75);
     --seccolor: rgb(255, 255, 255);
     --shadecolor: rgba(0, 0, 0, 0.1);
 }
@@ -273,6 +273,19 @@ path:hover {
 @media screen and (max-width: 650px) {
     button {
         padding: 10px 12px;
+    }
+
+    .buttonbox {
+        margin-left: -1000px;
+        margin-top: 3px;
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 5;
+        padding: 0;
+        text-align: center;
+        align-items: flex-start;
+        align-self: start;
     }
 }
 /* Idk if we actually need any of this */
