@@ -153,6 +153,8 @@ function process2024Districts(districts, year){
         //Model Time ---------------------------------------------------------------------------------
         var outcomesArray = [];
 
+
+
         //Just Fundamentals of District 1
         var maxD = projected2024Env + maxDemocraticResult;
         var maxR = projected2024Env + maxRepublicanResult;
@@ -160,15 +162,16 @@ function process2024Districts(districts, year){
         while (maxR < (maxD + .1)){
             var outcome = maxR;
             outcomesArray.push(outcome);
+            outcomesArray.push(outcome);
             maxR = maxR + .5;
         }
-
         //Just Fundamentals of District 2
         var maxD = projected2024Env2 + maxDemocraticResult;
         var maxR = projected2024Env2 + maxRepublicanResult;
 
         while (maxR < (maxD + .1)){
             var outcome = maxR;
+            outcomesArray.push(outcome);
             outcomesArray.push(outcome);
             maxR = maxR + .5;
         }
@@ -183,7 +186,6 @@ function process2024Districts(districts, year){
              outcomesArray.push(outcome);
              maxR = maxR + .5;
          }
-
          //Just Fundamentals of District 2 plus incumbent Over
          var maxD = projected2024Env2 + maxDemocraticResult + IncumbentOverperformance;
          var maxR = projected2024Env2 + maxRepublicanResult + IncumbentOverperformance;
@@ -195,16 +197,75 @@ function process2024Districts(districts, year){
              maxR = maxR + .5;
          }
 
-         //2020 Results plus incumbent Over
+
+
+        //Just Fundamentals of District 2 plus incumbent 
+        var maxD = projected2024Env + maxDemocraticResult + incumbentBonus;
+        var maxR = projected2024Env + maxRepublicanResult + incumbentBonus;
+
+        while (maxR < (maxD + .1)){
+            var outcome = maxR;
+            outcomesArray.push(outcome);
+
+            maxR = maxR + .5;
+        }
+        //Just Fundamentals of District 2 plus incumbent 
+        var maxD = projected2024Env2 + maxDemocraticResult + incumbentBonus;
+        var maxR = projected2024Env2 + maxRepublicanResult + incumbentBonus;
+
+        while (maxR < (maxD + .1)){
+            var outcome = maxR;
+            outcomesArray.push(outcome);
+
+            maxR = maxR + .5;
+        }
+
+
+
+
+
+         //Just 2020
+        var maxD = p2020Neutral + maxDemocraticResult;
+        var maxR = p2020Neutral + maxRepublicanResult;
+
+        while (maxR < (maxD + .1)){
+            var outcome = maxR;
+            outcomesArray.push(outcome);
+            outcomesArray.push(outcome);
+            outcomesArray.push(outcome);
+            outcomesArray.push(outcome);
+            maxR = maxR + .5;
+        }
+
+         //Just 2020  plus incumbent Over
          var maxD = p2020Neutral + maxDemocraticResult + IncumbentOverperformance;
          var maxR = p2020Neutral + maxRepublicanResult + IncumbentOverperformance;
+         if(districtName == "OH9"){
+            console.log(maxD + " " + maxR);
+         }
+
+         while (maxR < (maxD + .1)){
+             var outcome = maxR;
+             outcomesArray.push(outcome);
+             outcomesArray.push(outcome);
+             outcomesArray.push(outcome);
+             outcomesArray.push(outcome);
+             maxR = maxR + .5;
+         }
+
+         
+         //Just 2020  plus incumbent Over
+         var maxD = p2020Neutral + maxDemocraticResult + incumbentBonus;
+         var maxR = p2020Neutral + maxRepublicanResult + incumbentBonus;
  
          while (maxR < (maxD + .1)){
              var outcome = maxR;
              outcomesArray.push(outcome);
              outcomesArray.push(outcome);
+
              maxR = maxR + .5;
          }
+
 
 
          if(d.e2022Results != null){
@@ -216,32 +277,13 @@ function process2024Districts(districts, year){
                 var outcome = maxR;
                 outcomesArray.push(outcome);
                 outcomesArray.push(outcome);
+                outcomesArray.push(outcome);
+                outcomesArray.push(outcome);
+                outcomesArray.push(outcome);
+                outcomesArray.push(outcome);
                 maxR = maxR + .5;
             }
         }
-
-         //Just Fundamentals of District 1 plus bonus 
-         var maxD = projected2024Env + maxDemocraticResult + incumbentBonus;
-         var maxR = projected2024Env + maxRepublicanResult + incumbentBonus;
- 
-         while (maxR < (maxD + .1)){
-             var outcome = maxR;
-             outcomesArray.push(outcome);
-             outcomesArray.push(outcome);
-             maxR = maxR + .5;
-         }
-
-         //Just Fundamentals of District 2 plus incumbent bonus
-         var maxD = projected2024Env2 + maxDemocraticResult + incumbentBonus;
-         var maxR = projected2024Env2 + maxRepublicanResult + incumbentBonus;
- 
-         while (maxR < (maxD + .1)){
-             var outcome = maxR;
-             outcomesArray.push(outcome);
-             outcomesArray.push(outcome);
-             maxR = maxR + .5;
-         }
-
 
 
          //EVERYTHING TOGETHER NOW
@@ -264,34 +306,10 @@ function process2024Districts(districts, year){
             var outcome = maxR;
             outcomesArray.push(outcome);
             outcomesArray.push(outcome);
+            outcomesArray.push(outcome);
+            outcomesArray.push(outcome);
             maxR = maxR + .5;
         }
-
-        //EVERYTHING TOGETHER NOW
-        var maxR = projected2024Env2 - 2 + maxRepublicanResult;
-        var maxD = projected2024Env2 + 2 + maxDemocraticResult;
-        if(districtName == "OH9"){
-        console.log(projected2024Env2);
-        console.log(maxD + " " + maxR);
-        }
-        if(incumbentBonus > 0){
-        maxD = maxD + incumbentBonus;
-        }else{
-        maxR = maxR + incumbentBonus;
-        }
-
-        if(IncumbentOverperformance > 0){
-        maxD = maxD + IncumbentOverperformance;
-        }else{
-        maxR = maxR + IncumbentOverperformance
-        }
-
-        while (maxR < (maxD + .1)){
-        var outcome = maxR;
-        outcomesArray.push(outcome);
-        outcomesArray.push(outcome);
-        maxR = maxR + .5;
-    }
 
 
 
