@@ -795,7 +795,7 @@ function setColorBasedOnChance() {
             else if (statePercent > .01) {
                 try { svgState.style.fill = '#de0417'; } catch { }
             }
-            else if (statePercent == 0) {
+            else if (statePercent < .01) {
                 try { svgState.style.fill = '#a80210'; } catch { }
             }else{
                 try { svgState.style.fill = '#000000'; } catch { }
