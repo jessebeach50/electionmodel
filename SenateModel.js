@@ -2,7 +2,7 @@
 const statesArray = [];
 const senateArray = [];
 var pollingAverage = 0;
-const electionyear = "2024";
+var electionyear = "2024";
 setBackgroundColor();
 
 //DATA
@@ -82,9 +82,156 @@ window.onmousemove = function (e) {
 
 // Adding an event listener to the buttons
 document.addEventListener('DOMContentLoaded', (event) => {
+    const button2022 = document.getElementById('2022 Model');
+    button2022.addEventListener('click', handleClick2022);
+    
+    const button2020 = document.getElementById('2020 Model');
+    button2020.addEventListener('click', handleClick2020);
 
+    const button2018 = document.getElementById('2018 Model');
+    button2018.addEventListener('click', handleClick2018);
+
+    const button2024 = document.getElementById('2024 Model');
+    button2024.addEventListener('click', handleClick2024);
 });
 
+//2022 Model Click--------------------------------------------------------------------------------------------------------------------------
+// This function will be executed when the 2024 Model button is clicked
+function handleClick2022() {
+    statesArray.length = 0;
+    senateArray.length = 0;
+    electionyear = "2022";
+    console.log(electionyear);
+    // Use Papa Parse to fetch and parse the CSV file
+    Papa.parse(csvUrl, {
+        download: true,
+        header: true, // Set to false if the CSV doesn't have headers
+        dynamicTyping: true, // Convert types automatically
+        skipEmptyLines: true, // Skip empty lines
+        complete: function (results) {
+            processStates(results.data, '2020');
+        },
+        error: function (error) {
+            console.error("Error parsing CSV:", error);
+        }
+    });
+    Papa.parse(senateCSVUrl, {
+        download: true,
+        header: true, // Set to false if the CSV doesn't have headers
+        dynamicTyping: true, // Convert types automatically
+        skipEmptyLines: true, // Skip empty lines
+        complete: function (results) {
+            processStatesSenate(results.data, '2022');
+            setColorBasedOnChance();
+        },
+        error: function (error) {
+            console.error("Error parsing CSV:", error);
+        }
+    });
+    
+}
+
+function handleClick2020() {
+    statesArray.length = 0;
+    senateArray.length = 0;
+    electionyear = "2020";
+    console.log(electionyear);
+    // Use Papa Parse to fetch and parse the CSV file
+    Papa.parse(csvUrl, {
+        download: true,
+        header: true, // Set to false if the CSV doesn't have headers
+        dynamicTyping: true, // Convert types automatically
+        skipEmptyLines: true, // Skip empty lines
+        complete: function (results) {
+            processStates(results.data, '2020');
+        },
+        error: function (error) {
+            console.error("Error parsing CSV:", error);
+        }
+    });
+    Papa.parse(senateCSVUrl, {
+        download: true,
+        header: true, // Set to false if the CSV doesn't have headers
+        dynamicTyping: true, // Convert types automatically
+        skipEmptyLines: true, // Skip empty lines
+        complete: function (results) {
+            processStatesSenate(results.data, '2020');
+            setColorBasedOnChance();
+        },
+        error: function (error) {
+            console.error("Error parsing CSV:", error);
+        }
+    });
+    
+}
+
+function handleClick2024() {
+    statesArray.length = 0;
+    senateArray.length = 0;
+    electionyear = "2024";
+    console.log(electionyear);
+    // Use Papa Parse to fetch and parse the CSV file
+    Papa.parse(csvUrl, {
+        download: true,
+        header: true, // Set to false if the CSV doesn't have headers
+        dynamicTyping: true, // Convert types automatically
+        skipEmptyLines: true, // Skip empty lines
+        complete: function (results) {
+            processStates(results.data, '2024');
+        },
+        error: function (error) {
+            console.error("Error parsing CSV:", error);
+        }
+    });
+    Papa.parse(senateCSVUrl, {
+        download: true,
+        header: true, // Set to false if the CSV doesn't have headers
+        dynamicTyping: true, // Convert types automatically
+        skipEmptyLines: true, // Skip empty lines
+        complete: function (results) {
+            processStatesSenate(results.data, '2024');
+            setColorBasedOnChance();
+        },
+        error: function (error) {
+            console.error("Error parsing CSV:", error);
+        }
+    });
+    
+}
+
+function handleClick2018() {
+    statesArray.length = 0;
+    senateArray.length = 0;
+    electionyear = "2018";
+    console.log(electionyear);
+    // Use Papa Parse to fetch and parse the CSV file
+    Papa.parse(csvUrl, {
+        download: true,
+        header: true, // Set to false if the CSV doesn't have headers
+        dynamicTyping: true, // Convert types automatically
+        skipEmptyLines: true, // Skip empty lines
+        complete: function (results) {
+            processStates(results.data, '2018');
+        },
+        error: function (error) {
+            console.error("Error parsing CSV:", error);
+        }
+    });
+    Papa.parse(senateCSVUrl, {
+        download: true,
+        header: true, // Set to false if the CSV doesn't have headers
+        dynamicTyping: true, // Convert types automatically
+        skipEmptyLines: true, // Skip empty lines
+        complete: function (results) {
+            processStatesSenate(results.data, '2018');
+            setColorBasedOnChance();
+        },
+        error: function (error) {
+            console.error("Error parsing CSV:", error);
+        }
+    });
+    
+}
 
 function processStatesSenate(states, year) {
     //cycle through each states and parse the data as needed
@@ -104,6 +251,10 @@ function processStatesSenate(states, year) {
         var e2016Result = s.e2016;
         var e2018Result = s.e2018;
         var e2020Result = s.e2020;
+
+        var e2018ResultS = s.e2018r;
+        var e2020ResultS = s.e2020r;
+        var e2022ResultS = s.e2022r;
         
 
         //Get Corresponding State Data, excpetions for special elections
@@ -133,8 +284,27 @@ function processStatesSenate(states, year) {
 
         }
 
+
         if(s.Election == "2024"){
             var polls = s.Polls2024;
+            var pollingErrorInMonth = 3;
+            var standardPollingError = 3;
+        }else if (s.Election == "2022"){
+            var polls = s.Polls2022;
+            var pollingErrorInMonth = 0;
+            var standardPollingError = 3;
+        }
+        else if (s.Election == "2020"){
+            var polls = s.Polls2020;
+            var pollingErrorInMonth = 0;
+            var standardPollingError = 3;
+        }
+        else if (s.Election == "2018"){
+            var polls = s.Polls2018;
+            var pollingErrorInMonth = 0;
+            var standardPollingError = 3;
+        }else{
+            console.log("Error, no election assigned for: " + stateFullName);
         }
 
         var pollingErrorInMonth = 3;
@@ -201,6 +371,7 @@ function processStatesSenate(states, year) {
         var incumbentStrength = 0;
         var counter = 0;
         var sum = 0;
+
         while (counter < incumbentPerformances.length){
             sum = sum + incumbentPerformances[counter];
             counter++;
@@ -222,19 +393,57 @@ function processStatesSenate(states, year) {
             incumbentBonus = 0;
         }
 
-        //logging for debugging
-        if (s.Election == "2024"){
-            console.log(stateName + "============ \n" + incumbent);
-            console.log(incumbentBonus);
+        if (year == "2024"){
+            try{ 
+                var presidentMedian = stateObject.MedianOutcome;
+
+            }catch{
+                var presidentMedian = 0;
+                console.log(stateFullName + s.Election)
+                console.log("Failed")
+            }
         }
 
-        try{ 
-            var presidentMedian = stateObject.MedianOutcome;
+        if (year == "2022"){
+            try{ 
+                var presidentMedian = stateObject.Election2020ResultsNeutral - 1.2;
 
-        }catch{
-            var presidentMedian = 0;
-            console.log(stateFullName + s.Election)
-            console.log("Failed")
+            }catch{
+                var presidentMedian = 0;
+                console.log(stateFullName + s.Election)
+                console.log("Failed")
+            }
+        }
+
+        if (year == "2020"){
+            console.log("I am here" + stateObject);
+            try{ 
+                var presidentMedian = stateObject.MedianOutcome;
+
+            }catch{
+                var presidentMedian = 0;
+                console.log(stateFullName + s.Election)
+                console.log("Failed")
+            }
+        }
+
+        if (year == "2018"){
+            console.log("I am here" + stateObject);
+            try{ 
+                var presidentMedian = stateObject.Election2016ResultsNeutral + 8.6;
+
+            }catch{
+                var presidentMedian = 0;
+                console.log(stateFullName + s.Election)
+                console.log("Failed")
+            }
+        }
+
+        //logging for debugging
+        if (s.Election == "2020"){
+            console.log(stateName + "============ \n" + incumbent);
+            console.log(year);
+            console.log(incumbentStrength + " " + presidentMedian);
         }
 
         //Model---------------------------------
@@ -262,53 +471,107 @@ function processStatesSenate(states, year) {
             }
         }
 
+
         //President Results
+       if(year == "2024" || year == "2020"){ 
+            
+            var maxD = presidentMedian + 5;
+            var maxR = presidentMedian - 5;
+
+            if(incumbentBonus  == 3){
+                maxD = maxD + incumbentBonus;
+            }else{
+                maxR = maxR + incumbentBonus;
+            }
+
+            while (maxR < (maxD + .1)) {
+                var maxVariationD = 0 + pollingErrorInMonth + standardPollingError;
+                var maxVariationR = 0 - pollingErrorInMonth - standardPollingError;
+                
+                while (maxVariationR < (maxVariationD + .1)){
+                    var outcome = maxR + maxVariationR;
+                    outcomesArray.push(outcome);
+                    
+                    maxVariationR = maxVariationR + .5;
+                }
+                maxR = maxR + .5;
+            }
         
-        var maxD = presidentMedian + 5;
-        var maxR = presidentMedian - 5;
 
-        if(incumbentBonus  == 3){
-            maxD = maxD + incumbentBonus;
-        }else{
-            maxR = maxR + incumbentBonus;
+            //President Results + Past incumbent Strength
+            var maxD = presidentMedian + incumbentStrength + 5;
+            var maxR = presidentMedian + incumbentStrength - 5;
+
+            if(incumbentBonus  == 3){
+                maxD = maxD + incumbentBonus;
+            }else{
+                maxR = maxR + incumbentBonus;
+            }
+            
+
+            while (maxR < (maxD + .1)) {
+                var maxVariationD = 0 + pollingErrorInMonth + standardPollingError;
+                var maxVariationR = 0 - pollingErrorInMonth - standardPollingError;
+                
+                while (maxVariationR < (maxVariationD + .1)){
+                    var outcome = maxR + maxVariationR;
+                    outcomesArray.push(outcome);
+                    outcomesArray.push(outcome);
+                    maxVariationR = maxVariationR + .5;
+                }
+                maxR = maxR + .5;
+            }
+
         }
 
-        while (maxR < (maxD + .1)) {
-            var maxVariationD = 0 + pollingErrorInMonth + standardPollingError;
-            var maxVariationR = 0 - pollingErrorInMonth - standardPollingError;
+        //Midterm based on last presidential neutral
+        if (year == "2022" || year == "2018"){
             
-            while (maxVariationR < (maxVariationD + .1)){
-                var outcome = maxR + maxVariationR;
-                outcomesArray.push(outcome);
-                outcomesArray.push(outcome);
-                maxVariationR = maxVariationR + .5;
+            var maxD = presidentMedian + incumbentStrength + 5;
+            var maxR = presidentMedian + incumbentStrength - 5;
+
+            if(incumbentBonus  == 3){
+                maxD = maxD + incumbentBonus;
+            }else{
+                maxR = maxR + incumbentBonus;
             }
-            maxR = maxR + .5;
-        }
-
-
-        //President Results + Past incumbent Strength
-        var maxD = presidentMedian + incumbentStrength + 3;
-        var maxR = presidentMedian + incumbentStrength - 3;
-
-        while (maxR < (maxD + .1)) {
-            var maxVariationD = 0 + pollingErrorInMonth + standardPollingError;
-            var maxVariationR = 0 - pollingErrorInMonth - standardPollingError;
             
-            while (maxVariationR < (maxVariationD + .1)){
-                var outcome = maxR + maxVariationR;
-                outcomesArray.push(outcome);
-                outcomesArray.push(outcome);
-                outcomesArray.push(outcome);
-                maxVariationR = maxVariationR + .5;
+            while (maxR < (maxD + .1)) {
+                var maxVariationD = 0 + pollingErrorInMonth + standardPollingError;
+                var maxVariationR = 0 - pollingErrorInMonth - standardPollingError;
+                
+                while (maxVariationR < (maxVariationD + .1)){
+                    var outcome = maxR + maxVariationR;
+                    outcomesArray.push(outcome);
+                    outcomesArray.push(outcome);
+                    
+                    maxVariationR = maxVariationR + .5;
+                }
+                maxR = maxR + .5;
             }
-            maxR = maxR + .5;
         }
 
         //President 2020Result
-        if(year == "2024"){
+        if(year == "2024" || year == "2022"){
             var maxD = stateObject.Election2020Results + 3;
             var maxR = stateObject.Election2020Results - 3;
+            while (maxR < (maxD + .1)) {
+                var maxVariationD = 0 + pollingErrorInMonth + standardPollingError;
+                var maxVariationR = 0 - pollingErrorInMonth - standardPollingError;
+                
+                while (maxVariationR < (maxVariationD + .1)){
+                    var outcome = maxR + maxVariationR;
+                    outcomesArray.push(outcome);
+                    maxVariationR = maxVariationR + .5;
+                }
+                maxR = maxR + .5;
+            }
+        }
+
+        //President 2016Result
+        if(year == "2020" || year == "2018"){
+            var maxD = stateObject.Election2016Results + 3;
+            var maxR = stateObject.Election2016Results - 3;
             while (maxR < (maxD + .1)) {
                 var maxVariationD = 0 + pollingErrorInMonth + standardPollingError;
                 var maxVariationR = 0 - pollingErrorInMonth - standardPollingError;
@@ -353,8 +616,19 @@ function processStatesSenate(states, year) {
         var medianN = ~~(outcomesArray.length / 2);
         var median = outcomesArray[medianN];
 
-        var infoBoxString = stateFullName + "\nIncumbent: " + incumbent + "\nChance of D Win: " + percentDWin + "\nProjected Result: " + median + "\nPollingAverage: " + polls;
-
+        if (year == "2024"){
+            var infoBoxString = stateFullName + "\nIncumbent: " + incumbent + "\nChance of D Win: " + percentDWin + "\nProjected Result: " + median + "\nPollingAverage: " + polls;
+        }
+        if (year == "2022"){
+            var infoBoxString = stateFullName + "\n2022 Actual Result: " + e2022ResultS + "\nIncumbent: " + incumbent + "\nChance of D Win: " + percentDWin + "\nProjected Result: " + median + "\nPollingAverage: " + polls;
+        }
+        if (year == "2020"){
+            var infoBoxString = stateFullName + "\n2020 Actual Result: " + e2020ResultS + "\nIncumbent: " + incumbent + "\nChance of D Win: " + percentDWin + "\nProjected Result: " + median + "\nPollingAverage: " + polls;
+        }
+        if (year == "2018"){
+            var infoBoxString = stateFullName + "\n2018 Actual Result: " + e2018ResultS + "\nIncumbent: " + incumbent + "\nChance of D Win: " + percentDWin + "\nProjected Result: " + median + "\nPollingAverage: " + polls;
+        }
+        
         //Data for array -----------------------------------------------------
         let seatData = {
             State: stateName,
@@ -747,10 +1021,18 @@ function setColorsBasedOnResults(year) {
 
 //Set the colors based on 2024 result
 function setColorBasedOnChance() {
+    
+    for (var i = 0; i < senateArray.length; i++) {
+        var stateName = senateArray[i].State;
+        svgState = document.getElementById(stateName);
+        try { svgState.style.fill = 'transparent'; } catch { }
+
+    }
     for (var i = 0; i < senateArray.length; i++) {
         var statePercent = senateArray[i].ChanceOfDWin;
         var stateName = senateArray[i].State;
         var stateYear = senateArray[i].ElectionYear;
+
 
         if (stateYear == electionyear){
         
