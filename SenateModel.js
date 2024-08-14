@@ -93,6 +93,15 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
     const button2024 = document.getElementById('2024 Model');
     button2024.addEventListener('click', handleClick2024);
+
+    const button2022r = document.getElementById('2022 Actual Results');
+    button2022r.addEventListener('click', handleClick2022r);
+
+    const button2020r = document.getElementById('2020 Actual Results');
+    button2020r.addEventListener('click', handleClick2020r);
+
+    const button2018r = document.getElementById('2018 Actual Results');
+    button2018r.addEventListener('click', handleClick2018r);
 });
 
 //2022 Model Click--------------------------------------------------------------------------------------------------------------------------
@@ -225,6 +234,109 @@ function handleClick2018() {
         complete: function (results) {
             processStatesSenate(results.data, '2018');
             setColorBasedOnChance();
+        },
+        error: function (error) {
+            console.error("Error parsing CSV:", error);
+        }
+    });
+    
+}
+
+function handleClick2018r() {
+
+    statesArray.length = 0;
+    senateArray.length = 0;
+    electionyear = "2018";
+    console.log(electionyear);
+    // Use Papa Parse to fetch and parse the CSV file
+    Papa.parse(csvUrl, {
+        download: true,
+        header: true, // Set to false if the CSV doesn't have headers
+        dynamicTyping: true, // Convert types automatically
+        skipEmptyLines: true, // Skip empty lines
+        complete: function (results) {
+            processStates(results.data, '2018');
+        },
+        error: function (error) {
+            console.error("Error parsing CSV:", error);
+        }
+    });
+    Papa.parse(senateCSVUrl, {
+        download: true,
+        header: true, // Set to false if the CSV doesn't have headers
+        dynamicTyping: true, // Convert types automatically
+        skipEmptyLines: true, // Skip empty lines
+        complete: function (results) {
+            processStatesSenate(results.data, '2018');
+            setColorsBasedOnResults("2018");
+        },
+        error: function (error) {
+            console.error("Error parsing CSV:", error);
+        }
+    });
+    
+}
+function handleClick2020r() {
+
+    statesArray.length = 0;
+    senateArray.length = 0;
+    electionyear = "2020";
+    console.log(electionyear);
+    // Use Papa Parse to fetch and parse the CSV file
+    Papa.parse(csvUrl, {
+        download: true,
+        header: true, // Set to false if the CSV doesn't have headers
+        dynamicTyping: true, // Convert types automatically
+        skipEmptyLines: true, // Skip empty lines
+        complete: function (results) {
+            processStates(results.data, '2020');
+        },
+        error: function (error) {
+            console.error("Error parsing CSV:", error);
+        }
+    });
+    Papa.parse(senateCSVUrl, {
+        download: true,
+        header: true, // Set to false if the CSV doesn't have headers
+        dynamicTyping: true, // Convert types automatically
+        skipEmptyLines: true, // Skip empty lines
+        complete: function (results) {
+            processStatesSenate(results.data, '2020');
+            setColorsBasedOnResults("2020");
+        },
+        error: function (error) {
+            console.error("Error parsing CSV:", error);
+        }
+    });
+    
+}
+function handleClick2022r() {
+
+    statesArray.length = 0;
+    senateArray.length = 0;
+    electionyear = "2022";
+    console.log(electionyear);
+    // Use Papa Parse to fetch and parse the CSV file
+    Papa.parse(csvUrl, {
+        download: true,
+        header: true, // Set to false if the CSV doesn't have headers
+        dynamicTyping: true, // Convert types automatically
+        skipEmptyLines: true, // Skip empty lines
+        complete: function (results) {
+            processStates(results.data, '2020');
+        },
+        error: function (error) {
+            console.error("Error parsing CSV:", error);
+        }
+    });
+    Papa.parse(senateCSVUrl, {
+        download: true,
+        header: true, // Set to false if the CSV doesn't have headers
+        dynamicTyping: true, // Convert types automatically
+        skipEmptyLines: true, // Skip empty lines
+        complete: function (results) {
+            processStatesSenate(results.data, '2022');
+            setColorsBasedOnResults("2022");
         },
         error: function (error) {
             console.error("Error parsing CSV:", error);
@@ -439,12 +551,7 @@ function processStatesSenate(states, year) {
             }
         }
 
-        //logging for debugging
-        if (s.Election == "2020"){
-            console.log(stateName + "============ \n" + incumbent);
-            console.log(year);
-            console.log(incumbentStrength + " " + presidentMedian);
-        }
+
 
         //Model---------------------------------
       
@@ -562,6 +669,7 @@ function processStatesSenate(states, year) {
                 while (maxVariationR < (maxVariationD + .1)){
                     var outcome = maxR + maxVariationR;
                     outcomesArray.push(outcome);
+                    outcomesArray.push(outcome);
                     maxVariationR = maxVariationR + .5;
                 }
                 maxR = maxR + .5;
@@ -579,6 +687,8 @@ function processStatesSenate(states, year) {
                 while (maxVariationR < (maxVariationD + .1)){
                     var outcome = maxR + maxVariationR;
                     outcomesArray.push(outcome);
+                    outcomesArray.push(outcome);
+        
                     maxVariationR = maxVariationR + .5;
                 }
                 maxR = maxR + .5;
@@ -628,7 +738,6 @@ function processStatesSenate(states, year) {
         if (year == "2018"){
             var infoBoxString = stateFullName + "\n2018 Actual Result: " + e2018ResultS + "\nIncumbent: " + incumbent + "\nChance of D Win: " + percentDWin + "\nProjected Result: " + median + "\nPollingAverage: " + polls;
         }
-        
         //Data for array -----------------------------------------------------
         let seatData = {
             State: stateName,
@@ -642,6 +751,10 @@ function processStatesSenate(states, year) {
             Election2016Result: e2016Result,
             Election2018Result: e2018Result,
             Election2020Result: e2020Result,
+            
+            Election2018ResultS: e2018ResultS,
+            Election2020ResultS: e2020ResultS,
+            Election2022ResultS: e2022ResultS,
 
             ChanceOfDWin: percentDWin,
             InfoBoxString: infoBoxString
@@ -956,65 +1069,78 @@ function processStates(states, year) {
     });
 }
 
-
-
 //Set the colors to results
 function setColorsBasedOnResults(year) {
-    for (var i = 0; i < statesArray.length; i++) {
-        if (year == '2020') {
-            var stater = statesArray[i].Election2020Results;
-        }
-        if (year == '2016') {
-            var stater = statesArray[i].Election2016Results;
-        }
-        if (year == '2012') {
-            var stater = statesArray[i].Election2012Results;
-        }
-        var stateAbbr = statesArray[i].StateAbbreviation;
-        svgState = document.getElementById(stateAbbr);
-        if (stater > 25) {
-            try { svgState.style.fill = '#040275'; } catch { }
-        }
-        else if (stater > 20) {
-            try { svgState.style.fill = '#0300c4'; } catch { }
-        }
-        else if (stater > 15) {
-            try { svgState.style.fill = '#2b28f7'; } catch { }
-        }
-        else if (stater > 10) {
-            try { svgState.style.fill = '#605df5'; } catch { }
-        }
-        else if (stater > 5) {
-            try { svgState.style.fill = '#8a88fc'; } catch { }
-        }
-        else if (stater > 1) {
-            try { svgState.style.fill = '#c6c5fa'; } catch { }
-        }
-        else if (stater > 0) {
-            try { svgState.style.fill = '#e4e4f5'; } catch { }
-        }
-        else if (stater > -1) {
-            try { svgState.style.fill = '#fce8ea'; } catch { }
-        }
-        else if (stater > -5) {
-            try { svgState.style.fill = '#f0afb4'; } catch { }
-        }
-        else if (stater > -10) {
-            try { svgState.style.fill = '#db7f87'; } catch { }
-        }
-        else if (stater > -15) {
-            try { svgState.style.fill = '#cf515b'; } catch { }
-        }
-        else if (stater > -20) {
-            try { svgState.style.fill = '#eb2334'; } catch { }
-        }
-        else if (stater > -25) {
-            try { svgState.style.fill = '#de0417'; } catch { }
-        }
-        else {
-            try { svgState.style.fill = '#a80210'; } catch { }
-        }
+    for (var i = 0; i < senateArray.length; i++) {
+        var stateName = senateArray[i].State;
+        svgState = document.getElementById(stateName);
+        try { svgState.style.fill = 'transparent'; } catch { }
 
+    }
+    
+    for (var i = 0; i < senateArray.length; i++) {
+        var stateYear = senateArray[i].ElectionYear;
+
+
+        if (stateYear == electionyear){
+
+            if (year == '2022') {
+                var stater = senateArray[i].Election2022ResultS;
+            }
+            if (year == '2020') {
+                var stater = senateArray[i].Election2020ResultS;
+            }
+            if (year == '2018') {
+                var stater = senateArray[i].Election2018ResultS;
+            }
+            console.log("Test")
+
+            var stateAbbr = senateArray[i].State;
+            svgState = document.getElementById(stateAbbr);
+
+            if (stater > 25) {
+                try { svgState.style.fill = '#040275'; } catch { }
+            }
+            else if (stater > 20) {
+                try { svgState.style.fill = '#0300c4'; } catch { }
+            }
+            else if (stater > 15) {
+                try { svgState.style.fill = '#2b28f7'; } catch { }
+            }
+            else if (stater > 10) {
+                try { svgState.style.fill = '#605df5'; } catch { }
+            }
+            else if (stater > 5) {
+                try { svgState.style.fill = '#8a88fc'; } catch { }
+            }
+            else if (stater > 1) {
+                try { svgState.style.fill = '#c6c5fa'; } catch { }
+            }
+            else if (stater > 0) {
+                try { svgState.style.fill = '#e4e4f5'; } catch { }
+            }
+            else if (stater > -1) {
+                try { svgState.style.fill = '#fce8ea'; } catch { }
+            }
+            else if (stater > -5) {
+                try { svgState.style.fill = '#f0afb4'; } catch { }
+            }
+            else if (stater > -10) {
+                try { svgState.style.fill = '#db7f87'; } catch { }
+            }
+            else if (stater > -15) {
+                try { svgState.style.fill = '#cf515b'; } catch { }
+            }
+            else if (stater > -20) {
+                try { svgState.style.fill = '#eb2334'; } catch { }
+            }
+            else if (stater > -25) {
+                try { svgState.style.fill = '#de0417'; } catch { }
+            }
+            else {
+                try { svgState.style.fill = '#a80210'; } catch { }
+            }
+        }
     }
 }
 
