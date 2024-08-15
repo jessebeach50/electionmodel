@@ -68,6 +68,18 @@ document.addEventListener('DOMContentLoaded', (event) => {
     const buttonInc = document.getElementById('Incumbents');
     buttonInc.addEventListener('click', handleClickIncumbent);
 
+    const button2020p = document.getElementById('2020 President Actual Results');
+    button2020p.addEventListener('click', handleClick2020p);
+
+    const button2016p = document.getElementById('2016 President Actual Results');
+    button2016p.addEventListener('click', handleClick2016p);
+
+    const button2012p = document.getElementById('2012 President Actual Results');
+    button2012p.addEventListener('click', handleClick2012p);
+
+    const button2022 = document.getElementById('2022 Actual Results');
+    button2022.addEventListener('click', handleClick2022);
+
 });
 //Incumbent Model Click--------------------------------------------------------------------------------------------------------------------------
 // This function will be executed when the Incumbency Button is clicked
@@ -89,6 +101,21 @@ function handleClickIncumbent() {
     });
 }
 
+function handleClick2020p(){
+    setColorBasedOnResult("2020");
+}
+
+function handleClick2022(){
+    setColorBasedOnResult("2022");
+}
+
+function handleClick2016p(){
+    setColorBasedOnResult("2016");    
+}
+
+function handleClick2012p(){
+    setColorBasedOnResult("2012");
+}
 
 //Run the model on the csv imported for 2024
 function process2024Districts(districts, year){
@@ -453,5 +480,79 @@ function setColorBasedOnChance() {
             try { svgDistrict.style.fill = '#a80210'; } catch { }
         }
 
+    }
+}
+
+//Set the colors based on past result
+function setColorBasedOnResult(year) {
+    for (var i = 0; i < districtsArray.length; i++) {
+        if(year == "2020"){
+            var districtPercent = districtsArray[i].President2020Result;
+        }
+        if(year == "2016"){
+            var districtPercent = districtsArray[i].President2016Result;
+        }
+        if(year == "2012"){
+            var districtPercent = districtsArray[i].President2012Result;
+        }
+
+        if(year == "2022"){
+            var districtPercent = districtsArray[i].Election2022Result;
+        }
+
+        var districtAbbr = districtsArray[i].District;
+        svgDistrict = document.getElementById(districtAbbr);
+
+
+        if(districtAbbr == "MT2"){
+            console.log(districtPercent)
+        }
+
+        if (districtPercent > 25) {
+            try { svgDistrict.style.fill = '#040275'; } catch { }
+        }else if (districtPercent == null){
+            try { svgDistrict.style.fill = '#000000'; } catch { }
+        }
+        else if (districtPercent > 20) {
+            try { svgDistrict.style.fill = '#0300c4'; } catch { }
+        }
+        else if (districtPercent > 15) {
+            try { svgDistrict.style.fill = '#2b28f7'; } catch { }
+        }
+        else if (districtPercent > 10) {
+            try { svgDistrict.style.fill = '#605df5'; } catch { }
+        }
+        else if (districtPercent > 5) {
+            try { svgDistrict.style.fill = '#8a88fc'; } catch { }
+        }
+        else if (districtPercent > 1) {
+            try { svgDistrict.style.fill = '#c6c5fa'; } catch { }
+        }
+        else if (districtPercent > 0) {
+            try { svgDistrict.style.fill = '#e4e4f5'; } catch { }
+        }
+        else if (districtPercent > -1) {
+            try { svgDistrict.style.fill = '#fce8ea'; } catch { }
+        }
+        else if (districtPercent > -5) {
+            try { svgDistrict.style.fill = '#f0afb4'; } catch { }
+        }
+        else if (districtPercent > -10) {
+            try { svgDistrict.style.fill = '#db7f87'; } catch { }
+        }
+        else if (districtPercent > -15) {
+            try { svgDistrict.style.fill = '#cf515b'; } catch { }
+        }
+        else if (districtPercent > -20) {
+            try { svgDistrict.style.fill = '#eb2334'; } catch { }
+        }
+        else if (districtPercent > -25) {
+            try { svgDistrict.style.fill = '#de0417'; } catch { }
+        }
+        else if(districtPercent > -100) {
+            try { svgDistrict.style.fill = '#a80210'; } catch { }
+        }else{
+            try { svgDistrict.style.fill = '#000000'; } catch { }
+        }
     }
 }
