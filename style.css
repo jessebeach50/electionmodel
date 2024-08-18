@@ -90,6 +90,7 @@ li ul {
 
 a {
     color: var(--seccolor);
+    text-decoration: none;
 }
 
 /*Background Animated*/
@@ -182,19 +183,41 @@ svg {
 path {
     fill: var(--shadecolor);
     stroke: black;
-    stroke-width: 1.5;
     transition: 0.5s;
     position: absolute;
+    stroke-width: 1.5;
 }
 
-path.hovered,
-path:hover {
-    transition: 0.5s;
+/* Pres Paths */
+.pres-model path.hovered,
+.pres-model path:hover {
     stroke: white;
     stroke-width: 3px;
     transform: translateY(-5px);
     filter: drop-shadow(0px 5px 5px rgba(0, 0, 0, 0.5));
 }
+
+/* House Paths */
+.house-model path {
+    stroke-width: 0.5;
+}
+
+.house-model path.hovered,
+.house-model path:hover {
+    stroke: white;
+    stroke-width: 0.5px;
+    filter: drop-shadow(0px 5px 5px rgba(0, 0, 0, 0.5));
+}
+
+/* Senate Paths */
+.senate-model path.hovered,
+.senate-model path:hover {
+    stroke: white;
+    stroke-width: 3px;
+    filter: drop-shadow(0px 5px 5px rgba(0, 0, 0, 0.5));
+}
+
+
 
 /* Details Pane */
 
@@ -207,7 +230,6 @@ path:hover {
     background-color: rgba(0, 0, 0, 0.5);
     color: white;
     font-family: Verdana, sans-serif;
-    ;
     width: fit-content;
     transform: translateX(-50%);
     transition: opacity .4s ease;
@@ -277,47 +299,27 @@ path:hover {
 
     .buttonbox {
         margin-left: -1000px;
-        margin-top: 3px;
-        position: absolute;
-        top: 0;
-        left: 0;
-        z-index: 5;
-        padding: 0;
-        text-align: center;
-        align-items: flex-start;
-        align-self: start;
     }
 }
-/* Idk if we actually need any of this */
 
-/*Slider*/
+/* Slider */
 .slidecontainer {
     width: 100%;
-    /* Width of the outside container */
 }
 
-/* The slider itself */
 .slider {
     -webkit-appearance: none;
-    /* Override default CSS styles */
     appearance: none;
     width: 100%;
-    /* Full-width */
     height: 25px;
-    /* Specified height */
     opacity: 0.7;
-    /* Set transparency (for mouse-over effects on hover) */
     -webkit-transition: .2s;
-    /* 0.2 seconds transition on hover */
     transition: opacity .2s;
     background: #1a2436;
-    /* Grey background */
 }
 
-/*use # for ids*/
 #myRange {
     background: #c52424;
-    /* Grey background */
 }
 
 #slidervalue {
