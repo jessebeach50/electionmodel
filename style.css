@@ -64,6 +64,7 @@ body {
     border: 3px dotted var(--seccolor);
     box-shadow: none;
     padding-top: 0px;
+    overflow: hidden;
 }
 
 /* General Text Formatting */
@@ -178,6 +179,7 @@ button.ZoomButton {
 
 svg {
     scale: 100%;
+    position: relative;
 }
 
 path {
