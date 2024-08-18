@@ -6,8 +6,8 @@ var electionyear = "2024";
 setBackgroundColor();
 
 //DATA
-const csvUrl = 'https://raw.githubusercontent.com/jessebeach50/electionmodel/main/ElectionModelData.csv';
-const senateCSVUrl = 'https://raw.githubusercontent.com/jessebeach50/electionmodel/main/SenateData.csv';
+const csvUrl = 'https://raw.githubusercontent.com/jessebeach50/electionmodel/main/ModelData/ElectionModelData.csv';
+const senateCSVUrl = 'https://raw.githubusercontent.com/jessebeach50/electionmodel/main/ModelData/SenateData.csv';
 
 
 // Use Papa Parse to fetch and parse the CSV file; runs when file loads
