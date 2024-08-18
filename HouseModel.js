@@ -8,7 +8,7 @@ var maxRepublicanResult = pollingAverage - pollingErrorInMonth - pollingError;
 const districtsArray = [];
 
 //DATA
-const csvUrl = 'https://raw.githubusercontent.com/jessebeach50/electionmodel/main/HouseDataCSV.csv';
+const csvUrl = 'https://raw.githubusercontent.com/jessebeach50/electionmodel/main/ModelData/HouseDataCSV.csv';
 
 
 // Use Papa Parse to fetch and parse the CSV file
