@@ -40,7 +40,7 @@ document.addEventListener("wheel", function (e) {
       zoom -= ZOOM_SPEED;
       updateTransform();
     }
-  } else if (zoom < 5) {
+  } else if (zoom < 8) {
     zoom += ZOOM_SPEED;
     updateTransform();
   }
@@ -90,7 +90,7 @@ function handleClickZout(event) {
 }
 
 function handleClickZin(event) {
-  if (zoom < 5) {
+  if (zoom < 8) {
     zoom += ZOOM_SPEED;
     updateTransform();
   }
