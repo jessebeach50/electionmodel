@@ -34,7 +34,7 @@ let isDragging = false;
 let startX, startY;
 let translateX = 0, translateY = 0;
 
-document.addEventListener("wheel", function (e) {
+/* document.addEventListener("wheel", function (e) {
   if (e.deltaY > 0) {
     if (zoom > 1) {
       zoom -= ZOOM_SPEED;
@@ -44,7 +44,7 @@ document.addEventListener("wheel", function (e) {
     zoom += ZOOM_SPEED;
     updateTransform();
   }
-});
+}); */
 
 zoomElement.addEventListener('mousedown', startDrag);
 document.addEventListener('mousemove', drag);
@@ -103,7 +103,7 @@ function handleClickReset(event) {
 
 function updateTransform() {
   zoomElement.style.transform = `translate(${translateX}px, ${translateY}px) scale(${zoom})`;
-  if (zoom === 1) {
+  if (zoom <= 1) {
     resetPosition();
   }
 }
