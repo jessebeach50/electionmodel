@@ -4,7 +4,7 @@ var pollingAverage = 0;
 setBackgroundColor();
 
 //DATA
-const csvUrl = 'https://raw.githubusercontent.com/jessebeach50/electionmodel/main/ElectionModelData.csv';
+const csvUrl = 'https://raw.githubusercontent.com/jessebeach50/electionmodel/main/ModelData/ElectionModelData.csv';
 
 // Use Papa Parse to fetch and parse the CSV file; runs when file loads
 Papa.parse(csvUrl, {
