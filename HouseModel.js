@@ -80,6 +80,9 @@ document.addEventListener('DOMContentLoaded', (event) => {
     const button2022 = document.getElementById('2022 Actual Results');
     button2022.addEventListener('click', handleClick2022);
 
+    const button2024 = document.getElementById('2024 Model');
+    button2024.addEventListener('click', handleClick2024);
+
 });
 //Incumbent Model Click--------------------------------------------------------------------------------------------------------------------------
 // This function will be executed when the Incumbency Button is clicked
@@ -115,6 +118,11 @@ function handleClick2016p(){
 
 function handleClick2012p(){
     setColorBasedOnResult("2012");
+}
+
+function handleClick2024(){
+    process2024Districts;
+    setColorBasedOnChance("2024");
 }
 
 //Run the model on the csv imported for 2024
@@ -415,13 +423,13 @@ function setColorBasedOnParty(){
         svgDistrict = document.getElementById(districtID);
         
         if (party == "R"){
-            try{svgDistrict.style.fill='red';}catch{}
+            try{svgDistrict.style.fill='rgb(121, 24, 24)';}catch{}
         }
         else if (party == "D"){
-            try{svgDistrict.style.fill='blue';}catch{}
+            try{svgDistrict.style.fill='rgb(24, 31, 121)';}catch{}
         }
         else {
-            try{svgDistrict.style.fill='gray';}catch{}
+            try{svgDistrict.style.fill='rgba(255, 255, 255, 0.05)';}catch{}
         }
     }
 }
@@ -438,46 +446,46 @@ function setColorBasedOnChance() {
 
 
         if (districtPercent > .99) {
-            try { svgDistrict.style.fill = '#040275'; } catch { }
+            try { svgDistrict.style.fill = 'rgb(19, 25, 109)'; } catch { }
         }
         else if (districtPercent > .95) {
-            try { svgDistrict.style.fill = '#0300c4'; } catch { }
+            try { svgDistrict.style.fill = 'rgb(24, 31, 121)'; } catch { }
         }
         else if (districtPercent > .9) {
-            try { svgDistrict.style.fill = '#2b28f7'; } catch { }
+            try { svgDistrict.style.fill = 'rgb(41, 48, 141)'; } catch { }
         }
         else if (districtPercent > .8) {
-            try { svgDistrict.style.fill = '#605df5'; } catch { }
+            try { svgDistrict.style.fill = 'rgb(63, 71, 167)'; } catch { }
         }
         else if (districtPercent > .7) {
-            try { svgDistrict.style.fill = '#8a88fc'; } catch { }
+            try { svgDistrict.style.fill = 'rgb(95, 102, 197)'; } catch { }
         }
         else if (districtPercent > .6) {
-            try { svgDistrict.style.fill = '#c6c5fa'; } catch { }
+            try { svgDistrict.style.fill = 'rgb(129, 135, 216)'; } catch { }
         }
         else if (districtPercent > .5) {
-            try { svgDistrict.style.fill = '#e4e4f5'; } catch { }
+            try { svgDistrict.style.fill = 'rgb(173, 178, 242)'; } catch { }
         }
         else if (districtPercent > .4) {
-            try { svgDistrict.style.fill = '#fce8ea'; } catch { }
+            try { svgDistrict.style.fill = 'rgb(242, 173, 173)'; } catch { }
         }
         else if (districtPercent > .3) {
-            try { svgDistrict.style.fill = '#f0afb4'; } catch { }
+            try { svgDistrict.style.fill = 'rgb(215, 128, 128)'; } catch { }
         }
         else if (districtPercent > .2) {
-            try { svgDistrict.style.fill = '#db7f87'; } catch { }
+            try { svgDistrict.style.fill = 'rgb(195, 93, 93)'; } catch { }
         }
         else if (districtPercent > .1) {
-            try { svgDistrict.style.fill = '#cf515b'; } catch { }
+            try { svgDistrict.style.fill = 'rgb(163, 59, 59)'; } catch { }
         }
         else if (districtPercent > .05) {
-            try { svgDistrict.style.fill = '#eb2334'; } catch { }
+            try { svgDistrict.style.fill = 'rgb(137, 37, 37)'; } catch { }
         }
         else if (districtPercent > .01) {
-            try { svgDistrict.style.fill = '#de0417'; } catch { }
+            try { svgDistrict.style.fill = 'rgb(121, 24, 24)'; } catch { }
         }
         else {
-            try { svgDistrict.style.fill = '#a80210'; } catch { }
+            try { svgDistrict.style.fill = 'rgb(105, 15, 15)'; } catch { }
         }
 
     }
@@ -509,50 +517,50 @@ function setColorBasedOnResult(year) {
         }
 
         if (districtPercent > 25) {
-            try { svgDistrict.style.fill = '#040275'; } catch { }
+            try { svgDistrict.style.fill = 'rgb(19, 25, 109)'; } catch { }
         }else if (districtPercent == null){
-            try { svgDistrict.style.fill = '#000000'; } catch { }
+            try { svgDistrict.style.fill = 'rgba(0, 0, 0, 0.15)'; } catch { }
         }
         else if (districtPercent > 20) {
-            try { svgDistrict.style.fill = '#0300c4'; } catch { }
+            try { svgDistrict.style.fill = 'rgb(24, 31, 121)'; } catch { }
         }
         else if (districtPercent > 15) {
-            try { svgDistrict.style.fill = '#2b28f7'; } catch { }
+            try { svgDistrict.style.fill = 'rgb(41, 48, 141)'; } catch { }
         }
         else if (districtPercent > 10) {
-            try { svgDistrict.style.fill = '#605df5'; } catch { }
+            try { svgDistrict.style.fill = 'rgb(63, 71, 167)'; } catch { }
         }
         else if (districtPercent > 5) {
-            try { svgDistrict.style.fill = '#8a88fc'; } catch { }
+            try { svgDistrict.style.fill = 'rgb(95, 102, 197)'; } catch { }
         }
         else if (districtPercent > 1) {
-            try { svgDistrict.style.fill = '#c6c5fa'; } catch { }
+            try { svgDistrict.style.fill = 'rgb(129, 135, 216)'; } catch { }
         }
         else if (districtPercent > 0) {
-            try { svgDistrict.style.fill = '#e4e4f5'; } catch { }
+            try { svgDistrict.style.fill = 'rgb(173, 178, 242)'; } catch { }
         }
         else if (districtPercent > -1) {
-            try { svgDistrict.style.fill = '#fce8ea'; } catch { }
+            try { svgDistrict.style.fill = 'rgb(242, 173, 173)'; } catch { }
         }
         else if (districtPercent > -5) {
-            try { svgDistrict.style.fill = '#f0afb4'; } catch { }
+            try { svgDistrict.style.fill = 'rgb(215, 128, 128)'; } catch { }
         }
         else if (districtPercent > -10) {
-            try { svgDistrict.style.fill = '#db7f87'; } catch { }
+            try { svgDistrict.style.fill = 'rgb(195, 93, 93)'; } catch { }
         }
         else if (districtPercent > -15) {
-            try { svgDistrict.style.fill = '#cf515b'; } catch { }
+            try { svgDistrict.style.fill = 'rgb(163, 59, 59)'; } catch { }
         }
         else if (districtPercent > -20) {
-            try { svgDistrict.style.fill = '#eb2334'; } catch { }
+            try { svgDistrict.style.fill = 'rgb(137, 37, 37)'; } catch { }
         }
         else if (districtPercent > -25) {
-            try { svgDistrict.style.fill = '#de0417'; } catch { }
+            try { svgDistrict.style.fill = 'rgb(121, 24, 24)'; } catch { }
         }
         else if(districtPercent > -100) {
-            try { svgDistrict.style.fill = '#a80210'; } catch { }
+            try { svgDistrict.style.fill = 'rgb(105, 15, 15)'; } catch { }
         }else{
-            try { svgDistrict.style.fill = '#000000'; } catch { }
+            try { svgDistrict.style.fill = 'rgba(0, 0, 0, 0.15)'; } catch { }
         }
     }
 }
