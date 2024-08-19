@@ -1099,46 +1099,46 @@ function setColorsBasedOnResults(year) {
             svgState = document.getElementById(stateAbbr);
 
             if (stater > 25) {
-                try { svgState.style.fill = '#040275'; } catch { }
+                try { svgState.style.fill = 'rgb(19, 25, 109)'; } catch { }
             }
             else if (stater > 20) {
-                try { svgState.style.fill = '#0300c4'; } catch { }
+                try { svgState.style.fill = 'rgb(24, 31, 121)'; } catch { }
             }
             else if (stater > 15) {
-                try { svgState.style.fill = '#2b28f7'; } catch { }
+                try { svgState.style.fill = 'rgb(41, 48, 141)'; } catch { }
             }
             else if (stater > 10) {
-                try { svgState.style.fill = '#605df5'; } catch { }
+                try { svgState.style.fill = 'rgb(63, 71, 167)'; } catch { }
             }
             else if (stater > 5) {
-                try { svgState.style.fill = '#8a88fc'; } catch { }
+                try { svgState.style.fill = 'rgb(95, 102, 197)'; } catch { }
             }
             else if (stater > 1) {
-                try { svgState.style.fill = '#c6c5fa'; } catch { }
+                try { svgState.style.fill = 'rgb(129, 135, 216)'; } catch { }
             }
             else if (stater > 0) {
-                try { svgState.style.fill = '#e4e4f5'; } catch { }
+                try { svgState.style.fill = 'rgb(173, 178, 242)'; } catch { }
             }
             else if (stater > -1) {
-                try { svgState.style.fill = '#fce8ea'; } catch { }
+                try { svgState.style.fill = 'rgb(242, 173, 173)'; } catch { }
             }
             else if (stater > -5) {
-                try { svgState.style.fill = '#f0afb4'; } catch { }
+                try { svgState.style.fill = 'rgb(215, 128, 128)'; } catch { }
             }
             else if (stater > -10) {
-                try { svgState.style.fill = '#db7f87'; } catch { }
+                try { svgState.style.fill = 'rgb(195, 93, 93)'; } catch { }
             }
             else if (stater > -15) {
-                try { svgState.style.fill = '#cf515b'; } catch { }
+                try { svgState.style.fill = 'rgb(163, 59, 59)'; } catch { }
             }
             else if (stater > -20) {
-                try { svgState.style.fill = '#eb2334'; } catch { }
+                try { svgState.style.fill = 'rgb(137, 37, 37)'; } catch { }
             }
             else if (stater > -25) {
-                try { svgState.style.fill = '#de0417'; } catch { }
+                try { svgState.style.fill = 'rgb(121, 24, 24)'; } catch { }
             }
             else {
-                try { svgState.style.fill = '#a80210'; } catch { }
+                try { svgState.style.fill = 'rgb(105, 15, 15)'; } catch { }
             }
         }
     }
@@ -1165,48 +1165,48 @@ function setColorBasedOnChance() {
             svgState = document.getElementById(stateName);
 
             if (statePercent > .99) {
-                try { svgState.style.fill = '#040275'; } catch { }
+                try { svgState.style.fill = 'rgb(19, 25, 109)'; } catch { }
             }
             else if (statePercent > .95) {
-                try { svgState.style.fill = '#0300c4'; } catch { }
+                try { svgState.style.fill = 'rgb(24, 31, 121)'; } catch { }
             }
             else if (statePercent > .9) {
-                try { svgState.style.fill = '#2b28f7'; } catch { }
+                try { svgState.style.fill = 'rgb(41, 48, 141)'; } catch { }
             }
             else if (statePercent > .8) {
-                try { svgState.style.fill = '#605df5'; } catch { }
+                try { svgState.style.fill = 'rgb(63, 71, 167)'; } catch { }
             }
             else if (statePercent > .7) {
-                try { svgState.style.fill = '#8a88fc'; } catch { }
+                try { svgState.style.fill = 'rgb(95, 102, 197)'; } catch { }
             }
             else if (statePercent > .6) {
-                try { svgState.style.fill = '#c6c5fa'; } catch { }
+                try { svgState.style.fill = 'rgb(129, 135, 216)'; } catch { }
             }
             else if (statePercent > .5) {
-                try { svgState.style.fill = '#e4e4f5'; } catch { }
+                try { svgState.style.fill = 'rgb(173, 178, 242)'; } catch { }
             }
             else if (statePercent > .4) {
-                try { svgState.style.fill = '#fce8ea'; } catch { }
+                try { svgState.style.fill = 'rgb(242, 173, 173)'; } catch { }
             }
             else if (statePercent > .3) {
-                try { svgState.style.fill = '#f0afb4'; } catch { }
+                try { svgState.style.fill = 'rgb(215, 128, 128)'; } catch { }
             }
             else if (statePercent > .2) {
-                try { svgState.style.fill = '#db7f87'; } catch { }
+                try { svgState.style.fill = 'rgb(195, 93, 93)'; } catch { }
             }
             else if (statePercent > .1) {
-                try { svgState.style.fill = '#cf515b'; } catch { }
+                try { svgState.style.fill = 'rgb(163, 59, 59)'; } catch { }
             }
             else if (statePercent > .05) {
-                try { svgState.style.fill = '#eb2334'; } catch { }
+                try { svgState.style.fill = 'rgb(137, 37, 37)'; } catch { }
             }
             else if (statePercent > .01) {
-                try { svgState.style.fill = '#de0417'; } catch { }
+                try { svgState.style.fill = 'rgb(121, 24, 24)'; } catch { }
             }
             else if (statePercent < .01) {
-                try { svgState.style.fill = '#a80210'; } catch { }
+                try { svgState.style.fill = 'rgb(105, 15, 15)'; } catch { }
             }else{
-                try { svgState.style.fill = '#000000'; } catch { }
+                try { svgState.style.fill = 'rgba(0, 0, 0, 0.25)'; } catch { }
             }
         }
     }
