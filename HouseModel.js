@@ -21,6 +21,8 @@ Papa.parse(csvUrl, {
         console.log("Success");
         process2024Districts(results.data, "2024");
         setColorBasedOnChance();
+        populateDropDown();
+        getPercentDWin();
         
     },
     error: function(error) {
@@ -82,6 +84,15 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
     const button2024 = document.getElementById('2024 Model');
     button2024.addEventListener('click', handleClick2024);
+
+    const callButtonD = document.getElementById('callButtonD');
+    callButtonD.addEventListener('click', handleClickCallButtonD);
+
+    const callButtonR = document.getElementById('callButtonR');
+    callButtonR.addEventListener('click', handleClickCallButtonR);
+
+    const enterButton = document.getElementById('enterButton');
+    enterButton.addEventListener('click', handleClickEnterButton);
 
 });
 //Incumbent Model Click--------------------------------------------------------------------------------------------------------------------------
@@ -443,9 +454,14 @@ function setColorBasedOnChance() {
         var districtAbbr = districtsArray[i].District;
         svgDistrict = document.getElementById(districtAbbr);
 
+        if (districtPercent == 1000) {
 
-
-        if (districtPercent > .99) {
+            try { svgDistrict.style.fill = 'rgb(0, 9, 59)'; } catch {  }
+        }
+        else if (districtPercent == -1000) {
+            try { svgDistrict.style.fill = 'rgb(65, 12, 0)'; } catch { }
+        }
+        else if (districtPercent > .99) {
             try { svgDistrict.style.fill = 'rgb(19, 25, 109)'; } catch { }
         }
         else if (districtPercent > .95) {
@@ -564,3 +580,169 @@ function setColorBasedOnResult(year) {
         }
     }
 }
+
+
+//Drop Down Menu
+
+// Get the select element
+const dropdown = document.getElementById('stateDropDown');
+
+function populateDropDown(){
+    // Array of options
+    const optionsArray = [];
+    districtsArray.forEach(element => {
+        //console.log("I am here")
+        optionsArray.push(element.District);
+    });
+
+    // Populate the drop-down menu
+    optionsArray.forEach(option => {
+        // Create a new option element
+        const optionElement = document.createElement('option');
+        optionElement.textContent = option; // Set the text of the option
+        optionElement.value = option; // Set the value of the option
+
+        // Append the option element to the select element
+        dropdown.appendChild(optionElement);
+    });
+
+
+}
+
+
+function handleClickEnterButton(){
+    const numberInput = document.getElementById('numberInput');
+    var percent = numberInput.value || 'None';
+    var selectedDistrict = dropdown.value;
+    // Get references to the input field and display area
+
+    //console.log("I am here" + percent + " " + selectedState);
+
+
+    for (var i = 0; i < districtsArray.length; i++) {
+        if (districtsArray[i].District == selectedDistrict) {
+            changeDistrict = districtsArray[i];
+            found = true;
+            console.log(districtsArray[i]);
+            break;
+        }  
+    }
+
+    if(percent <= 1 && percent >= 0){
+        console.log(districtsArray[i].ChanceOfDWin)
+        districtsArray[i].ChanceOfDWin = percent
+        districtsArray[i].InfoBoxString = districtsArray[i].District+ "\nIncumbent: " + districtsArray[i].Incumbent + "\n2022 Result: " + districtsArray[i].Election2020Results + "\nIncumbent Over/UnderPerformance: " + districtsArray[i].IncumbentStrength + "\nProjected Result: " + districtsArray[i].MedianOutcome +  "\nChance of D Win: " + districtsArray[i].ChanceOfDWin;
+        console.log(districtsArray[i].ChanceOfDWin)
+    }
+
+    setColorBasedOnChance()
+    getPercentDWin();
+}
+
+
+function handleClickCallButtonD(){
+    const numberInput = document.getElementById('numberInput');
+    var percent = numberInput.value || 'None';
+    var selectedDistrict = dropdown.value;
+    // Get references to the input field and display area
+
+    //console.log("I am here" + percent + " " + selectedState);
+
+
+    for (var i = 0; i < districtsArray.length; i++) {
+        if (districtsArray[i].District == selectedDistrict) {
+            changeDistrict = districtsArray[i];
+            found = true;
+            break;
+        }
+  
+    }
+
+    districtsArray[i].ChanceOfDWin = 1000
+    districtsArray[i].InfoBoxString = districtsArray[i].District+ "\nIncumbent: " + districtsArray[i].Incumbent + "\n2022 Result: " + districtsArray[i].Election2020Results + "\nIncumbent Over/UnderPerformance: " + districtsArray[i].IncumbentStrength + "\nProjected Result: " + districtsArray[i].MedianOutcome +  "\nChance of D Win: " + districtsArray[i].ChanceOfDWin;
+  
+    setColorBasedOnChance();
+    getPercentDWin();
+}
+function handleClickCallButtonR(){
+    const numberInput = document.getElementById('numberInput');
+    var percent = numberInput.value || 'None';
+    var selectedDistrict = dropdown.value;
+    // Get references to the input field and display area
+
+    //console.log("I am here" + percent + " " + selectedState);
+
+
+    for (var i = 0; i < districtsArray.length; i++) {
+        if (districtsArray[i].District == selectedDistrict) {
+            changeDistrict = districtsArray[i];
+            found = true;
+            break;
+        }
+  
+    }
+    districtsArray[i].ChanceOfDWin = -1000
+    districtsArray[i].InfoBoxString = districtsArray[i].District+ "\nIncumbent: " + districtsArray[i].Incumbent + "\n2022 Result: " + districtsArray[i].Election2020Results + "\nIncumbent Over/UnderPerformance: " + districtsArray[i].IncumbentStrength + "\nProjected Result: " + districtsArray[i].MedianOutcome +  "\nChance of D Win: " + districtsArray[i].ChanceOfDWin;
+  
+    setColorBasedOnChance()
+    getPercentDWin();
+}
+
+function getPercentDWin(){
+    var DSeats = 0;
+    var DWins = 0;
+    var count = 0;
+    
+    var DemVotesArray = [];
+
+    while (count < 1000){
+        DSeats = 0;
+        for (var i = 0; i < districtsArray.length; i++) {
+            currentDistrict = districtsArray[i];  
+
+            var roll = Math.floor(Math.random() * (100 - 0 + 1)) + 0;
+            
+            if(roll < (currentDistrict.ChanceOfDWin * 100)){
+                DSeats = DSeats + 1;
+            }
+        }
+        if(DSeats >= 218){
+            DWins++;
+        }
+        DemVotesArray.push(DSeats);
+        count++;
+    }
+
+    count = 0;
+    sum = 0;
+    while (count < DemVotesArray.length){
+        sum = sum + DemVotesArray[count];
+        count++;
+    }
+    var average = sum / DemVotesArray.length
+
+    console.log ("Democrats win " + DWins + "/1000 Times \nAverage of " + average + "Seats")
+
+    let numberElement = document.getElementById('chanceOfDWinState')
+    numberElement.innerText = (DWins / 1000) * 100;
+
+    let SeatsElement = document.getElementById('projectedSeatsD')
+    SeatsElement.innerText = average
+}
+
+
+//Set Drop Down Menu to clicked state
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Get all paths in the SVG
+    const paths = document.querySelectorAll('svg path');
+    const stateDropDown = document.getElementById('stateDropDown');
+
+    paths.forEach(path => {
+        path.addEventListener('click', function() {
+            // Set the dropdown value to the clicked path's ID
+            console.log(this.id)
+            stateDropDown.value = this.id;
+        });
+    });
+});
