@@ -23,7 +23,7 @@
       </div>
 
       <div class="box top-right">
-         <h2>the bar with the number of electors or seats will be here</h2>
+         <div class="resultbar"></div>
       </div>
 
       <div class="box center-left">
@@ -74,28 +74,45 @@
       
       <div class="box bottom-left">
          <h2>Options</h2>
+         <hr>
          <!-- gonna set up grid stuff here -->
          <!--Change the Percentage in each state or call a state-->
-         <select id="stateDropDown">
-             <!-- Options will be populated here -->
-         </select>
+         <div class="box">
+             <div class="tooltip">
+                 <select id="stateDropDown">
+                     <!-- Options will be populated here -->
+                 </select>
+                 <span class="tooltiptext">Select a state on the list, or click on the map!</span>
+             </div>
+             <br>
 
- 
-         <!-- Number input field -->
-         <label for="numberInput">Enter a number 0 -1:</label>
-         <input type="number" id="numberInput" name="numberInput" min="0" max="1" step=".001">
+             <h3>Call State for:</h3>
+             <button class="statecall" id="callButtonD">
+                 <h3>Democrats</h3>
+             </button>
+             <button class="statecall" id="callButtonR">
+                 <h3>Republicans</h3>
+             </button>
 
-         <button id="enterButton">Enter</button>
+             <hr>
 
-         <button id="callButtonD">Call State for Democrats</button>
-         <button id="callButtonR">Call State for Republicans</button>
+             <!-- Number input field -->
+             <label>Enter a number between 0 (strong republican) and 1 (strong democrat)</label>
+             <input type="number" id="numberInput" name="numberInput" min="0" max="1" step=".001">
+
+             <button class="enter" id="enterButton">
+                 <h3>Enter</h3>
+             </button>
+         </div>
+
+         <br>
 
          <!--Percent Democrats win-->
-         <label for="chanceOfDWinState">Chance Democratic Win:</label>
+         <label for="chanceOfDWinState"><h3>Chance of Democratic Win:</h3></label>
          <span id="chanceOfDWinState">0</span>
 
          <!--Projected Seats-->
-         <label for="projectedSeatsD">Projected Democrat Seats:</label>
+         <label for="projectedSeatsD"><h3>Projected Democrat Seats:</h3></label>
          <span id="projectedSeatsD">0</span>
      </div>
 
