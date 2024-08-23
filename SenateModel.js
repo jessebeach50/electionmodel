@@ -31,6 +31,8 @@ Papa.parse(senateCSVUrl, {
     complete: function (results) {
         processStatesSenate(results.data, '2024');
         setColorBasedOnChance();
+        getPercentDWin();
+        populateDropDown();
     },
     error: function (error) {
         console.error("Error parsing CSV:", error);
@@ -79,7 +81,6 @@ window.onmousemove = function (e) {
 };
 
 
-
 // Adding an event listener to the buttons
 document.addEventListener('DOMContentLoaded', (event) => {
     const button2022 = document.getElementById('2022 Model');
@@ -102,6 +103,15 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
     const button2018r = document.getElementById('2018 Actual Results');
     button2018r.addEventListener('click', handleClick2018r);
+
+    const enterButton = document.getElementById('enterButton');
+    enterButton.addEventListener('click', handleClickEnterButton);
+
+    const callButtonD = document.getElementById('callButtonD');
+    callButtonD.addEventListener('click', handleClickCallButtonD);
+
+    const callButtonR = document.getElementById('callButtonR');
+    callButtonR.addEventListener('click', handleClickCallButtonR);
 });
 
 //2022 Model Click--------------------------------------------------------------------------------------------------------------------------
@@ -742,6 +752,7 @@ function processStatesSenate(states, year) {
         let seatData = {
             State: stateName,
             ElectionYear: s.Election,
+            Polls: polls,
 
             Election2006Result: e2006Result,
             Election2008Result: e2008Result,
@@ -1164,7 +1175,13 @@ function setColorBasedOnChance() {
         
             svgState = document.getElementById(stateName);
 
-            if (statePercent > .99) {
+            if (statePercent == 1000) {
+                try { svgState.style.fill = 'rgb(0, 9, 59)'; } catch { }
+            }
+            else if (statePercent == -1000) {
+                try { svgState.style.fill = 'rgb(65, 12, 0)'; } catch { }
+            }
+            else if (statePercent > .99) {
                 try { svgState.style.fill = 'rgb(19, 25, 109)'; } catch { }
             }
             else if (statePercent > .95) {
@@ -1255,3 +1272,177 @@ function setBackgroundColor() {
     }
 
 }
+
+//Drop Down Menu
+
+// Get the select element
+const dropdown = document.getElementById('stateDropDown');
+
+function populateDropDown(){
+    // Array of options
+    const optionsArray = [];
+    senateArray.forEach(element => {
+        //console.log("I am here")
+        if (element.ElectionYear == "2024"){
+            optionsArray.push(element.State);
+        }
+    });
+
+
+
+    // Populate the drop-down menu
+    optionsArray.forEach(option => {
+        // Create a new option element
+        const optionElement = document.createElement('option');
+        optionElement.textContent = option; // Set the text of the option
+        optionElement.value = option; // Set the value of the option
+
+        // Append the option element to the select element
+        dropdown.appendChild(optionElement);
+    });
+
+
+}
+
+function handleClickEnterButton(){
+    const numberInput = document.getElementById('numberInput');
+    var percent = numberInput.value || 'None';
+    var selectedState = dropdown.value;
+    // Get references to the input field and display area
+
+    //console.log("I am here" + percent + " " + selectedState);
+
+
+    for (var i = 0; i < senateArray.length; i++) {
+        if (senateArray[i].State == selectedState && senateArray[i].ElectionYear == "2024") {
+            changeState = senateArray[i];
+            found = true;
+            console.log(senateArray[i]);
+            break;
+        }  
+    }
+
+    if(percent <= 1 && percent >= 0){
+        console.log(senateArray[i].ChanceOfDWin)
+        senateArray[i].ChanceOfDWin = percent
+        senateArray[i].InfoBoxString = senateArray[i].State + "\nElection 2020 Results: " + senateArray[i].Election2020Results + "\nProjected2024Result: " + senateArray[i].MedianOutcome + "\nDemocrat Win %: " + senateArray[i].ChanceOfDWin + "\n2024 Polling Average: " + senateArray[i].Polls;
+        console.log(senateArray[i].ChanceOfDWin)
+    }
+
+    setColorBasedOnChance()
+    getPercentDWin();
+}
+
+function handleClickCallButtonD(){
+    const numberInput = document.getElementById('numberInput');
+    var percent = numberInput.value || 'None';
+    var selectedState = dropdown.value;
+    // Get references to the input field and display area
+
+    //console.log("I am here" + percent + " " + selectedState);
+
+
+    for (var i = 0; i < senateArray.length; i++) {
+        if (senateArray[i].State == selectedState && senateArray[i].ElectionYear == "2024") {
+            changeState = senateArray[i];
+            found = true;
+            console.log(senateArray[i]);
+            break;
+        }
+  
+    }
+
+    senateArray[i].ChanceOfDWin = 1000
+    senateArray[i].InfoBoxString = senateArray[i].State + "\nElection 2020 Results: " + senateArray[i].Election2020Results + "\nProjected2024Result: " + senateArray[i].MedianOutcome + "\nDemocrat Win %: " + senateArray[i].ChanceOfDWin + "\n2024 Polling Average: " + senateArray[i].Polls;
+
+    setColorBasedOnChance()
+    getPercentDWin();
+}
+function handleClickCallButtonR(){
+    const numberInput = document.getElementById('numberInput');
+    var percent = numberInput.value || 'None';
+    var selectedState = dropdown.value;
+    // Get references to the input field and display area
+
+    //console.log("I am here" + percent + " " + selectedState);
+
+
+    for (var i = 0; i < senateArray.length; i++) {
+        if (senateArray[i].State == selectedState && senateArray[i].ElectionYear == "2024") {
+            changeState = senateArray[i];
+            found = true;
+            console.log(senateArray[i]);
+            break;
+        }
+  
+    }
+
+    senateArray[i].ChanceOfDWin = -1000
+    senateArray[i].InfoBoxString = senateArray[i].State + "\nElection 2020 Results: " + senateArray[i].Election2020Results + "\nProjected2024Result: " + senateArray[i].MedianOutcome + "\nDemocrat Win %: " + senateArray[i].ChanceOfDWin + "\n2024 Polling Average: " + senateArray[i].Polls;
+
+    setColorBasedOnChance()
+    getPercentDWin();
+}
+function getPercentDWin(){
+    var DSeats = 28;
+    var count = 0;
+    var DWins = 0;
+    
+    var DemSeatsArray = [];
+
+    while (count < 1000){
+        DSeats = 28;
+
+        for (var i = 0; i < senateArray.length; i++) {
+            currentState = senateArray[i];     
+            
+            if (currentState.ElectionYear == "2024"){
+                var roll = Math.floor(Math.random() * (100 - 0 + 1)) + 0;
+
+                if(roll < (currentState.ChanceOfDWin * 100)){
+                    DSeats = DSeats + 1
+                }
+            }
+        }
+        if(DSeats >= 50){
+            DWins++;
+        }
+
+        DemSeatsArray.push(DSeats);
+        count++;
+    }
+
+    count = 0;
+    sum = 0;
+    while (count < DemSeatsArray.length){
+        sum = sum + DemSeatsArray[count];
+        count++;
+    }
+
+    var average = sum / DemSeatsArray.length
+
+    console.log ("Average Seats for Democrats: " + average)
+
+    let numberElement = document.getElementById('chanceOfDWin50')
+    numberElement.innerText = (DWins / 1000) * 100;
+    let SeatsElement = document.getElementById('projectedSeatsD')
+    SeatsElement.innerText = average
+
+    
+}
+
+//Set Drop Down Menu to clicked state
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Get all paths in the SVG
+    const paths = document.querySelectorAll('svg path');
+    const stateDropDown = document.getElementById('stateDropDown');
+
+    paths.forEach(path => {
+        path.addEventListener('click', function() {
+            // Set the dropdown value to the clicked path's ID
+            console.log(this.id)
+            stateDropDown.value = this.id;
+        });
+    });
+});
