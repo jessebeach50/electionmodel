@@ -242,6 +242,38 @@ function handleClickResults2012() {
 
 //Set the colors to results
 function setColorsBasedOnResults(year) {
+
+
+    // Clear Segments so they can be reloaded
+    const segments = document.querySelectorAll('.color-segment');
+
+    segments.forEach(segment => {
+        // Get width and color from data attributes
+        const width = segment.getAttribute('data-width');
+        const color = segment.getAttribute('data-color');
+
+        // Apply width and color to the segment
+        segment.style.width = `${0}%`;
+        segment.style.backgroundColor = color;
+    });
+
+    var width1 = 0;
+    var width2 = 0;
+    var width3 = 0;
+    var width4 = 0;
+    var width5 = 0;
+    var width6 = 0;
+    var width7 = 0;
+    var width8 = 0;
+    var width9 = 0;
+    var width10 = 0;
+    var width11 = 0;
+    var width12 = 0;
+    var width13 = 0;
+    var width14 = 0;
+    var width15 = 0;
+    var width16 = 0;
+
     for (var i = 0; i < statesArray.length; i++) {
         if (year == '2020') {
             var stater = statesArray[i].Election2020Results;
@@ -254,50 +286,83 @@ function setColorsBasedOnResults(year) {
         }
         var stateAbbr = statesArray[i].StateAbbreviation;
         svgState = document.getElementById(stateAbbr);
+        var stateEV = statesArray[i].ElectoralVotes
+        var percent = (stateEV / 538) * 100
+
         if (stater > 25) {
             try { svgState.style.fill = 'rgb(19, 25, 109)'; } catch { }
+            width2 = width2 + percent;
         }
         else if (stater > 20) {
             try { svgState.style.fill = 'rgb(24, 31, 121)'; } catch { }
+            width3 = width3 + percent;
         }
         else if (stater > 15) {
             try { svgState.style.fill = 'rgb(41, 48, 141)'; } catch { }
+            width4 = width4 + percent;
         }
         else if (stater > 10) {
             try { svgState.style.fill = 'rgb(63, 71, 167)'; } catch { }
+            width5 = width5 + percent;
         }
         else if (stater > 5) {
             try { svgState.style.fill = 'rgb(95, 102, 197)'; } catch { }
+            width6 = width6 + percent;
         }
         else if (stater > 1) {
             try { svgState.style.fill = 'rgb(129, 135, 216)'; } catch { }
+            width7 = width7 + percent;
         }
         else if (stater > 0) {
             try { svgState.style.fill = 'rgb(173, 178, 242)'; } catch { }
+            width8 = width8 + percent;
         }
         else if (stater > -1) {
             try { svgState.style.fill = 'rgb(242, 173, 173)'; } catch { }
+            width9 = width9 + percent;
         }
         else if (stater > -5) {
             try { svgState.style.fill = 'rgb(215, 128, 128)'; } catch { }
+            width10 = width10 + percent;
         }
         else if (stater > -10) {
             try { svgState.style.fill = 'rgb(195, 93, 93)'; } catch { }
+            width11 = width11 + percent;
         }
         else if (stater > -15) {
             try { svgState.style.fill = 'rgb(163, 59, 59)'; } catch { }
+            width12 = width12 + percent;
         }
         else if (stater > -20) {
             try { svgState.style.fill = 'rgb(137, 37, 37)'; } catch { }
+            width13 = width13 + percent;
         }
         else if (stater > -25) {
             try { svgState.style.fill = 'rgb(121, 24, 24)'; } catch { }
+            width14 = width14 + percent;
         }
         else {
             try { svgState.style.fill = 'rgb(105, 15, 15)'; } catch { }
+            width15 = width15 + percent;
         }
 
     }
+    segments[0].style.width = `${width1}%`;
+    segments[1].style.width = `${width2}%`;
+    segments[2].style.width = `${width3}%`;
+    segments[3].style.width = `${width4}%`;
+    segments[4].style.width = `${width5}%`;
+    segments[5].style.width = `${width6}%`;
+    segments[6].style.width = `${width7}%`;
+    segments[7].style.width = `${width8}%`;
+    segments[8].style.width = `${width9}%`;
+    segments[9].style.width = `${width10}%`;
+    segments[10].style.width = `${width11}%`;
+    segments[11].style.width = `${width12}%`;
+    segments[12].style.width = `${width13}%`;
+    segments[13].style.width = `${width14}%`;
+    segments[14].style.width = `${width15}%`;
+    segments[15].style.width = `${width16}%`;
 }
 
 //Process states and model----
@@ -607,61 +672,129 @@ function processStates(states, year) {
 
 //Set the colors based on 2024 result
 function setColorBasedOnChance() {
+
+    // Clear Segments so they can be reloaded
+    const segments = document.querySelectorAll('.color-segment');
+
+    segments.forEach(segment => {
+        // Get width and color from data attributes
+        const width = segment.getAttribute('data-width');
+        const color = segment.getAttribute('data-color');
+
+        // Apply width and color to the segment
+        segment.style.width = `${0}%`;
+        segment.style.backgroundColor = color;
+    });
+
+    var width1 = 0;
+    var width2 = 0;
+    var width3 = 0;
+    var width4 = 0;
+    var width5 = 0;
+    var width6 = 0;
+    var width7 = 0;
+    var width8 = 0;
+    var width9 = 0;
+    var width10 = 0;
+    var width11 = 0;
+    var width12 = 0;
+    var width13 = 0;
+    var width14 = 0;
+    var width15 = 0;
+    var width16 = 0;
+
     for (var i = 0; i < statesArray.length; i++) {
         var statePercent = statesArray[i].ChanceOfDWin;
         var stateAbbr = statesArray[i].StateAbbreviation;
+        var stateEV = statesArray[i].ElectoralVotes
+
+        var percent = (stateEV / 538) * 100
+
         svgState = document.getElementById(stateAbbr);
 
         if (statePercent == 1000) {
-            try { svgState.style.fill = 'rgb(0, 9, 59)'; } catch { }
+            try { svgState.style.fill = 'rgb(0, 9, 59)'; } catch { };
+            width1 = width1 + percent;
         }
         else if (statePercent == -1000) {
             try { svgState.style.fill = 'rgb(65, 12, 0)'; } catch { }
+            width16 = width16 + percent;
         }
         else if (statePercent > .99) {
             try { svgState.style.fill = 'rgb(19, 25, 109)'; } catch { }
+            width2 = width2 + percent;
         }
         else if (statePercent > .95) {
             try { svgState.style.fill = 'rgb(24, 31, 121)'; } catch { }
+            width3 = width3 + percent;
         }
         else if (statePercent > .9) {
             try { svgState.style.fill = 'rgb(41, 48, 141)'; } catch { }
+            width4 = width4 + percent;
         }
         else if (statePercent > .8) {
             try { svgState.style.fill = 'rgb(63, 71, 167)'; } catch { }
+            width5 = width5 + percent;
         }
         else if (statePercent > .7) {
             try { svgState.style.fill = 'rgb(95, 102, 197)'; } catch { }
+            width6 = width6 + percent;
         }
         else if (statePercent > .6) {
             try { svgState.style.fill = 'rgb(129, 135, 216)'; } catch { }
+            width7 = width7 + percent;
         }
         else if (statePercent > .5) {
             try { svgState.style.fill = 'rgb(173, 178, 242)'; } catch { }
+            width8 = width8 + percent;
         }
         else if (statePercent > .4) {
             try { svgState.style.fill = 'rgb(242, 173, 173)'; } catch { }
+            width9 = width9 + percent;
         }
         else if (statePercent > .3) {
             try { svgState.style.fill = 'rgb(215, 128, 128)'; } catch { }
+            width10 = width10 + percent;
         }
         else if (statePercent > .2) {
             try { svgState.style.fill = 'rgb(195, 93, 93)'; } catch { }
+            width11 = width11 + percent;
         }
         else if (statePercent > .1) {
             try { svgState.style.fill = 'rgb(163, 59, 59)'; } catch { }
+            width12 = width12 + percent;
         }
         else if (statePercent > .05) {
             try { svgState.style.fill = 'rgb(137, 37, 37)'; } catch { }
+            width13 = width13 + percent;
         }
         else if (statePercent > .01) {
             try { svgState.style.fill = 'rgb(121, 24, 24)'; } catch { }
+            width14 = width14 + percent;
         }
         else {
             try { svgState.style.fill = 'rgb(105, 15, 15)'; } catch { }
+            width15 = width15 + percent;
         }
 
     }
+
+    segments[0].style.width = `${width1}%`;
+    segments[1].style.width = `${width2}%`;
+    segments[2].style.width = `${width3}%`;
+    segments[3].style.width = `${width4}%`;
+    segments[4].style.width = `${width5}%`;
+    segments[5].style.width = `${width6}%`;
+    segments[6].style.width = `${width7}%`;
+    segments[7].style.width = `${width8}%`;
+    segments[8].style.width = `${width9}%`;
+    segments[9].style.width = `${width10}%`;
+    segments[10].style.width = `${width11}%`;
+    segments[11].style.width = `${width12}%`;
+    segments[12].style.width = `${width13}%`;
+    segments[13].style.width = `${width14}%`;
+    segments[14].style.width = `${width15}%`;
+    segments[15].style.width = `${width16}%`;
 }
 
 //Set the colors based on 2024 result
@@ -882,3 +1015,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 });
+
+function setResultBar(){
+
+}
