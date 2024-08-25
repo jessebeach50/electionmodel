@@ -109,6 +109,7 @@ function handleClick2024() {
             processStates(results.data, '2024');
             setColorBasedOnChance();
             setBackgroundColor(pollingAverage)
+            getPercentDWin()
         },
         error: function (error) {
             console.error("Error parsing CSV:", error);
@@ -130,6 +131,7 @@ function handleClick2020Model() {
             processStates(results.data, '2020');
             setColorBasedOnChance();
             setBackgroundColor(pollingAverage)
+            getPercentDWin()
         },
         error: function (error) {
             console.error("Error parsing CSV:", error);
@@ -170,6 +172,7 @@ function handleClick2016Model() {
             processStates(results.data, '2016');
             setColorBasedOnChance();
             setBackgroundColor(pollingAverage);
+            getPercentDWin()
         },
         error: function (error) {
             console.error("Error parsing CSV:", error);
@@ -211,6 +214,7 @@ function handleClick2012Model() {
             processStates(results.data, '2012');
             setColorBasedOnChance();
             setBackgroundColor();
+            getPercentDWin()
         },
         error: function (error) {
             console.error("Error parsing CSV:", error);
@@ -231,6 +235,7 @@ function handleClickResults2012() {
         complete: function (results) {
             processStates(results.data, '2012');
             setColorsBasedOnResults('2012');
+            
         },
         error: function (error) {
             console.error("Error parsing CSV:", error);
@@ -274,14 +279,24 @@ function setColorsBasedOnResults(year) {
     var width15 = 0;
     var width16 = 0;
 
+    var DVotes = 0;
+    var RVotes = 0;
+
+
     for (var i = 0; i < statesArray.length; i++) {
         if (year == '2020') {
+            DVotes = '306'
+            RVotes = '232'
             var stater = statesArray[i].Election2020Results;
         }
         if (year == '2016') {
+            DVotes = '232'
+            RVotes = '306'
             var stater = statesArray[i].Election2016Results;
         }
         if (year == '2012') {
+            DVotes = '332'
+            RVotes = '206'
             var stater = statesArray[i].Election2012Results;
         }
         var stateAbbr = statesArray[i].StateAbbreviation;
@@ -363,6 +378,12 @@ function setColorsBasedOnResults(year) {
     segments[13].style.width = `${width14}%`;
     segments[14].style.width = `${width15}%`;
     segments[15].style.width = `${width16}%`;
+
+    var element = document.querySelector('.RepBarcount');
+    element.textContent = RVotes
+
+    var element2 = document.querySelector('.DemBarcount');
+    element2.textContent = DVotes
 }
 
 //Process states and model----
@@ -625,16 +646,16 @@ function processStates(states, year) {
 
         //String that will show when state is hovered over
         if (year == '2024') {
-            infoBoxString = s.State + "\nElection 2020 Results: " + e2020Results + "\nProjected2024Result: " + median + "\nDemocrat Win %: " + percentDWin + "\n2024 Polling Average: " + s.Polls;
+            infoBoxString = s.State + "\nElection 2020 Results: " + e2020Results + "\nProjected2024Result: " + median + "\nDemocrat Win %: " + percentDWin * 100 + "\n2024 Polling Average: " + s.Polls;
         }
         if (year == '2020') {
-            infoBoxString = s.State + "\nActual 2020 Results: " + e2020Results + "\nProjected2020Result: " + median + "\nDemocrat Win %: " + percentDWin + "\n2020 Polling Average: " + s.Polls2020;
+            infoBoxString = s.State + "\nActual 2020 Results: " + e2020Results + "\nProjected2020Result: " + median + "\nDemocrat Win %: " + percentDWin * 100 + "\n2020 Polling Average: " + s.Polls2020;
         }
         if (year == '2016') {
-            infoBoxString = s.State + "\nActual 2016 Results: " + e2016Results + "\nProjected2016Result: " + median + "\nDemocrat Win %: " + percentDWin + "\n2016 Polling Average: " + s.Polls2016;
+            infoBoxString = s.State + "\nActual 2016 Results: " + e2016Results + "\nProjected2016Result: " + median + "\nDemocrat Win %: " + percentDWin * 100 + "\n2016 Polling Average: " + s.Polls2016;
         }
         if (year == '2012') {
-            infoBoxString = s.State + "\nActual 2012 Results: " + e2012Results + "\nProjected2012Result: " + median + "\nDemocrat Win %: " + percentDWin + "\n2012 Polling Average: " + s.Polls2012;
+            infoBoxString = s.State + "\nActual 2012 Results: " + e2012Results + "\nProjected2012Result: " + median + "\nDemocrat Win %: " + percentDWin * 100 + "\n2012 Polling Average: " + s.Polls2012;
         }
         //This is the state data obbject that is put into the array-------------------------------------------------------
         let stateData = {
@@ -703,6 +724,9 @@ function setColorBasedOnChance() {
     var width15 = 0;
     var width16 = 0;
 
+    var DVotes = 0;
+    var RVotes = 0;
+
     for (var i = 0; i < statesArray.length; i++) {
         var statePercent = statesArray[i].ChanceOfDWin;
         var stateAbbr = statesArray[i].StateAbbreviation;
@@ -711,6 +735,13 @@ function setColorBasedOnChance() {
         var percent = (stateEV / 538) * 100
 
         svgState = document.getElementById(stateAbbr);
+
+        if(statePercent > '.50'){
+            DVotes = DVotes + stateEV
+        }else{
+            RVotes = RVotes + stateEV
+        }
+
 
         if (statePercent == 1000) {
             try { svgState.style.fill = 'rgb(0, 12, 65)'; } catch { };
@@ -795,6 +826,12 @@ function setColorBasedOnChance() {
     segments[13].style.width = `${width14}%`;
     segments[14].style.width = `${width15}%`;
     segments[15].style.width = `${width16}%`;
+
+    var element = document.querySelector('.RepBarcount');
+    element.textContent = RVotes
+
+    var element2 = document.querySelector('.DemBarcount');
+    element2.textContent = DVotes
 }
 
 //Set the colors based on 2024 result
@@ -877,7 +914,7 @@ function handleClickEnterButton(){
     var selectedState = dropdown.value;
     // Get references to the input field and display area
 
-    //console.log("I am here" + percent + " " + selectedState);
+    console.log("I am here" + percent + " " + selectedState);
 
 
     for (var i = 0; i < statesArray.length; i++) {
@@ -889,11 +926,11 @@ function handleClickEnterButton(){
         }  
     }
 
-    if(percent <= 1 && percent >= 0){
+    if(percent <= 100 && percent >= 0){
         console.log(statesArray[i].ChanceOfDWin)
-        statesArray[i].ChanceOfDWin = percent
-        statesArray[i].InfoBoxString = statesArray[i].State + "\nElection 2020 Results: " + statesArray[i].Election2020Results + "\nProjected2024Result: " + statesArray[i].MedianOutcome + "\nDemocrat Win %: " + statesArray[i].ChanceOfDWin + "\n2024 Polling Average: " + statesArray[i].Polls;
-        console.log(statesArray[i].ChanceOfDWin)
+        statesArray[i].ChanceOfDWin = percent / 100
+        statesArray[i].InfoBoxString = statesArray[i].State + "\nElection 2020 Results: " + statesArray[i].Election2020Results + "\nProjected2024Result: " + statesArray[i].MedianOutcome + "\nDemocrat Win %: " + (statesArray[i].ChanceOfDWin * 100) + "\n2024 Polling Average: " + statesArray[i].Polls;
+        console.log("====" + statesArray[i].ChanceOfDWin)
     }
 
     setColorBasedOnChance()
@@ -921,7 +958,7 @@ function handleClickCallButtonD(){
     }
     console.log(statesArray[i].ChanceOfDWin)
     statesArray[i].ChanceOfDWin = 1000
-    statesArray[i].InfoBoxString = statesArray[i].State + "\nElection 2020 Results: " + statesArray[i].Election2020Results + "\nProjected2024Result: " + statesArray[i].MedianOutcome + "\nDemocrat Win %: " + statesArray[i].ChanceOfDWin + "\n2024 Polling Average: " + statesArray[i].Polls;
+    statesArray[i].InfoBoxString = statesArray[i].State + "\nElection 2020 Results: " + statesArray[i].Election2020Results + "\nProjected2024Result: " + statesArray[i].MedianOutcome + "\nDemocrat Win %: " + statesArray[i].ChanceOfDWin * 100 + "\n2024 Polling Average: " + statesArray[i].Polls;
     console.log(statesArray[i].ChanceOfDWin)
 
     setColorBasedOnChance()
@@ -947,7 +984,7 @@ function handleClickCallButtonR(){
     }
 
     statesArray[i].ChanceOfDWin = -1000
-    statesArray[i].InfoBoxString = statesArray[i].State + "\nElection 2020 Results: " + statesArray[i].Election2020Results + "\nProjected2024Result: " + statesArray[i].MedianOutcome + "\nDemocrat Win %: " + statesArray[i].ChanceOfDWin + "\n2024 Polling Average: " + statesArray[i].Polls;
+    statesArray[i].InfoBoxString = statesArray[i].State + "\nElection 2020 Results: " + statesArray[i].Election2020Results + "\nProjected2024Result: " + statesArray[i].MedianOutcome + "\nDemocrat Win %: " + statesArray[i].ChanceOfDWin * 100 + "\n2024 Polling Average: " + statesArray[i].Polls;
 
 
     setColorBasedOnChance()
@@ -1016,6 +1053,3 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
-function setResultBar(){
-
-}
