@@ -391,11 +391,6 @@ function process2024Districts(districts, year){
         var percentDWin = numDWins / outcomesArray.length;
         var medianN = ~~(outcomesArray.length / 2);
         var median = outcomesArray[medianN];
-
-
-
-
-
         infoBoxString = districtName + "\nIncumbent: " + incumbent + "\n2022 Result: " + e2022Result + "\nIncumbent Over/UnderPerformance: " + IncumbentOverperformance + "\nProjected Result: " + median +  "\nChance of D Win: " + percentDWin;
 
    //This is the state data obbject that is put into the array-------------------------------------------------------
@@ -448,6 +443,38 @@ function setColorBasedOnParty(){
 
 //Set the colors based on 2024 result
 function setColorBasedOnChance() {
+    // Clear Segments so they can be reloaded
+    const segments = document.querySelectorAll('.color-segment');
+
+    segments.forEach(segment => {
+        // Get width and color from data attributes
+        const width = segment.getAttribute('data-width');
+        const color = segment.getAttribute('data-color');
+
+        // Apply width and color to the segment
+        segment.style.width = `${0}%`;
+        segment.style.backgroundColor = color;
+    });
+
+    var width1 = 0;
+    var width2 = 0;
+    var width3 = 0;
+    var width4 = 0;
+    var width5 = 0;
+    var width6 = 0;
+    var width7 = 0;
+    var width8 = 0;
+    var width9 = 0;
+    var width10 = 0;
+    var width11 = 0;
+    var width12 = 0;
+    var width13 = 0;
+    var width14 = 0;
+    var width15 = 0;
+    var width16 = 0;
+
+    var percent = (1 / 435) * 100
+
     for (var i = 0; i < districtsArray.length; i++) {
         
         var districtPercent = districtsArray[i].ChanceOfDWin;
@@ -457,54 +484,86 @@ function setColorBasedOnChance() {
         if (districtPercent == 1000) {
 
             try { svgDistrict.style.fill = 'rgb(0, 9, 59)'; } catch {  }
+            width1 = width1 + percent;
         }
         else if (districtPercent == -1000) {
             try { svgDistrict.style.fill = 'rgb(65, 12, 0)'; } catch { }
+            width16 = width16 + percent;
         }
         else if (districtPercent > .99) {
             try { svgDistrict.style.fill = 'rgb(19, 25, 109)'; } catch { }
+            width2 = width2 + percent;
         }
         else if (districtPercent > .95) {
             try { svgDistrict.style.fill = 'rgb(24, 31, 121)'; } catch { }
+            width3 = width3 + percent;
         }
         else if (districtPercent > .9) {
             try { svgDistrict.style.fill = 'rgb(41, 48, 141)'; } catch { }
+            width4 = width4 + percent;
         }
         else if (districtPercent > .8) {
             try { svgDistrict.style.fill = 'rgb(63, 71, 167)'; } catch { }
+            width5 = width5 + percent;
         }
         else if (districtPercent > .7) {
             try { svgDistrict.style.fill = 'rgb(95, 102, 197)'; } catch { }
+            width6 = width6 + percent;
         }
         else if (districtPercent > .6) {
             try { svgDistrict.style.fill = 'rgb(129, 135, 216)'; } catch { }
+            width7 = width7 + percent;
         }
         else if (districtPercent > .5) {
             try { svgDistrict.style.fill = 'rgb(173, 178, 242)'; } catch { }
+            width8 = width8 + percent;
         }
         else if (districtPercent > .4) {
             try { svgDistrict.style.fill = 'rgb(242, 173, 173)'; } catch { }
+            width9 = width9 + percent;
         }
         else if (districtPercent > .3) {
             try { svgDistrict.style.fill = 'rgb(215, 128, 128)'; } catch { }
+            width10 = width10 + percent;
         }
         else if (districtPercent > .2) {
             try { svgDistrict.style.fill = 'rgb(195, 93, 93)'; } catch { }
+            width11 = width11 + percent;
         }
         else if (districtPercent > .1) {
             try { svgDistrict.style.fill = 'rgb(163, 59, 59)'; } catch { }
+            width12 = width12 + percent;
         }
         else if (districtPercent > .05) {
             try { svgDistrict.style.fill = 'rgb(137, 37, 37)'; } catch { }
+            width13 = width13 + percent;
         }
         else if (districtPercent > .01) {
             try { svgDistrict.style.fill = 'rgb(121, 24, 24)'; } catch { }
+            width14 = width14 + percent;
         }
         else {
             try { svgDistrict.style.fill = 'rgb(105, 15, 15)'; } catch { }
+            width15 = width15 + percent;
         }
 
     }
+    segments[0].style.width = `${width1}%`;
+    segments[1].style.width = `${width2}%`;
+    segments[2].style.width = `${width3}%`;
+    segments[3].style.width = `${width4}%`;
+    segments[4].style.width = `${width5}%`;
+    segments[5].style.width = `${width6}%`;
+    segments[6].style.width = `${width7}%`;
+    segments[7].style.width = `${width8}%`;
+    segments[8].style.width = `${width9}%`;
+    segments[9].style.width = `${width10}%`;
+    segments[10].style.width = `${width11}%`;
+    segments[11].style.width = `${width12}%`;
+    segments[12].style.width = `${width13}%`;
+    segments[13].style.width = `${width14}%`;
+    segments[14].style.width = `${width15}%`;
+    segments[15].style.width = `${width16}%`;
 }
 
 //Set the colors based on past result
