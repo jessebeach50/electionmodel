@@ -713,7 +713,7 @@ function setColorBasedOnChance() {
         svgState = document.getElementById(stateAbbr);
 
         if (statePercent == 1000) {
-            try { svgState.style.fill = 'rgb(0, 9, 59)'; } catch { };
+            try { svgState.style.fill = 'rgb(0, 12, 65)'; } catch { };
             width1 = width1 + percent;
         }
         else if (statePercent == -1000) {
