@@ -142,6 +142,7 @@ function handleClick2022() {
         complete: function (results) {
             processStatesSenate(results.data, '2022');
             setColorBasedOnChance();
+            getPercentDWin()
         },
         error: function (error) {
             console.error("Error parsing CSV:", error);
@@ -176,6 +177,7 @@ function handleClick2020() {
         complete: function (results) {
             processStatesSenate(results.data, '2020');
             setColorBasedOnChance();
+            getPercentDWin()
         },
         error: function (error) {
             console.error("Error parsing CSV:", error);
@@ -210,6 +212,7 @@ function handleClick2024() {
         complete: function (results) {
             processStatesSenate(results.data, '2024');
             setColorBasedOnChance();
+            getPercentDWin()
         },
         error: function (error) {
             console.error("Error parsing CSV:", error);
@@ -244,6 +247,7 @@ function handleClick2018() {
         complete: function (results) {
             processStatesSenate(results.data, '2018');
             setColorBasedOnChance();
+            getPercentDWin()
         },
         error: function (error) {
             console.error("Error parsing CSV:", error);
@@ -737,16 +741,16 @@ function processStatesSenate(states, year) {
         var median = outcomesArray[medianN];
 
         if (year == "2024"){
-            var infoBoxString = stateFullName + "\nIncumbent: " + incumbent + "\nChance of D Win: " + percentDWin + "\nProjected Result: " + median + "\nPollingAverage: " + polls;
+            var infoBoxString = stateFullName + "\nIncumbent: " + incumbent + "\nChance of D Win: " + percentDWin * 100 + "\nProjected Result: " + median + "\nPollingAverage: " + polls;
         }
         if (year == "2022"){
-            var infoBoxString = stateFullName + "\n2022 Actual Result: " + e2022ResultS + "\nIncumbent: " + incumbent + "\nChance of D Win: " + percentDWin + "\nProjected Result: " + median + "\nPollingAverage: " + polls;
+            var infoBoxString = stateFullName + "\n2022 Actual Result: " + e2022ResultS + "\nIncumbent: " + incumbent + "\nChance of D Win: " + percentDWin * 100 + "\nProjected Result: " + median + "\nPollingAverage: " + polls;
         }
         if (year == "2020"){
-            var infoBoxString = stateFullName + "\n2020 Actual Result: " + e2020ResultS + "\nIncumbent: " + incumbent + "\nChance of D Win: " + percentDWin + "\nProjected Result: " + median + "\nPollingAverage: " + polls;
+            var infoBoxString = stateFullName + "\n2020 Actual Result: " + e2020ResultS + "\nIncumbent: " + incumbent + "\nChance of D Win: " + percentDWin * 100 + "\nProjected Result: " + median + "\nPollingAverage: " + polls;
         }
         if (year == "2018"){
-            var infoBoxString = stateFullName + "\n2018 Actual Result: " + e2018ResultS + "\nIncumbent: " + incumbent + "\nChance of D Win: " + percentDWin + "\nProjected Result: " + median + "\nPollingAverage: " + polls;
+            var infoBoxString = stateFullName + "\n2018 Actual Result: " + e2018ResultS + "\nIncumbent: " + incumbent + "\nChance of D Win: " + percentDWin * 100 + "\nProjected Result: " + median + "\nPollingAverage: " + polls;
         }
         //Data for array -----------------------------------------------------
         let seatData = {
@@ -1038,16 +1042,16 @@ function processStates(states, year) {
 
         //String that will show when state is hovered over
         if (year == '2024') {
-            infoBoxString = s.State + "\nElection 2020 Results: " + e2020Results + "\nProjected2024Result: " + median + "\nDemocrat Win %: " + percentDWin + "\n2024 Polling Average: " + s.Polls;
+            infoBoxString = s.State + "\nElection 2020 Results: " + e2020Results + "\nProjected2024Result: " + median + "\nDemocrat Win %: " + percentDWin * 100 + "\n2024 Polling Average: " + s.Polls;
         }
         if (year == '2020') {
-            infoBoxString = s.State + "\nActual 2020 Results: " + e2020Results + "\nProjected2020Result: " + median + "\nDemocrat Win %: " + percentDWin + "\n2020 Polling Average: " + s.Polls2020;
+            infoBoxString = s.State + "\nActual 2020 Results: " + e2020Results + "\nProjected2020Result: " + median + "\nDemocrat Win %: " + percentDWin * 100 + "\n2020 Polling Average: " + s.Polls2020;
         }
         if (year == '2016') {
-            infoBoxString = s.State + "\nActual 2016 Results: " + e2016Results + "\nProjected2016Result: " + median + "\nDemocrat Win %: " + percentDWin + "\n2016 Polling Average: " + s.Polls2016;
+            infoBoxString = s.State + "\nActual 2016 Results: " + e2016Results + "\nProjected2016Result: " + median + "\nDemocrat Win %: " + percentDWin * 100 + "\n2016 Polling Average: " + s.Polls2016;
         }
         if (year == '2012') {
-            infoBoxString = s.State + "\nActual 2012 Results: " + e2012Results + "\nProjected2012Result: " + median + "\nDemocrat Win %: " + percentDWin + "\n2012 Polling Average: " + s.Polls2012;
+            infoBoxString = s.State + "\nActual 2012 Results: " + e2012Results + "\nProjected2012Result: " + median + "\nDemocrat Win %: " + percentDWin * 100 + "\n2012 Polling Average: " + s.Polls2012;
         }
         //This is the state data obbject that is put into the array-------------------------------------------------------
         let stateData = {
@@ -1088,6 +1092,53 @@ function setColorsBasedOnResults(year) {
         try { svgState.style.fill = 'transparent'; } catch { }
 
     }
+
+    // Clear Segments so they can be reloaded
+    const segments = document.querySelectorAll('.color-segment');
+
+    segments.forEach(segment => {
+        // Get width and color from data attributes
+        const width = segment.getAttribute('data-width');
+        const color = segment.getAttribute('data-color');
+
+        // Apply width and color to the segment
+        segment.style.width = `${0}%`;
+        segment.style.backgroundColor = color;
+    });
+    var width1 = 0;
+    var width2 = 0;
+    var width3 = 0;
+    var width4 = 0;
+    var width5 = 0;
+    var width6 = 0;
+    var width7 = 0;
+    var width8 = 0;
+    var width9 = 0;
+    var width10 = 0;
+    var width11 = 0;
+    var width12 = 0;
+    var width13 = 0;
+    var width14 = 0;
+    var width15 = 0;
+    var width16 = 0;
+
+    var percent = (1 / 100) * 100
+
+    if(electionyear == "2022"){
+        var width1 = 36
+        var width16 = 29
+
+    }
+    if(electionyear == "2020"){
+        var width1 = 35
+        var width16 = 30
+
+    }
+    if(electionyear == "2018"){
+        var width1 = 24
+        var width16 = 42
+
+    }
     
     for (var i = 0; i < senateArray.length; i++) {
         var stateYear = senateArray[i].ElectionYear;
@@ -1097,12 +1148,18 @@ function setColorsBasedOnResults(year) {
 
             if (year == '2022') {
                 var stater = senateArray[i].Election2022ResultS;
+                var RSeats = '49'
+                var DSeats = '51'
             }
             if (year == '2020') {
                 var stater = senateArray[i].Election2020ResultS;
+                var RSeats = '50'
+                var DSeats = '50'
             }
             if (year == '2018') {
                 var stater = senateArray[i].Election2018ResultS;
+                var RSeats = '53'
+                var DSeats = '47'
             }
             console.log("Test")
 
@@ -1111,54 +1168,154 @@ function setColorsBasedOnResults(year) {
 
             if (stater > 25) {
                 try { svgState.style.fill = 'rgb(19, 25, 109)'; } catch { }
+                width2 = width2 + percent;
             }
             else if (stater > 20) {
                 try { svgState.style.fill = 'rgb(24, 31, 121)'; } catch { }
+                width3 = width3 + percent;
             }
             else if (stater > 15) {
                 try { svgState.style.fill = 'rgb(41, 48, 141)'; } catch { }
+                width4 = width4 + percent;
             }
             else if (stater > 10) {
                 try { svgState.style.fill = 'rgb(63, 71, 167)'; } catch { }
+                width5 = width5 + percent;
             }
             else if (stater > 5) {
                 try { svgState.style.fill = 'rgb(95, 102, 197)'; } catch { }
+                width6 = width6 + percent;
             }
             else if (stater > 1) {
                 try { svgState.style.fill = 'rgb(129, 135, 216)'; } catch { }
+                width7 = width7 + percent;
             }
             else if (stater > 0) {
                 try { svgState.style.fill = 'rgb(173, 178, 242)'; } catch { }
+                width8 = width8 + percent;
             }
             else if (stater > -1) {
                 try { svgState.style.fill = 'rgb(242, 173, 173)'; } catch { }
+                width9 = width9 + percent;
             }
             else if (stater > -5) {
                 try { svgState.style.fill = 'rgb(215, 128, 128)'; } catch { }
+                width10 = width10 + percent;
+
             }
             else if (stater > -10) {
                 try { svgState.style.fill = 'rgb(195, 93, 93)'; } catch { }
+                width11 = width11 + percent;
+
             }
             else if (stater > -15) {
                 try { svgState.style.fill = 'rgb(163, 59, 59)'; } catch { }
+                width12 = width12 + percent;
             }
             else if (stater > -20) {
                 try { svgState.style.fill = 'rgb(137, 37, 37)'; } catch { }
+                width13 = width13 + percent;
             }
             else if (stater > -25) {
                 try { svgState.style.fill = 'rgb(121, 24, 24)'; } catch { }
+                width14 = width14 + percent;
+
             }
             else {
                 try { svgState.style.fill = 'rgb(105, 15, 15)'; } catch { }
+                width15 = width15 + percent;
+
             }
         }
     }
+    segments[0].style.width = `${width1}%`;
+    segments[1].style.width = `${width2}%`;
+    segments[2].style.width = `${width3}%`;
+    segments[3].style.width = `${width4}%`;
+    segments[4].style.width = `${width5}%`;
+    segments[5].style.width = `${width6}%`;
+    segments[6].style.width = `${width7}%`;
+    segments[7].style.width = `${width8}%`;
+    segments[8].style.width = `${width9}%`;
+    segments[9].style.width = `${width10}%`;
+    segments[10].style.width = `${width11}%`;
+    segments[11].style.width = `${width12}%`;
+    segments[12].style.width = `${width13}%`;
+    segments[13].style.width = `${width14}%`;
+    segments[14].style.width = `${width15}%`;
+    segments[15].style.width = `${width16}%`;
+
+    var element = document.querySelector('.RepBarcount');
+    element.textContent = RSeats
+
+    var element2 = document.querySelector('.DemBarcount');
+    element2.textContent = DSeats
 }
 
 
 //Set the colors based on 2024 result
 function setColorBasedOnChance() {
-    
+    // Clear Segments so they can be reloaded
+    const segments = document.querySelectorAll('.color-segment');
+
+    segments.forEach(segment => {
+        // Get width and color from data attributes
+        const width = segment.getAttribute('data-width');
+        const color = segment.getAttribute('data-color');
+
+        // Apply width and color to the segment
+        segment.style.width = `${0}%`;
+        segment.style.backgroundColor = color;
+    });
+
+    var width1 = 0;
+    var width2 = 0;
+    var width3 = 0;
+    var width4 = 0;
+    var width5 = 0;
+    var width6 = 0;
+    var width7 = 0;
+    var width8 = 0;
+    var width9 = 0;
+    var width10 = 0;
+    var width11 = 0;
+    var width12 = 0;
+    var width13 = 0;
+    var width14 = 0;
+    var width15 = 0;
+    var width16 = 0;
+
+    var percent = (1 / 100) * 100
+
+    if(electionyear == "2024"){
+        var width1 = 28
+        var width16 = 38
+
+        var DSeats = 28
+        var RSeats = 38
+    }
+
+    if(electionyear == "2022"){
+        var width1 = 36
+        var width16 = 29
+
+        var DSeats = 36
+        var RSeats = 29
+    }
+    if(electionyear == "2020"){
+        var width1 = 35
+        var width16 = 30
+
+        var DSeats = 35
+        var RSeats = 30
+    }
+    if(electionyear == "2018"){
+        var width1 = 24
+        var width16 = 42
+
+        var DSeats = 24
+        var RSeats = 42
+    }
     for (var i = 0; i < senateArray.length; i++) {
         var stateName = senateArray[i].State;
         svgState = document.getElementById(stateName);
@@ -1175,58 +1332,102 @@ function setColorBasedOnChance() {
         
             svgState = document.getElementById(stateName);
 
-            if (statePercent == 1000) {
-                try { svgState.style.fill = 'rgb(0, 12, 65)'; } catch { }
-            }
-            else if (statePercent == -1000) {
-                try { svgState.style.fill = 'rgb(65, 12, 0)'; } catch { }
-            }
-            else if (statePercent > .99) {
-                try { svgState.style.fill = 'rgb(19, 25, 109)'; } catch { }
-            }
-            else if (statePercent > .95) {
-                try { svgState.style.fill = 'rgb(24, 31, 121)'; } catch { }
-            }
-            else if (statePercent > .9) {
-                try { svgState.style.fill = 'rgb(41, 48, 141)'; } catch { }
-            }
-            else if (statePercent > .8) {
-                try { svgState.style.fill = 'rgb(63, 71, 167)'; } catch { }
-            }
-            else if (statePercent > .7) {
-                try { svgState.style.fill = 'rgb(95, 102, 197)'; } catch { }
-            }
-            else if (statePercent > .6) {
-                try { svgState.style.fill = 'rgb(129, 135, 216)'; } catch { }
-            }
-            else if (statePercent > .5) {
-                try { svgState.style.fill = 'rgb(173, 178, 242)'; } catch { }
-            }
-            else if (statePercent > .4) {
-                try { svgState.style.fill = 'rgb(242, 173, 173)'; } catch { }
-            }
-            else if (statePercent > .3) {
-                try { svgState.style.fill = 'rgb(215, 128, 128)'; } catch { }
-            }
-            else if (statePercent > .2) {
-                try { svgState.style.fill = 'rgb(195, 93, 93)'; } catch { }
-            }
-            else if (statePercent > .1) {
-                try { svgState.style.fill = 'rgb(163, 59, 59)'; } catch { }
-            }
-            else if (statePercent > .05) {
-                try { svgState.style.fill = 'rgb(137, 37, 37)'; } catch { }
-            }
-            else if (statePercent > .01) {
-                try { svgState.style.fill = 'rgb(121, 24, 24)'; } catch { }
-            }
-            else if (statePercent < .01) {
-                try { svgState.style.fill = 'rgb(105, 15, 15)'; } catch { }
-            }else{
-                try { svgState.style.fill = 'rgba(0, 0, 0, 0.25)'; } catch { }
-            }
+            
+        if(statePercent > '.50'){
+            DSeats++
+        }else{
+            RSeats++
+        }
+
+
+  if (statePercent == 1000) {
+            try { svgState.style.fill = 'rgb(0, 12, 65)'; } catch { };
+            width1 = width1 + percent;
+        }
+        else if (statePercent == -1000) {
+            try { svgState.style.fill = 'rgb(65, 12, 0)'; } catch { }
+            width16 = width16 + percent;
+        }
+        else if (statePercent > .99) {
+            try { svgState.style.fill = 'rgb(19, 25, 109)'; } catch { }
+            width2 = width2 + percent;
+        }
+        else if (statePercent > .95) {
+            try { svgState.style.fill = 'rgb(24, 31, 121)'; } catch { }
+            width3 = width3 + percent;
+        }
+        else if (statePercent > .9) {
+            try { svgState.style.fill = 'rgb(41, 48, 141)'; } catch { }
+            width4 = width4 + percent;
+        }
+        else if (statePercent > .8) {
+            try { svgState.style.fill = 'rgb(63, 71, 167)'; } catch { }
+            width5 = width5 + percent;
+        }
+        else if (statePercent > .7) {
+            try { svgState.style.fill = 'rgb(95, 102, 197)'; } catch { }
+            width6 = width6 + percent;
+        }
+        else if (statePercent > .6) {
+            try { svgState.style.fill = 'rgb(129, 135, 216)'; } catch { }
+            width7 = width7 + percent;
+        }
+        else if (statePercent > .5) {
+            try { svgState.style.fill = 'rgb(173, 178, 242)'; } catch { }
+            width8 = width8 + percent;
+        }
+        else if (statePercent > .4) {
+            try { svgState.style.fill = 'rgb(242, 173, 173)'; } catch { }
+            width9 = width9 + percent;
+        }
+        else if (statePercent > .3) {
+            try { svgState.style.fill = 'rgb(215, 128, 128)'; } catch { }
+            width10 = width10 + percent;
+        }
+        else if (statePercent > .2) {
+            try { svgState.style.fill = 'rgb(195, 93, 93)'; } catch { }
+            width11 = width11 + percent;
+        }
+        else if (statePercent > .1) {
+            try { svgState.style.fill = 'rgb(163, 59, 59)'; } catch { }
+            width12 = width12 + percent;
+        }
+        else if (statePercent > .05) {
+            try { svgState.style.fill = 'rgb(137, 37, 37)'; } catch { }
+            width13 = width13 + percent;
+        }
+        else if (statePercent > .01) {
+            try { svgState.style.fill = 'rgb(121, 24, 24)'; } catch { }
+            width14 = width14 + percent;
+        }
+        else {
+            try { svgState.style.fill = 'rgb(105, 15, 15)'; } catch { }
+            width15 = width15 + percent;
+        }
         }
     }
+    segments[0].style.width = `${width1}%`;
+    segments[1].style.width = `${width2}%`;
+    segments[2].style.width = `${width3}%`;
+    segments[3].style.width = `${width4}%`;
+    segments[4].style.width = `${width5}%`;
+    segments[5].style.width = `${width6}%`;
+    segments[6].style.width = `${width7}%`;
+    segments[7].style.width = `${width8}%`;
+    segments[8].style.width = `${width9}%`;
+    segments[9].style.width = `${width10}%`;
+    segments[10].style.width = `${width11}%`;
+    segments[11].style.width = `${width12}%`;
+    segments[12].style.width = `${width13}%`;
+    segments[13].style.width = `${width14}%`;
+    segments[14].style.width = `${width15}%`;
+    segments[15].style.width = `${width16}%`;
+
+    var element = document.querySelector('.RepBarcount');
+    element.textContent = RSeats
+
+    var element2 = document.querySelector('.DemBarcount');
+    element2.textContent = DSeats
 }
 
 //Set the colors based on 2024 result
@@ -1314,7 +1515,7 @@ function handleClickEnterButton(){
 
 
     for (var i = 0; i < senateArray.length; i++) {
-        if (senateArray[i].State == selectedState && senateArray[i].ElectionYear == "2024") {
+        if (senateArray[i].State == selectedState && senateArray[i].ElectionYear == electionyear) {
             changeState = senateArray[i];
             found = true;
             console.log(senateArray[i]);
@@ -1322,10 +1523,10 @@ function handleClickEnterButton(){
         }  
     }
 
-    if(percent <= 1 && percent >= 0){
+    if(percent <= 100 && percent >= 0){
         console.log(senateArray[i].ChanceOfDWin)
-        senateArray[i].ChanceOfDWin = percent
-        senateArray[i].InfoBoxString = senateArray[i].State + "\nElection 2020 Results: " + senateArray[i].Election2020Results + "\nProjected2024Result: " + senateArray[i].MedianOutcome + "\nDemocrat Win %: " + senateArray[i].ChanceOfDWin + "\n2024 Polling Average: " + senateArray[i].Polls;
+        senateArray[i].ChanceOfDWin = percent / 100
+        senateArray[i].InfoBoxString = senateArray[i].State + "\nElection 2020 Results: " + senateArray[i].Election2020Results + "\nProjected2024Result: " + senateArray[i].MedianOutcome + "\nDemocrat Win %: " + senateArray[i].ChanceOfDWin * 100  + "\n2024 Polling Average: " + senateArray[i].Polls;
         console.log(senateArray[i].ChanceOfDWin)
     }
 
@@ -1343,7 +1544,7 @@ function handleClickCallButtonD(){
 
 
     for (var i = 0; i < senateArray.length; i++) {
-        if (senateArray[i].State == selectedState && senateArray[i].ElectionYear == "2024") {
+        if (senateArray[i].State == selectedState && senateArray[i].ElectionYear == electionyear) {
             changeState = senateArray[i];
             found = true;
             console.log(senateArray[i]);
@@ -1353,7 +1554,7 @@ function handleClickCallButtonD(){
     }
 
     senateArray[i].ChanceOfDWin = 1000
-    senateArray[i].InfoBoxString = senateArray[i].State + "\nElection 2020 Results: " + senateArray[i].Election2020Results + "\nProjected2024Result: " + senateArray[i].MedianOutcome + "\nDemocrat Win %: " + senateArray[i].ChanceOfDWin + "\n2024 Polling Average: " + senateArray[i].Polls;
+    senateArray[i].InfoBoxString = senateArray[i].State + "\nElection 2020 Results: " + senateArray[i].Election2020Results + "\nProjected2024Result: " + senateArray[i].MedianOutcome + "\nDemocrat Win %: " + senateArray[i].ChanceOfDWin * 100 + "\n2024 Polling Average: " + senateArray[i].Polls;
 
     setColorBasedOnChance()
     getPercentDWin();
@@ -1364,8 +1565,7 @@ function handleClickCallButtonR(){
     var selectedState = dropdown.value;
     // Get references to the input field and display area
 
-    //console.log("I am here" + percent + " " + selectedState);
-
+    console.log("I am here")
 
     for (var i = 0; i < senateArray.length; i++) {
         if (senateArray[i].State == selectedState && senateArray[i].ElectionYear == "2024") {
@@ -1384,19 +1584,29 @@ function handleClickCallButtonR(){
     getPercentDWin();
 }
 function getPercentDWin(){
-    var DSeats = 28;
+   
+    if (electionyear == '2024'){
+        var DSeats = 28;
+    }
     var count = 0;
     var DWins = 0;
     
     var DemSeatsArray = [];
 
     while (count < 1000){
-        DSeats = 28;
-
+        if (electionyear == '2024'){
+            var DSeats = 28;
+        }else if (electionyear == '2022'){
+            var DSeats = 36;
+        }else if (electionyear == '2020'){
+            var DSeats = 35;
+        }else if (electionyear == '2018'){
+            var DSeats = 24;
+        }
         for (var i = 0; i < senateArray.length; i++) {
             currentState = senateArray[i];     
             
-            if (currentState.ElectionYear == "2024"){
+            if (currentState.ElectionYear == electionyear){
                 var roll = Math.floor(Math.random() * (100 - 0 + 1)) + 0;
 
                 if(roll < (currentState.ChanceOfDWin * 100)){
