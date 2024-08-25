@@ -391,7 +391,7 @@ function process2024Districts(districts, year){
         var percentDWin = numDWins / outcomesArray.length;
         var medianN = ~~(outcomesArray.length / 2);
         var median = outcomesArray[medianN];
-        infoBoxString = districtName + "\nIncumbent: " + incumbent + "\n2022 Result: " + e2022Result + "\nIncumbent Over/UnderPerformance: " + IncumbentOverperformance + "\nProjected Result: " + median +  "\nChance of D Win: " + percentDWin;
+        infoBoxString = districtName + "\nIncumbent: " + incumbent + "\n2022 Result: " + e2022Result + "\nIncumbent Over/UnderPerformance: " + IncumbentOverperformance + "\nProjected Result: " + median +  "\nChance of D Win: " + percentDWin * 100;
 
    //This is the state data obbject that is put into the array-------------------------------------------------------
         let districtData ={
@@ -443,6 +443,8 @@ function setColorBasedOnParty(){
 
 //Set the colors based on 2024 result
 function setColorBasedOnChance() {
+
+
     // Clear Segments so they can be reloaded
     const segments = document.querySelectorAll('.color-segment');
 
@@ -475,11 +477,21 @@ function setColorBasedOnChance() {
 
     var percent = (1 / 435) * 100
 
+    var DSeats = 0
+    var RSeats = 0
+
     for (var i = 0; i < districtsArray.length; i++) {
         
         var districtPercent = districtsArray[i].ChanceOfDWin;
         var districtAbbr = districtsArray[i].District;
         svgDistrict = document.getElementById(districtAbbr);
+
+        if(districtPercent > '.50'){
+            DSeats++
+        }else{
+            RSeats++
+        }
+
 
         if (districtPercent == 1000) {
 
@@ -564,6 +576,15 @@ function setColorBasedOnChance() {
     segments[13].style.width = `${width14}%`;
     segments[14].style.width = `${width15}%`;
     segments[15].style.width = `${width16}%`;
+
+    var element = document.querySelector('.RepBarcount');
+    element.textContent = RSeats
+    console.log(RSeats + "=====" + DSeats )
+
+    var element2 = document.querySelector('.DemBarcount');
+    element2.textContent = DSeats
+
+
 }
 
 //Set the colors based on past result
@@ -687,11 +708,11 @@ function handleClickEnterButton(){
         }  
     }
 
-    if(percent <= 1 && percent >= 0){
-        console.log(districtsArray[i].ChanceOfDWin)
-        districtsArray[i].ChanceOfDWin = percent
-        districtsArray[i].InfoBoxString = districtsArray[i].District+ "\nIncumbent: " + districtsArray[i].Incumbent + "\n2022 Result: " + districtsArray[i].Election2020Results + "\nIncumbent Over/UnderPerformance: " + districtsArray[i].IncumbentStrength + "\nProjected Result: " + districtsArray[i].MedianOutcome +  "\nChance of D Win: " + districtsArray[i].ChanceOfDWin;
-        console.log(districtsArray[i].ChanceOfDWin)
+    if(percent <= 100 && percent >= 0){
+   
+        districtsArray[i].ChanceOfDWin = percent / 100
+        districtsArray[i].InfoBoxString = districtsArray[i].District+ "\nIncumbent: " + districtsArray[i].Incumbent + "\n2022 Result: " + districtsArray[i].Election2020Results + "\nIncumbent Over/UnderPerformance: " + districtsArray[i].IncumbentStrength + "\nProjected Result: " + districtsArray[i].MedianOutcome +  "\nChance of D Win: " + districtsArray[i].ChanceOfDWin * 100;
+
     }
 
     setColorBasedOnChance()
@@ -718,7 +739,7 @@ function handleClickCallButtonD(){
     }
 
     districtsArray[i].ChanceOfDWin = 1000
-    districtsArray[i].InfoBoxString = districtsArray[i].District+ "\nIncumbent: " + districtsArray[i].Incumbent + "\n2022 Result: " + districtsArray[i].Election2020Results + "\nIncumbent Over/UnderPerformance: " + districtsArray[i].IncumbentStrength + "\nProjected Result: " + districtsArray[i].MedianOutcome +  "\nChance of D Win: " + districtsArray[i].ChanceOfDWin;
+    districtsArray[i].InfoBoxString = districtsArray[i].District+ "\nIncumbent: " + districtsArray[i].Incumbent + "\n2022 Result: " + districtsArray[i].Election2020Results + "\nIncumbent Over/UnderPerformance: " + districtsArray[i].IncumbentStrength + "\nProjected Result: " + districtsArray[i].MedianOutcome +  "\nChance of D Win: " + districtsArray[i].ChanceOfDWin * 100;
   
     setColorBasedOnChance();
     getPercentDWin();
@@ -741,7 +762,7 @@ function handleClickCallButtonR(){
   
     }
     districtsArray[i].ChanceOfDWin = -1000
-    districtsArray[i].InfoBoxString = districtsArray[i].District+ "\nIncumbent: " + districtsArray[i].Incumbent + "\n2022 Result: " + districtsArray[i].Election2020Results + "\nIncumbent Over/UnderPerformance: " + districtsArray[i].IncumbentStrength + "\nProjected Result: " + districtsArray[i].MedianOutcome +  "\nChance of D Win: " + districtsArray[i].ChanceOfDWin;
+    districtsArray[i].InfoBoxString = districtsArray[i].District+ "\nIncumbent: " + districtsArray[i].Incumbent + "\n2022 Result: " + districtsArray[i].Election2020Results + "\nIncumbent Over/UnderPerformance: " + districtsArray[i].IncumbentStrength + "\nProjected Result: " + districtsArray[i].MedianOutcome +  "\nChance of D Win: " + districtsArray[i].ChanceOfDWin * 100;
   
     setColorBasedOnChance()
     getPercentDWin();
