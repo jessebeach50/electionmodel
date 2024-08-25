@@ -9,7 +9,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
 </head>
 
-<body>
+<body class="stripe">
 
     <!-- When you hover over a state this appears-->
     <div class="StateInfo">
@@ -40,7 +40,12 @@
                 <div class="color-segment" style="width: 5%;">&nbsp;</div>
                 <div class="color-segment" style="width: 15%;">&nbsp;</div>
                 <div class="color-segment" style="width: 5%;">&nbsp;</div>
+                <div class="Barcountbox">
+                    <h2 class="DemBarcount">270</h2>
+                    <h2 class="RepBarcount">270</h2>
+                </div>
             </div>
+            <div class="resultcenterline"></div>
         </div>
 
         <div class="box center-left">
@@ -81,13 +86,13 @@
 
             <h2>Actual Results</h2>
             <hr>
-            <button id="2020 Actual Results">
+            <button id="2020 Actual Results" style="padding: 10px 20px; background-color: rgb(50, 50, 100);">
                 <h2>2020</h2>
             </button>
-            <button id="2016 Actual Results">
+            <button id="2016 Actual Results" style="padding: 10px 20px; background-color: rgb(100, 50, 50);">
                 <h2>2016</h2>
             </button>
-            <button id="2012 Actual Results">
+            <button id="2012 Actual Results" style="padding: 10px 20px; background-color: rgb(50, 50, 100);">
                 <h2>2012</h2>
             </button>
         </div>
@@ -107,10 +112,10 @@
                 <br>
 
                 <h3>Call State for:</h3>
-                <button class="statecall" id="callButtonD">
+                <button class="statecall" id="callButtonD" style="background-color: rgb(50, 50, 100);">
                     <h3>Democrats</h3>
                 </button>
-                <button class="statecall" id="callButtonR">
+                <button class="statecall" id="callButtonR" style="background-color: rgb(100, 50, 50);">
                     <h3>Republicans</h3>
                 </button>
 
