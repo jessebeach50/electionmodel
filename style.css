@@ -1,7 +1,7 @@
 /* Global Theme */
 
 :root {
-    --maincolor: rgb(75, 75, 75);
+    --maincolor: rgb(45, 38, 53);
     --seccolor: rgb(255, 255, 255);
     --shadecolor: rgba(0, 0, 0, 0.15);
 
@@ -34,7 +34,7 @@ body {
 .box {
     background-color: var(--shadecolor);
     border-radius: 20px;
-    box-shadow: 0 5px 5px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 5px 5px rgba(0, 0, 0, 0.35);
     padding: 15px 25px 15px 25px;
     overflow: auto;
     position: relative;
@@ -51,7 +51,11 @@ body {
 .top-right {
     grid-column: 2 / 3;
     grid-row: 1 / 2;
-    justify-content: column center;
+    padding: 0%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
 }
 
 .center-left {
@@ -110,40 +114,72 @@ a {
 /* big shifting results thing u can rename this. kinda placeholder. do what you want with it. idk if this is the way youre supposed to do a reactive slide display thing but youd have to change the 50%s*/
 
 .resultbar {
-    width: 100%;
-    height: 100%;
-    min-height: 40px;
-    height: 80%;
-    border-radius: 10px;
+    position: absolute;
+    min-width: 98%;
+    height: 40px;
+    border-radius: 15px;
     border: black 3px solid;
     display: flex;
-    
-    /*background: linear-gradient(to right,
-            rgb(24, 31, 121), rgb(24, 31, 121) 50%,
-            rgb(121, 24, 24), rgb(121, 24, 24) 50%);*/
+    justify-content: center;
+    transition: 2s;
+    overflow: hidden;
+    box-shadow: 0 5px 5px rgba(0, 0, 0, 0.35);
+}
+
+.resultcenterline {
+    position: absolute;
+    min-width: 0px;
+    min-height: 50px;
+    border-radius: 1px;
+    border: rgba(255, 255, 255, 0.5) 2px solid;
+    display: flex;
+    transition: 2s;
+    z-index: 5;
+}
+
+.color-segment:nth-child(1) { background-color: rgb(0, 12, 65); transition: 2s;} /* Example color */
+.color-segment:nth-child(2) { background-color: rgb(19, 25, 109); transition: 2s;}
+.color-segment:nth-child(3) { background-color: rgb(24, 31, 121); transition: 2s;}
+.color-segment:nth-child(4) { background-color: rgb(41, 48, 141); transition: 2s;}
+.color-segment:nth-child(5) { background-color: rgb(63, 71, 167); transition: 2s;}
+.color-segment:nth-child(6) { background-color: rgb(95, 102, 197); transition: 2s;}
+.color-segment:nth-child(7) { background-color: rgb(129, 135, 216); transition: 2s;}
+.color-segment:nth-child(8) { background-color: rgb(173, 178, 242); transition: 2s;}
+.color-segment:nth-child(9) { background-color: rgb(242, 173, 173); transition: 2s;}
+.color-segment:nth-child(10) { background-color: rgb(215, 128, 128); transition: 2s;}
+.color-segment:nth-child(11) { background-color: rgb(195, 93, 93); transition: 2s;} 
+.color-segment:nth-child(12) { background-color: rgb(163, 59, 59); transition: 2s;}
+.color-segment:nth-child(13) { background-color: rgb(137, 37, 37); transition: 2s;}
+.color-segment:nth-child(14) { background-color: rgb(121, 24, 24); transition: 2s;}
+.color-segment:nth-child(15) { background-color: rgb(105, 15, 15); transition: 2s;}
+.color-segment:nth-child(16) { background-color: rgb(65, 12, 0); transition: 2s;}
+
+.Barcountbox {
+    display: flex;
+    position: absolute;
+    justify-content: space-between;
+    width: 100%;
+    height: 100%;
+}
+
+.DemBarcount {
+    padding: 5px 30px;
+    text-align: left;
+    z-index: 5;
+    position: relative;
 
 }
 
-.color-segment:nth-child(1) { background-color: rgb(0, 9, 59); } /* Example color */
-.color-segment:nth-child(2) { background-color: rgb(19, 25, 109); }
-.color-segment:nth-child(3) { background-color: rgb(24, 31, 121); }
-.color-segment:nth-child(4) { background-color: rgb(41, 48, 141); }
-.color-segment:nth-child(5) { background-color: rgb(63, 71, 167); }
-.color-segment:nth-child(6) { background-color: rgb(95, 102, 197); }
-.color-segment:nth-child(7) { background-color: rgb(129, 135, 216); }
-.color-segment:nth-child(8) { background-color: rgb(173, 178, 242); }
-.color-segment:nth-child(9) { background-color: rgb(242, 173, 173); }
-.color-segment:nth-child(10) { background-color: rgb(215, 128, 128); }
-.color-segment:nth-child(11) { background-color: rgb(195, 93, 93); } 
-.color-segment:nth-child(12) { background-color: rgb(163, 59, 59); }
-.color-segment:nth-child(13) { background-color: rgb(137, 37, 37); }
-.color-segment:nth-child(14) { background-color: rgb(121, 24, 24); }
-.color-segment:nth-child(15) { background-color: rgb(105, 15, 15); }
-.color-segment:nth-child(16) { background-color: rgb(65, 12, 0); }
-
+.RepBarcount {
+    position: relative;
+    text-align: right;
+    z-index: 5;
+    padding: 5px 30px;
+    
+}
 
 /*Background Animated*/
-body {
+.stripe {
     background-image:
         repeating-linear-gradient(-45deg,
             transparent,
