@@ -84,7 +84,8 @@ body {
 h1,
 h2 {
     margin: 0;
-    color: var(--seccolor)
+    color: var(--seccolor);
+    transition: 2s;
 }
 
 hr {
@@ -108,6 +109,20 @@ li ul {
 a {
     color: var(--seccolor);
     text-decoration: none;
+}
+
+.title:hover {
+    scale: 1.1;
+    -webkit-text-fill-color: transparent;
+    -webkit-background-clip: text;
+    transition: 0.25s;
+}
+
+.title {
+    -webkit-text-fill-color: var(--seccolor);
+    transition: 0.25s;
+    background-clip: text;
+    background-image: repeating-linear-gradient(to left, rgb(47, 56, 184), rgb(132, 139, 202) 50%, rgb(194, 127, 127) 50%, rgb(112, 22, 22));
 }
 
 /* Results Bar */
