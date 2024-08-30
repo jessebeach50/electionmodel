@@ -882,6 +882,9 @@ function setBackgroundColor() {
 
 // Get the select element
 const dropdown = document.getElementById('stateDropDown');
+const numberInput = document.getElementById('numberInput');
+
+numberInput.addEventListener('change', changeInputTypeNumber);
 
 function populateDropDown(){
     // Array of options
@@ -907,9 +910,15 @@ function populateDropDown(){
 
 }
 
-
 function handleClickEnterButton(){
-    const numberInput = document.getElementById('numberInput');
+ 
+    if(inputType == "slider"){
+        numberInput.value = slider.value;
+    }
+    if(inputType == "number"){
+        slider.value = numberInput.value;
+    }
+
     var percent = numberInput.value || 'None';
     var selectedState = dropdown.value;
     // Get references to the input field and display area
@@ -936,7 +945,6 @@ function handleClickEnterButton(){
     setColorBasedOnChance()
     getPercentDWin();
 }
-
 
 function handleClickCallButtonD(){
     const numberInput = document.getElementById('numberInput');
@@ -1053,3 +1061,18 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
+
+const slider = document.getElementById('sliderInput');
+var inputType = "number"
+
+// Event listener to run a function when slider is released
+slider.addEventListener('change', handleClickEnterButton);
+slider.addEventListener('input', changeInputTypeSlider);
+
+function changeInputTypeSlider(){
+    inputType = "slider"
+}
+
+function changeInputTypeNumber(){
+    inputType = "number"
+}
