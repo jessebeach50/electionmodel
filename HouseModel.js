@@ -1,4 +1,4 @@
-var pollingAverage = 1.95;
+var pollingAverage = 1.29;
 var pollingErrorInMonth = 4;
 var pollingError = 4;
 var maxDemocraticResult = pollingAverage + pollingErrorInMonth + pollingError;
@@ -666,6 +666,9 @@ function setColorBasedOnResult(year) {
 
 // Get the select element
 const dropdown = document.getElementById('stateDropDown');
+const numberInput = document.getElementById('numberInput');
+
+numberInput.addEventListener('change', changeInputTypeNumber);
 
 function populateDropDown(){
     // Array of options
@@ -691,7 +694,13 @@ function populateDropDown(){
 
 
 function handleClickEnterButton(){
-    const numberInput = document.getElementById('numberInput');
+    if(inputType == "slider"){
+        numberInput.value = slider.value;
+    }
+    if(inputType == "number"){
+        slider.value = numberInput.value;
+    }
+
     var percent = numberInput.value || 'None';
     var selectedDistrict = dropdown.value;
     // Get references to the input field and display area
@@ -826,3 +835,52 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 });
+
+// Function to synchronize the slider and number input
+function sliderInput() {
+    const numberInput = document.getElementById('numberInput');
+
+    
+    numberInput.value = slider.value;
+    var percent = numberInput.value || 'None';
+    var selectedState = dropdown.value;
+    // Get references to the input field and display area
+
+    console.log("I am here" + percent + " " + selectedState);
+
+
+    for (var i = 0; i < statesArray.length; i++) {
+        if (statesArray[i].StateAbbreviation == selectedState) {
+            changeState = statesArray[i];
+            found = true;
+            console.log(statesArray[i]);
+            break;
+        }  
+    }
+
+    if(percent <= 100 && percent >= 0){
+        console.log(statesArray[i].ChanceOfDWin)
+        statesArray[i].ChanceOfDWin = percent / 100
+        statesArray[i].InfoBoxString = statesArray[i].State + "\nElection 2020 Results: " + statesArray[i].Election2020Results + "\nProjected2024Result: " + statesArray[i].MedianOutcome + "\nDemocrat Win %: " + (statesArray[i].ChanceOfDWin * 100) + "\n2024 Polling Average: " + statesArray[i].Polls;
+        console.log("====" + statesArray[i].ChanceOfDWin)
+    }
+
+    setColorBasedOnChance()
+    getPercentDWin();
+}
+
+
+const slider = document.getElementById('sliderInput');
+var inputType = "number"
+
+// Event listener to run a function when slider is released
+slider.addEventListener('change', handleClickEnterButton);
+slider.addEventListener('input', changeInputTypeSlider);
+
+function changeInputTypeSlider(){
+    inputType = "slider"
+}
+
+function changeInputTypeNumber(){
+    inputType = "number"
+}
