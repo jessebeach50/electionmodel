@@ -8,12 +8,10 @@
 /* General Layout */
 body {
     position: relative;
-    min-height: 100vh;
     margin: 0;
     padding: 0;
     display: flex;
     justify-content: center;
-    align-items: center;
     background-color: var(--maincolor);
     font-family: "Verdana", sans-serif;
     color: var(--seccolor);
@@ -23,16 +21,18 @@ body {
 .container {
     position: relative;
     width: 98vw;
-    height: 96vh;
+    height: 96%;
     display: grid;
     grid-template-columns: 400px 1fr;
-    grid-template-rows: auto auto 1fr;
+    grid-template-rows: auto auto auto 1fr;
     gap: 20px;
+    padding-top: 20px;
+    padding-bottom: 20px;
 }
 
 .box {
     position: relative;
-    padding: 15px 25px 15px 25px;
+    padding: 15px 25px;
     overflow: auto;
     background-color: var(--shadecolor);
     border-radius: 20px;
@@ -40,7 +40,7 @@ body {
 }
 
 /* Specific Layout Elements */
-.top-left {
+.titlebox {
     grid-column: 1 / 2;
     grid-row: 1 / 2;
     display: flex;
@@ -48,36 +48,44 @@ body {
     align-items: center;
 }
 
-.top-right {
+.resultbarbox {
     position: relative;
     grid-column: 2 / 3;
     grid-row: 1 / 2;
-    padding: 0%;
+    padding: 0;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-.center-left {
+.modelpickerbox {
     grid-column: 1 / 2;
     grid-row: 2 / 3;
 }
 
-.bottom-left {
+.optionsbox {
     grid-column: 1 / 2;
-    grid-row: 3 / 3;
+    grid-row: 3 / 5;
 }
 
-.bottom-right {
+.mapviewbox {
     grid-column: 2 / 3;
-    grid-row-start: 2;
-    grid-row-end: span 2;
-    padding-top: 0px;
+    grid-row: 2 / 4;
+    padding-top: 0;
     overflow: hidden;
     background-color: transparent;
     border: 3px dotted var(--seccolor);
     box-shadow: none;
+}
 
+.chartbox {
+    grid-column: 2 / 3;
+    grid-row: 4 / 5;
+    position: relative;
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 /* Typography */
@@ -91,10 +99,6 @@ h2 {
 hr {
     border: 0;
     border-top: 3px dotted var(--seccolor);
-}
-
-h3 {
-    line-height: 0%;
 }
 
 ul {
@@ -115,6 +119,7 @@ a {
     scale: 1.1;
     -webkit-text-fill-color: transparent;
     -webkit-background-clip: text;
+    background-clip: text;
     transition: 0.25s;
 }
 
@@ -134,7 +139,7 @@ a {
     justify-content: center;
     overflow: hidden;
     background-color: transparent;
-    border: black 3px solid;
+    border: white 2px outset;
     border-radius: 15px;
     box-shadow: 0 5px 5px rgba(0, 0, 0, 0.35);
     transition: 2s;
@@ -492,15 +497,15 @@ path {
         box-sizing: border-box;
     }
 
-    .top-left {
+    .titlebox {
         order: 1;
     }
 
-    .center-left {
+    .modelpickerbox {
         order: 2;
     }
 
-    .top-right {
+    .resultbarbox {
         order: 3;
         height: 70px;
     }
@@ -509,12 +514,16 @@ path {
         scale: 0.95;
     }
 
-    .bottom-right {
+    .mapviewbox {
         order: 4;
         overflow: scroll;
     }
 
-    .bottom-left {
+    .optionsbox {
+        order: 6;
+    }
+
+    .chartbox {
         order: 5;
     }
 
