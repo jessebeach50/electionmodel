@@ -13,9 +13,11 @@ body {
     display: flex;
     justify-content: center;
     background-color: var(--maincolor);
-    font-family: "Verdana", sans-serif;
+    font-family: "Josefin Sans", sans-serif;
     color: var(--seccolor);
     text-align: center;
+    backdrop-filter: saturate(150%);
+    filter: hue-rotate(0);
 }
 
 .container {
@@ -32,11 +34,12 @@ body {
 
 .box {
     position: relative;
-    padding: 15px 25px;
+    padding: 10px 15px 15px 15px;
     overflow: auto;
     background-color: var(--shadecolor);
-    border-radius: 20px;
-    box-shadow: 0 5px 5px rgba(0, 0, 0, 0.35);
+    border-radius: 10px;
+    box-shadow: 0 4px 5px inset rgba(0, 0, 0, 0.35);
+    backdrop-filter: blur(5px);
 }
 
 /* Specific Layout Elements */
@@ -46,6 +49,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    box-shadow: 0 4px 5px rgba(0, 0, 0, 0.45);
 }
 
 .resultbarbox {
@@ -89,11 +93,22 @@ body {
 }
 
 /* Typography */
-h1,
+h1 {
+    margin: 0;
+    color: var(--seccolor);
+    transition: 2s;
+}
+
 h2 {
     margin: 0;
     color: var(--seccolor);
     transition: 2s;
+    margin-top: 2px;
+}
+
+h3 {
+    margin: 0;
+    margin-top: 15px;
 }
 
 hr {
@@ -115,15 +130,37 @@ a {
     text-decoration: none;
 }
 
+label {
+    font-size: 15px;
+}
+
+h2.optiontext {
+    font-size: 35px;
+    font-weight: 500;
+    margin-top: 5px;
+    margin-bottom: -5px;
+}
+
+.buttontext {
+    font-weight: 400;
+    font-size: 25px;
+    padding-top: 4px;
+    margin: 0;
+}
+
 .title:hover {
     scale: 1.1;
     -webkit-text-fill-color: transparent;
     -webkit-background-clip: text;
     background-clip: text;
     transition: 0.25s;
+    filter: drop-shadow(0 4px 5px rgba(0, 0, 0, 0.5));
 }
 
 .title {
+    font-size: 45px;
+    margin: 0;
+    margin-bottom: -8px;
     -webkit-text-fill-color: var(--seccolor);
     transition: 0.25s;
     background-clip: text;
@@ -139,10 +176,10 @@ a {
     justify-content: center;
     overflow: hidden;
     background-color: transparent;
-    border: white 2px outset;
-    border-radius: 15px;
+    border: white 3px outset;
+    border-radius: 5px;
     box-shadow: 0 5px 5px rgba(0, 0, 0, 0.35);
-    transition: 2s;
+
 }
 
 .resultcenterline {
@@ -264,8 +301,8 @@ a {
         repeating-linear-gradient(-45deg,
             transparent,
             transparent 1rem,
-            #00000009 1rem,
-            #0000000a 2rem);
+            #00000015 1rem,
+            #00000010 2rem);
     background-size: 150% 150%;
     animation: barberpole 100s linear infinite;
 }
@@ -284,9 +321,9 @@ button {
     outline: 0;
     border: 0;
     background-color: var(--maincolor);
-    font-family: "Verdana", sans-serif;
+    font-family: "Josefin Sans", sans-serif;
     color: var(--seccolor);
-    border-radius: 10px;
+    border-radius: 5px;
     box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.15);
     cursor: pointer;
 }
@@ -294,7 +331,7 @@ button {
 button:hover {
     -webkit-text-fill-color: rgba(255, 255, 255, 0);
     text-shadow: 0 3px 0 var(--seccolor);
-    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.3) inset;
+    box-shadow: 0px 5px 7px rgba(0, 0, 0, 0.3) inset;
     cursor: pointer;
 }
 
@@ -302,7 +339,7 @@ button:active,
 button.pressed {
     -webkit-text-fill-color: rgba(255, 255, 255, 0);
     text-shadow: 0 3px 0 var(--seccolor);
-    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.6) inset;
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.5) inset;
     cursor: pointer;
 }
 
@@ -312,10 +349,10 @@ button.pressed {
     left: 0;
     z-index: 5;
     margin-left: 5px;
-    margin-top: 3px;
     padding: 0;
     text-align: center;
-    align-items: flex-start;
+    align-content: center;
+    justify-content: center;
     align-self: start;
 }
 
@@ -324,20 +361,24 @@ button.ZoomButton {
     height: 45px;
     margin: 5px;
     padding: 0px;
-    align-items: flex-start;
     background-color: var(--shadecolor);
     border-radius: 10px;
     box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.35);
 }
 
 button.ElectionType {
-    padding: 10px 11px;
+    padding: 5px 11px;
     margin: 5px 2px;
 }
 
 button.statecall {
-    margin-top: 0;
+    width: 45%;
     padding: 10px;
+}
+
+button.enter {
+    padding: 7.5px 15px;
+    transform: translateY(6px);
 }
 
 input {
@@ -346,28 +387,35 @@ input {
     outline: 0;
     border: 0;
     background-color: var(--maincolor);
-    font-family: "Verdana", sans-serif;
+    font-family: "Josefin Sans", sans-serif;
     font-size: 24px;
+    text-align: center;
     line-height: 0%;
     color: var(--seccolor);
-    border-radius: 10px;
+    border-radius: 5px;
     box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.15);
     cursor: pointer;
     transform: translateY(3px);
 }
 
 select {
-    padding: 10px;
+    padding: 10px 5px 5px 10px;
     margin: 5px;
     outline: 0;
     border: 0;
     background-color: var(--maincolor);
-    font-family: "Verdana", sans-serif;
-    font-size: 18px;
+    font-family: "Josefin Sans", sans-serif;
+    font-size: 25px;
+    font-weight: 600;
     color: var(--seccolor);
     border-radius: 10px;
     box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.15);
     cursor: pointer;
+}
+
+option {
+    font-family: inherit(select), "Josefin Sans", sans-serif;
+    font-size: 15px;
 }
 
 .slider {
@@ -428,14 +476,21 @@ path {
     stroke: black;
     stroke-width: 1.5;
     transition: 0.5s;
+
 }
 
 .pres-model path.hovered,
 .pres-model path:hover {
     stroke: white;
+    stroke-dasharray: 10px;
     stroke-width: 3px;
+    stroke-linecap: round;
+    stroke-linejoin: bevel;
     transform: translateY(-5px);
-    filter: drop-shadow(0px 5px 5px rgba(0, 0, 0, 0.5));
+    filter: drop-shadow(0px 4px 7px rgba(0, 0, 0));
+    animation: dash 100s linear;
+    animation-fill-mode: forwards;
+    transition: 0.5;
 }
 
 .house-model path {
@@ -452,9 +507,21 @@ path {
 .senate-model path.hovered,
 .senate-model path:hover {
     stroke: white;
+    stroke-dasharray: 10px;
     stroke-width: 3px;
-    filter: drop-shadow(0px 5px 5px rgba(0, 0, 0, 0.5));
+    stroke-linecap: round;
+    stroke-linejoin: bevel;
+    filter: drop-shadow(0px 2px 5px rgba(0, 0, 0, 0.75));
+    animation: dash 100s linear;
+    animation-fill-mode: forwards;
+    transition: 0.5;
 }
+
+@keyframes dash {
+    to {
+      stroke-dashoffset: 1000;
+    }
+  }
 
 /* Details Box */
 #details-box {
@@ -463,7 +530,7 @@ path {
     padding: 1rem;
     width: fit-content;
     background-color: rgba(0, 0, 0, 0.5);
-    font-family: Verdana, sans-serif;
+    font-family: Josefin Sans, sans-serif;
     font-size: 24px;
     color: white;
     text-align: left;

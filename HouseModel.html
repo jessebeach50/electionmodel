@@ -6,10 +6,13 @@
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
    <title>ElectionMap</title>
    <link rel="stylesheet" href="style.css">
+   <link rel="preconnect" href="https://fonts.googleapis.com">
+   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+   <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap" rel="stylesheet">
    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
 </head>
 
-<body>
+<body class="stripe">
 
    <!-- When you hover over a state this appears-->
    <div class="StateInfo">
@@ -51,56 +54,54 @@
       </div>
 
       <div class="box modelpickerbox">
-         <h2>Election</h2>
+         <h2 class="optiontext">Election</h2>
          <hr>
 
          <a href="index.html">
             <button class="ElectionType">
-               <h2>President</h2>
+               <p class="buttontext">President</p>
             </button>
          </a>
 
          <a href="SenateModel.html">
             <button class="ElectionType">
-               <h2>Senate</h2>
+               <p class="buttontext">Senate</p>
             </button>
          </a>
          <a href="HouseModel.html">
             <button class="ElectionType pressed">
-               <h2>House</h2>
+               <p class="buttontext">House</p>
             </button>
          </a>
 
-         <h2>Model</h2>
+         <h2 class="optiontext">Model</h2>
          <hr>
-         <button id="2024 Model">
-            <h2>2024</h2>
+         <button class="ElectionType" id="2024 Model">
+            <p class="buttontext">2024</p>
          </button>
 
-         <h2>Actual Results</h2>
+         <h2 class="optiontext">Actual Results</h2>
          <hr>
-         <button id="Incumbents">
-            <h2>Incumbents</h2>
+         <button class="ElectionType" id="Incumbents">
+            <p class="buttontext">Incumbents</p>
          </button>
-         <button id="2022 Actual Results">
-            <h2>House 2022</h2>
+         <button class="ElectionType" id="2022 Actual Results">
+            <p class="buttontext">House 2022</p>
          </button>
-         <button id="2020 President Actual Results">
-            <h2>President 2020</h2>
+         <button class="ElectionType" id="2020 President Actual Results">
+            <p class="buttontext">Pres. 2020</p>
          </button>
-         <button id="2016 President Actual Results">
-            <h2>President 2016</h2>
+         <button class="ElectionType" id="2016 President Actual Results">
+            <p class="buttontext">Pres. 2016</p>
          </button>
-         <button id="2012 President Actual Results">
-            <h2>President 2012</h2>
+         <button class="ElectionType" id="2012 President Actual Results">
+            <p class="buttontext">Pres. 2012</p>
          </button>
       </div>
 
       <div class="box optionsbox">
-         <h2>Options</h2>
+         <h2 class="optiontext">Options</h2>
          <hr>
-         <!-- gonna set up grid stuff here -->
-         <!--Change the Percentage in each state or call a state-->
          <div class="box">
             <div class="tooltip">
                <select id="stateDropDown">
@@ -110,12 +111,12 @@
             </div>
             <br>
 
-            <h3>Call District for:</h3>
+            <h2>Call District for:</h2>
             <button class="statecall" id="callButtonR" style="background-color: rgb(100, 50, 50);">
-               <h3>Republicans</h3>
+               <p class="buttontext">Republicans</p>
             </button>
             <button class="statecall" id="callButtonD" style="background-color: rgb(50, 50, 100);">
-               <h3>Democrats</h3>
+               <p class="buttontext">Democrats</p>
             </button>
 
             <hr>
@@ -126,7 +127,7 @@
             <input type="number" id="numberInput" name="numberInput" min="0" max="1100" step="1">
 
             <button class="enter" id="enterButton">
-               <h3>Enter</h3>
+               <p class="buttontext">Enter</p>
             </button>
             <br>
             <input type="range" min="1" max="100" value="50" class="slider" id="sliderInput" name="numberInput">
@@ -136,15 +137,15 @@
 
          <!--Percent Democrats win-->
          <label for="chanceOfDWinState">
-            <h3>Chance of Democratic Win:</h3>
+            <h2>Chance of Democratic Win:</h2>
          </label>
-         <span id="chanceOfDWinState">0</span>
+         <span class="buttontext" id="chanceOfDWinState">0</span>
 
          <!--Projected Seats-->
          <label for="projectedSeatsD">
-            <h3>Projected Democrat Seats:</h3>
+            <h2>Projected Democrat Seats:</h2>
          </label>
-         <span id="projectedSeatsD">0</span>
+         <span class="buttontext" id="projectedSeatsD">0</span>
       </div>
 
       <div class="box mapviewbox">
@@ -155,7 +156,7 @@
             <button class="ZoomButton" id="Zoomout">
                <h1>-</h1>
             </button>
-            <button class="ZoomButton" id="Resetview">
+            <button class="ZoomButton" id="Resetview" style="transform: translateY(5px);">
                <h1>↪</h1>
             </button>
          </div>
