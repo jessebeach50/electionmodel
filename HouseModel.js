@@ -17,15 +17,15 @@ Papa.parse(csvUrl, {
     header: true, // Set to false if the CSV doesn't have headers
     dynamicTyping: true, // Convert types automatically
     skipEmptyLines: true, // Skip empty lines
-    complete: function(results) {
+    complete: function (results) {
         console.log("Success");
         process2024Districts(results.data, "2024");
         setColorBasedOnChance();
         populateDropDown();
         getPercentDWin();
-        
+
     },
-    error: function(error) {
+    error: function (error) {
         console.error("Error parsing CSV:", error);
     }
 });
@@ -37,10 +37,10 @@ var tooltipSpan = document.getElementById('details-box');
 
 document.addEventListener('mouseover', function (e) {
     if (e.target.tagName == 'path') {
-        var districtName = e.target.dataset.id;      
+        var districtName = e.target.dataset.id;
         var hoveredDistrict = null;
-        var found = false;       
-        for(var i = 0; i < districtsArray.length; i++) {
+        var found = false;
+        for (var i = 0; i < districtsArray.length; i++) {
             if (districtsArray[i].District == districtName) {
                 hoveredDistrict = districtsArray[i];
                 found = true;
@@ -49,9 +49,9 @@ document.addEventListener('mouseover', function (e) {
             }
         }
         document.getElementById("details-box").innerHTML = hoveredDistrict.InfoBoxString;
-        document.getElementById("details-box").style.opacity = "100%"; 
-            
-    }else {
+        document.getElementById("details-box").style.opacity = "100%";
+
+    } else {
         document.getElementById("details-box").style.opacity = "0%";
     }
 });
@@ -115,29 +115,29 @@ function handleClickIncumbent() {
     });
 }
 
-function handleClick2020p(){
+function handleClick2020p() {
     setColorBasedOnResult("2020");
 }
 
-function handleClick2022(){
+function handleClick2022() {
     setColorBasedOnResult("2022");
 }
 
-function handleClick2016p(){
-    setColorBasedOnResult("2016");    
+function handleClick2016p() {
+    setColorBasedOnResult("2016");
 }
 
-function handleClick2012p(){
+function handleClick2012p() {
     setColorBasedOnResult("2012");
 }
 
-function handleClick2024(){
+function handleClick2024() {
     process2024Districts;
     setColorBasedOnChance("2024");
 }
 
 //Run the model on the csv imported for 2024
-function process2024Districts(districts, year){
+function process2024Districts(districts, year) {
 
     //cycle through every district and parse the data as needed--------------------------------------------
     districts.forEach(d => {
@@ -146,21 +146,21 @@ function process2024Districts(districts, year){
         districtName = d.District;
         var incumbent = d.Inc2024;
 
-        if(d.Redistricted != "Y"){
+        if (d.Redistricted != "Y") {
             var e2022Result = d.e2022Results;
-        }else{
+        } else {
             var e2022Result = "N/A";
         }
 
         incumbentParty = d.Party2024;
 
         var incumbentBonus = 0;
-        if(incumbentParty == ""){
+        if (incumbentParty == "") {
             incumbentParty = "OPEN";
             incumbentBonus = 0;
-        }else if(incumbentParty == "D"){
+        } else if (incumbentParty == "D") {
             incumbentBonus = 3;
-        }else{
+        } else {
             incumbentBonus = -3;
         }
 
@@ -181,9 +181,9 @@ function process2024Districts(districts, year){
         var IncumbentOverperformance = 0;
 
 
-        if(d.Candidate2022 != null && d.e2022Results != null){
-            
-            if(districtName == "MI8"){
+        if (d.Candidate2022 != null && d.e2022Results != null) {
+
+            if (districtName == "MI8") {
                 console.log(d.Candidate2022);
                 console.log(d.e2022Results);
                 console.log(e2022Neutral);
@@ -194,16 +194,16 @@ function process2024Districts(districts, year){
 
         //Model Time ---------------------------------------------------------------------------------
         var outcomesArray = [];
-       
-        
+
+
         //Just Fundamentals of District 1
         var maxD = projected2024Env + 6
         var maxR = projected2024Env - 6;
 
-        while (maxR < (maxD + .1)){
+        while (maxR < (maxD + .1)) {
             var maxNatD = maxDemocraticResult;
             var maxNatR = maxRepublicanResult;
-            while (maxNatR < (maxNatD + .1)){
+            while (maxNatR < (maxNatD + .1)) {
                 var outcome = maxR + maxNatR;
                 outcomesArray.push(outcome);
                 maxNatR = maxNatR + .5;
@@ -211,29 +211,29 @@ function process2024Districts(districts, year){
             maxR = maxR + .5;
         }
 
-         //Just Fundamentals of District 2
-         var maxD = projected2024Env2 + 6
-         var maxR = projected2024Env2 - 6;
- 
-         while (maxR < (maxD + .1)){
-             var maxNatD = maxDemocraticResult;
-             var maxNatR = maxRepublicanResult;
-             while (maxNatR < (maxNatD + .1)){
+        //Just Fundamentals of District 2
+        var maxD = projected2024Env2 + 6
+        var maxR = projected2024Env2 - 6;
+
+        while (maxR < (maxD + .1)) {
+            var maxNatD = maxDemocraticResult;
+            var maxNatR = maxRepublicanResult;
+            while (maxNatR < (maxNatD + .1)) {
                 var outcome = maxR + maxNatR;
-                 outcomesArray.push(outcome);
-                 maxNatR = maxNatR + .5;
-             }
-             maxR = maxR + .5;
-         }
-         
+                outcomesArray.push(outcome);
+                maxNatR = maxNatR + .5;
+            }
+            maxR = maxR + .5;
+        }
+
         //Just Fundamentals of District 2020 Numbers
         var maxD = p2020Neutral + 6
         var maxR = p2020Neutral - 6;
 
-        while (maxR < (maxD + .1)){
+        while (maxR < (maxD + .1)) {
             var maxNatD = maxDemocraticResult;
             var maxNatR = maxRepublicanResult;
-            while (maxNatR < (maxNatD + .1)){
+            while (maxNatR < (maxNatD + .1)) {
                 var outcome = maxR + maxNatR;
                 outcomesArray.push(outcome);
                 outcomesArray.push(outcome);
@@ -246,108 +246,108 @@ function process2024Districts(districts, year){
         var maxD = projected2024Env + 6 + IncumbentOverperformance
         var maxR = projected2024Env - 6 + IncumbentOverperformance;
 
-        while (maxR < (maxD + .1)){
+        while (maxR < (maxD + .1)) {
             var maxNatD = maxDemocraticResult;
             var maxNatR = maxRepublicanResult;
-            while (maxNatR < (maxNatD + .1)){
+            while (maxNatR < (maxNatD + .1)) {
                 var outcome = maxR + maxNatR;
                 outcomesArray.push(outcome);
                 maxNatR = maxNatR + .5;
             }
             maxR = maxR + .5;
         }
-        
-         //Just Fundamentals of District 2 + Inc Over
-         var maxD = projected2024Env2 + 6 + IncumbentOverperformance
-         var maxR = projected2024Env2 - 6 + IncumbentOverperformance;
- 
-         while (maxR < (maxD + .1)){
-             var maxNatD = maxDemocraticResult;
-             var maxNatR = maxRepublicanResult;
-             while (maxNatR < (maxNatD + .1)){
+
+        //Just Fundamentals of District 2 + Inc Over
+        var maxD = projected2024Env2 + 6 + IncumbentOverperformance
+        var maxR = projected2024Env2 - 6 + IncumbentOverperformance;
+
+        while (maxR < (maxD + .1)) {
+            var maxNatD = maxDemocraticResult;
+            var maxNatR = maxRepublicanResult;
+            while (maxNatR < (maxNatD + .1)) {
                 var outcome = maxR + maxNatR;
-                 outcomesArray.push(outcome);
-                 maxNatR = maxNatR + .5;
-             }
-             maxR = maxR + .5;
-         }
-        
-         //Just Fundamentals of District 2 + Inc Over
-         var maxD = p2020Neutral + 6 + IncumbentOverperformance
-         var maxR = p2020Neutral - 6 + IncumbentOverperformance;
- 
-         while (maxR < (maxD + .1)){
-             var maxNatD = maxDemocraticResult;
-             var maxNatR = maxRepublicanResult;
-             while (maxNatR < (maxNatD + .1)){
+                outcomesArray.push(outcome);
+                maxNatR = maxNatR + .5;
+            }
+            maxR = maxR + .5;
+        }
+
+        //Just Fundamentals of District 2 + Inc Over
+        var maxD = p2020Neutral + 6 + IncumbentOverperformance
+        var maxR = p2020Neutral - 6 + IncumbentOverperformance;
+
+        while (maxR < (maxD + .1)) {
+            var maxNatD = maxDemocraticResult;
+            var maxNatR = maxRepublicanResult;
+            while (maxNatR < (maxNatD + .1)) {
                 var outcome = maxR + maxNatR;
-                 outcomesArray.push(outcome);
-                 outcomesArray.push(outcome);
-                 maxNatR = maxNatR + .5;
-             }
-             maxR = maxR + .5;
-         }
-        
+                outcomesArray.push(outcome);
+                outcomesArray.push(outcome);
+                maxNatR = maxNatR + .5;
+            }
+            maxR = maxR + .5;
+        }
+
         //Just Fundamentals of District 1 + Inc Over
         var maxD = projected2024Env + 6 + incumbentBonus
         var maxR = projected2024Env - 6 + incumbentBonus;
 
-        while (maxR < (maxD + .1)){
+        while (maxR < (maxD + .1)) {
             var maxNatD = maxDemocraticResult;
             var maxNatR = maxRepublicanResult;
-            while (maxNatR < (maxNatD + .1)){
+            while (maxNatR < (maxNatD + .1)) {
                 var outcome = maxR + maxNatR;
                 outcomesArray.push(outcome);
                 maxNatR = maxNatR + .5;
             }
             maxR = maxR + .5;
         }
-        
-         //Just Fundamentals of District 2 + Inc Over
-         var maxD = projected2024Env2 + 6 + incumbentBonus
-         var maxR = projected2024Env2 - 6 + incumbentBonus;
- 
-         while (maxR < (maxD + .1)){
-             var maxNatD = maxDemocraticResult;
-             var maxNatR = maxRepublicanResult;
-             while (maxNatR < (maxNatD + .1)){
-                var outcome = maxR + maxNatR;
-                 outcomesArray.push(outcome);
-                 maxNatR = maxNatR + .5;
-             }
-             maxR = maxR + .5;
-         }
-        
-         //Just Fundamentals of District 2 + Inc Bonus
-         var maxD = p2020Neutral + 6 + incumbentBonus
-         var maxR = p2020Neutral - 6 + incumbentBonus;
- 
-         while (maxR < (maxD + .1)){
-             var maxNatD = maxDemocraticResult;
-             var maxNatR = maxRepublicanResult;
-             while (maxNatR < (maxNatD + .1)){
-                var outcome = maxR + maxNatR;
-                 outcomesArray.push(outcome);
-                 outcomesArray.push(outcome);
-                 maxNatR = maxNatR + .5;
-             }
-             maxR = maxR + .5;
-         }
 
-         if(d.e2022Results != null){
-            
+        //Just Fundamentals of District 2 + Inc Over
+        var maxD = projected2024Env2 + 6 + incumbentBonus
+        var maxR = projected2024Env2 - 6 + incumbentBonus;
+
+        while (maxR < (maxD + .1)) {
+            var maxNatD = maxDemocraticResult;
+            var maxNatR = maxRepublicanResult;
+            while (maxNatR < (maxNatD + .1)) {
+                var outcome = maxR + maxNatR;
+                outcomesArray.push(outcome);
+                maxNatR = maxNatR + .5;
+            }
+            maxR = maxR + .5;
+        }
+
+        //Just Fundamentals of District 2 + Inc Bonus
+        var maxD = p2020Neutral + 6 + incumbentBonus
+        var maxR = p2020Neutral - 6 + incumbentBonus;
+
+        while (maxR < (maxD + .1)) {
+            var maxNatD = maxDemocraticResult;
+            var maxNatR = maxRepublicanResult;
+            while (maxNatR < (maxNatD + .1)) {
+                var outcome = maxR + maxNatR;
+                outcomesArray.push(outcome);
+                outcomesArray.push(outcome);
+                maxNatR = maxNatR + .5;
+            }
+            maxR = maxR + .5;
+        }
+
+        if (d.e2022Results != null) {
+
             //2022 Results 
             var maxD = d.e2022Results + 4;
             var maxR = d.e2022Results - 4;
-            
-            if(districtName == "AK-AL"){
+
+            if (districtName == "AK-AL") {
                 console.log("hi" + maxR + " " + d.e2022Results)
             }
 
-            while (maxR < (maxD + .1)){
+            while (maxR < (maxD + .1)) {
                 var maxNatD = maxDemocraticResult;
                 var maxNatR = maxRepublicanResult;
-                while (maxNatR < (maxNatD + .1)){
+                while (maxNatR < (maxNatD + .1)) {
                     var outcome = maxR + maxNatR;
 
                     outcomesArray.push(outcome);
@@ -355,14 +355,14 @@ function process2024Districts(districts, year){
                     outcomesArray.push(outcome);
                     outcomesArray.push(outcome);
                     outcomesArray.push(outcome);
-                    outcomesArray.push(outcome);             
+                    outcomesArray.push(outcome);
                     maxNatR = maxNatR + .5;
                 }
                 maxR = maxR + .5;
 
             }
         }
-        
+
 
         //sort array and count number of times Dem wins to get a percentage and median outcome
         var numDWins = 0;
@@ -391,16 +391,16 @@ function process2024Districts(districts, year){
         var percentDWin = numDWins / outcomesArray.length;
         var medianN = ~~(outcomesArray.length / 2);
         var median = outcomesArray[medianN];
-        infoBoxString = districtName + "\nIncumbent: " + incumbent + "\n2022 Result: " + e2022Result + "\nIncumbent Over/UnderPerformance: " + IncumbentOverperformance + "\nProjected Result: " + median +  "\nChance of D Win: " + percentDWin * 100;
+        infoBoxString = districtName + "\nIncumbent: " + incumbent + "\n2022 Result: " + e2022Result + "\nIncumbent Over/UnderPerformance: " + IncumbentOverperformance + "\nProjected Result: " + median + "\nChance of D Win: " + percentDWin * 100;
 
-   //This is the state data obbject that is put into the array-------------------------------------------------------
-        let districtData ={
+        //This is the state data obbject that is put into the array-------------------------------------------------------
+        let districtData = {
             District: districtName,
             Incumbent: incumbent,
             IncumbentStrength: IncumbentOverperformance,
             IncumbentParty: incumbentParty,
             InfoBoxString: infoBoxString,
-        
+
 
             Election2022Result: e2022Result,
             President2020Result: p2020Result,
@@ -412,7 +412,7 @@ function process2024Districts(districts, year){
             President2012Neutral: p2012Neutral,
 
             ChanceOfDWin: percentDWin
-        
+
 
         };
 
@@ -421,21 +421,21 @@ function process2024Districts(districts, year){
 }
 
 //Set color of each district based on incumbent party if incumbent is running
-function setColorBasedOnParty(){
-    for(var i = 0; i < districtsArray.length; i++) {
+function setColorBasedOnParty() {
+    for (var i = 0; i < districtsArray.length; i++) {
         var party = districtsArray[i].IncumbentParty;
         var districtID = districtsArray[i].District;
 
         svgDistrict = document.getElementById(districtID);
-        
-        if (party == "R"){
-            try{svgDistrict.style.fill='rgb(121, 24, 24)';}catch{}
+
+        if (party == "R") {
+            try { svgDistrict.style.fill = 'rgb(121, 24, 24)'; } catch { }
         }
-        else if (party == "D"){
-            try{svgDistrict.style.fill='rgb(24, 31, 121)';}catch{}
+        else if (party == "D") {
+            try { svgDistrict.style.fill = 'rgb(24, 31, 121)'; } catch { }
         }
         else {
-            try{svgDistrict.style.fill='rgba(255, 255, 255, 0.05)';}catch{}
+            try { svgDistrict.style.fill = 'rgba(255, 255, 255, 0.05)'; } catch { }
         }
     }
 }
@@ -481,21 +481,21 @@ function setColorBasedOnChance() {
     var RSeats = 0
 
     for (var i = 0; i < districtsArray.length; i++) {
-        
+
         var districtPercent = districtsArray[i].ChanceOfDWin;
         var districtAbbr = districtsArray[i].District;
         svgDistrict = document.getElementById(districtAbbr);
 
-        if(districtPercent > '.50'){
+        if (districtPercent > '.50') {
             DSeats++
-        }else{
+        } else {
             RSeats++
         }
 
 
         if (districtPercent == 1000) {
 
-            try { svgDistrict.style.fill = 'rgb(0, 12, 65)'; } catch {  }
+            try { svgDistrict.style.fill = 'rgb(0, 12, 65)'; } catch { }
             width1 = width1 + percent;
         }
         else if (districtPercent == -1000) {
@@ -579,7 +579,7 @@ function setColorBasedOnChance() {
 
     var element = document.querySelector('.RepBarcount');
     element.textContent = RSeats
-    console.log(RSeats + "=====" + DSeats )
+    console.log(RSeats + "=====" + DSeats)
 
     var element2 = document.querySelector('.DemBarcount');
     element2.textContent = DSeats
@@ -590,17 +590,17 @@ function setColorBasedOnChance() {
 //Set the colors based on past result
 function setColorBasedOnResult(year) {
     for (var i = 0; i < districtsArray.length; i++) {
-        if(year == "2020"){
+        if (year == "2020") {
             var districtPercent = districtsArray[i].President2020Result;
         }
-        if(year == "2016"){
+        if (year == "2016") {
             var districtPercent = districtsArray[i].President2016Result;
         }
-        if(year == "2012"){
+        if (year == "2012") {
             var districtPercent = districtsArray[i].President2012Result;
         }
 
-        if(year == "2022"){
+        if (year == "2022") {
             var districtPercent = districtsArray[i].Election2022Result;
         }
 
@@ -608,13 +608,13 @@ function setColorBasedOnResult(year) {
         svgDistrict = document.getElementById(districtAbbr);
 
 
-        if(districtAbbr == "MT2"){
+        if (districtAbbr == "MT2") {
             console.log(districtPercent)
         }
 
         if (districtPercent > 25) {
             try { svgDistrict.style.fill = 'rgb(19, 25, 109)'; } catch { }
-        }else if (districtPercent == null){
+        } else if (districtPercent == null) {
             try { svgDistrict.style.fill = 'rgba(0, 0, 0, 0.15)'; } catch { }
         }
         else if (districtPercent > 20) {
@@ -653,9 +653,9 @@ function setColorBasedOnResult(year) {
         else if (districtPercent > -25) {
             try { svgDistrict.style.fill = 'rgb(121, 24, 24)'; } catch { }
         }
-        else if(districtPercent > -100) {
+        else if (districtPercent > -100) {
             try { svgDistrict.style.fill = 'rgb(105, 15, 15)'; } catch { }
-        }else{
+        } else {
             try { svgDistrict.style.fill = 'rgba(0, 0, 0, 0.15)'; } catch { }
         }
     }
@@ -670,7 +670,7 @@ const numberInput = document.getElementById('numberInput');
 
 numberInput.addEventListener('change', changeInputTypeNumber);
 
-function populateDropDown(){
+function populateDropDown() {
     // Array of options
     const optionsArray = [];
     districtsArray.forEach(element => {
@@ -693,11 +693,11 @@ function populateDropDown(){
 }
 
 
-function handleClickEnterButton(){
-    if(inputType == "slider"){
+function handleClickEnterButton() {
+    if (inputType == "slider") {
         numberInput.value = slider.value;
     }
-    if(inputType == "number"){
+    if (inputType == "number") {
         slider.value = numberInput.value;
     }
 
@@ -714,13 +714,13 @@ function handleClickEnterButton(){
             found = true;
             console.log(districtsArray[i]);
             break;
-        }  
+        }
     }
 
-    if(percent <= 100 && percent >= 0){
-   
+    if (percent <= 100 && percent >= 0) {
+
         districtsArray[i].ChanceOfDWin = percent / 100
-        districtsArray[i].InfoBoxString = districtsArray[i].District+ "\nIncumbent: " + districtsArray[i].Incumbent + "\n2022 Result: " + districtsArray[i].Election2020Results + "\nIncumbent Over/UnderPerformance: " + districtsArray[i].IncumbentStrength + "\nProjected Result: " + districtsArray[i].MedianOutcome +  "\nChance of D Win: " + districtsArray[i].ChanceOfDWin * 100;
+        districtsArray[i].InfoBoxString = districtsArray[i].District + "\nIncumbent: " + districtsArray[i].Incumbent + "\n2022 Result: " + districtsArray[i].Election2020Results + "\nIncumbent Over/UnderPerformance: " + districtsArray[i].IncumbentStrength + "\nProjected Result: " + districtsArray[i].MedianOutcome + "\nChance of D Win: " + districtsArray[i].ChanceOfDWin * 100;
 
     }
 
@@ -729,7 +729,7 @@ function handleClickEnterButton(){
 }
 
 
-function handleClickCallButtonD(){
+function handleClickCallButtonD() {
     const numberInput = document.getElementById('numberInput');
     var percent = numberInput.value || 'None';
     var selectedDistrict = dropdown.value;
@@ -744,16 +744,16 @@ function handleClickCallButtonD(){
             found = true;
             break;
         }
-  
+
     }
 
     districtsArray[i].ChanceOfDWin = 1000
-    districtsArray[i].InfoBoxString = districtsArray[i].District+ "\nIncumbent: " + districtsArray[i].Incumbent + "\n2022 Result: " + districtsArray[i].Election2020Results + "\nIncumbent Over/UnderPerformance: " + districtsArray[i].IncumbentStrength + "\nProjected Result: " + districtsArray[i].MedianOutcome +  "\nChance of D Win: " + districtsArray[i].ChanceOfDWin * 100;
-  
+    districtsArray[i].InfoBoxString = districtsArray[i].District + "\nIncumbent: " + districtsArray[i].Incumbent + "\n2022 Result: " + districtsArray[i].Election2020Results + "\nIncumbent Over/UnderPerformance: " + districtsArray[i].IncumbentStrength + "\nProjected Result: " + districtsArray[i].MedianOutcome + "\nChance of D Win: " + districtsArray[i].ChanceOfDWin * 100;
+
     setColorBasedOnChance();
     getPercentDWin();
 }
-function handleClickCallButtonR(){
+function handleClickCallButtonR() {
     const numberInput = document.getElementById('numberInput');
     var percent = numberInput.value || 'None';
     var selectedDistrict = dropdown.value;
@@ -768,34 +768,34 @@ function handleClickCallButtonR(){
             found = true;
             break;
         }
-  
+
     }
     districtsArray[i].ChanceOfDWin = -1000
-    districtsArray[i].InfoBoxString = districtsArray[i].District+ "\nIncumbent: " + districtsArray[i].Incumbent + "\n2022 Result: " + districtsArray[i].Election2020Results + "\nIncumbent Over/UnderPerformance: " + districtsArray[i].IncumbentStrength + "\nProjected Result: " + districtsArray[i].MedianOutcome +  "\nChance of D Win: " + districtsArray[i].ChanceOfDWin * 100;
-  
+    districtsArray[i].InfoBoxString = districtsArray[i].District + "\nIncumbent: " + districtsArray[i].Incumbent + "\n2022 Result: " + districtsArray[i].Election2020Results + "\nIncumbent Over/UnderPerformance: " + districtsArray[i].IncumbentStrength + "\nProjected Result: " + districtsArray[i].MedianOutcome + "\nChance of D Win: " + districtsArray[i].ChanceOfDWin * 100;
+
     setColorBasedOnChance()
     getPercentDWin();
 }
 
-function getPercentDWin(){
+function getPercentDWin() {
     var DSeats = 0;
     var DWins = 0;
     var count = 0;
-    
+
     var DemVotesArray = [];
 
-    while (count < 1000){
+    while (count < 1000) {
         DSeats = 0;
         for (var i = 0; i < districtsArray.length; i++) {
-            currentDistrict = districtsArray[i];  
+            currentDistrict = districtsArray[i];
 
             var roll = Math.floor(Math.random() * (100 - 0 + 1)) + 0;
-            
-            if(roll < (currentDistrict.ChanceOfDWin * 100)){
+
+            if (roll < (currentDistrict.ChanceOfDWin * 100)) {
                 DSeats = DSeats + 1;
             }
         }
-        if(DSeats >= 218){
+        if (DSeats >= 218) {
             DWins++;
         }
         DemVotesArray.push(DSeats);
@@ -804,13 +804,13 @@ function getPercentDWin(){
 
     count = 0;
     sum = 0;
-    while (count < DemVotesArray.length){
+    while (count < DemVotesArray.length) {
         sum = sum + DemVotesArray[count];
         count++;
     }
     var average = sum / DemVotesArray.length
 
-    console.log ("Democrats win " + DWins + "/1000 Times \nAverage of " + average + "Seats")
+    console.log("Democrats win " + DWins + "/1000 Times \nAverage of " + average + "Seats")
 
     let numberElement = document.getElementById('chanceOfDWinState')
     numberElement.innerText = (DWins / 1000) * 100;
@@ -822,13 +822,13 @@ function getPercentDWin(){
 
 //Set Drop Down Menu to clicked state
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     // Get all paths in the SVG
     const paths = document.querySelectorAll('svg path');
     const stateDropDown = document.getElementById('stateDropDown');
 
     paths.forEach(path => {
-        path.addEventListener('click', function() {
+        path.addEventListener('click', function () {
             // Set the dropdown value to the clicked path's ID
             console.log(this.id)
             stateDropDown.value = this.id;
@@ -840,7 +840,7 @@ document.addEventListener('DOMContentLoaded', function() {
 function sliderInput() {
     const numberInput = document.getElementById('numberInput');
 
-    
+
     numberInput.value = slider.value;
     var percent = numberInput.value || 'None';
     var selectedState = dropdown.value;
@@ -855,10 +855,10 @@ function sliderInput() {
             found = true;
             console.log(statesArray[i]);
             break;
-        }  
+        }
     }
 
-    if(percent <= 100 && percent >= 0){
+    if (percent <= 100 && percent >= 0) {
         console.log(statesArray[i].ChanceOfDWin)
         statesArray[i].ChanceOfDWin = percent / 100
         statesArray[i].InfoBoxString = statesArray[i].State + "\nElection 2020 Results: " + statesArray[i].Election2020Results + "\nProjected2024Result: " + statesArray[i].MedianOutcome + "\nDemocrat Win %: " + (statesArray[i].ChanceOfDWin * 100) + "\n2024 Polling Average: " + statesArray[i].Polls;
@@ -877,10 +877,10 @@ var inputType = "number"
 slider.addEventListener('change', handleClickEnterButton);
 slider.addEventListener('input', changeInputTypeSlider);
 
-function changeInputTypeSlider(){
+function changeInputTypeSlider() {
     inputType = "slider"
 }
 
-function changeInputTypeNumber(){
+function changeInputTypeNumber() {
     inputType = "number"
 }

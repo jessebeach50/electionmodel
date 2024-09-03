@@ -148,7 +148,7 @@ function handleClick2022() {
             console.error("Error parsing CSV:", error);
         }
     });
-    
+    setBackgroundColor()
 }
 
 function handleClick2020() {
@@ -183,7 +183,7 @@ function handleClick2020() {
             console.error("Error parsing CSV:", error);
         }
     });
-    
+    setBackgroundColor()
 }
 
 function handleClick2024() {
@@ -218,7 +218,7 @@ function handleClick2024() {
             console.error("Error parsing CSV:", error);
         }
     });
-    
+    setBackgroundColor()
 }
 
 function handleClick2018() {
@@ -253,11 +253,11 @@ function handleClick2018() {
             console.error("Error parsing CSV:", error);
         }
     });
-    
+    setBackgroundColor()
 }
 
 function handleClick2018r() {
-
+    document.documentElement.style.cssText = "--maincolor: rgb(125, 51, 49)";
     statesArray.length = 0;
     senateArray.length = 0;
     electionyear = "2018";
@@ -291,7 +291,7 @@ function handleClick2018r() {
     
 }
 function handleClick2020r() {
-
+    document.documentElement.style.cssText = "--maincolor: rgb(97, 50, 87)";
     statesArray.length = 0;
     senateArray.length = 0;
     electionyear = "2020";
@@ -325,7 +325,7 @@ function handleClick2020r() {
     
 }
 function handleClick2022r() {
-
+    document.documentElement.style.cssText = "--maincolor: rgb(49, 50, 125)";
     statesArray.length = 0;
     senateArray.length = 0;
     electionyear = "2022";
@@ -1436,37 +1436,37 @@ function setBackgroundColor() {
         try { document.documentElement.style.cssText = "--maincolor: rgb(50, 50, 150)"; } catch { }
     }
     else if (pollingAverage > 10) {
-        try { document.documentElement.style.cssText = "--maincolor: rgb(50, 50, 100)"; } catch { }
+        try { document.documentElement.style.cssText = "--maincolor: rgb(49, 50, 125)"; } catch { }
     }
     else if (pollingAverage > 8) {
-        try { document.documentElement.style.cssText = "--maincolor: rgb(55, 50, 95)"; } catch { }
+        try { document.documentElement.style.cssText = "--maincolor: rgb(62, 50, 117)"; } catch { }
     }
     else if (pollingAverage > 6) {
-        try { document.documentElement.style.cssText = "--maincolor: rgb(60, 50, 90)"; } catch { }
+        try { document.documentElement.style.cssText = "--maincolor: rgb(73, 50, 110)"; } catch { }
     }
     else if (pollingAverage > 4) {
-        try { document.documentElement.style.cssText = "--maincolor: rgb(65, 50, 85)"; } catch { }
+        try { document.documentElement.style.cssText = "--maincolor: rgb(82, 50, 102)"; } catch { }
     }
     else if (pollingAverage > 2) {
-        try { document.documentElement.style.cssText = "--maincolor: rgb(70, 50, 80)"; } catch { }
+        try { document.documentElement.style.cssText = "--maincolor: rgb(90, 50, 94)"; } catch { }
     }
-    else if (pollingAverage > 0) {
-        try { document.documentElement.style.cssText = "--maincolor: rgb(75, 50, 75)"; } catch { }
+    else if (pollingAverage >= 0) {
+        try { document.documentElement.style.cssText = "--maincolor: rgb(97, 50, 87)"; } catch { }
     }
     else if (pollingAverage > -2) {
-        try { document.documentElement.style.cssText = "--maincolor: rgb(80, 50, 70)"; } catch { }
+        try { document.documentElement.style.cssText = "--maincolor: rgb(103, 50, 79)"; } catch { }
     }
     else if (pollingAverage > -4) {
-        try { document.documentElement.style.cssText = "--maincolor: rgb(85, 50, 65)"; } catch { }
+        try { document.documentElement.style.cssText = "--maincolor: rgb(109, 51, 72)"; } catch { }
     }
     else if (pollingAverage > -6) {
-        try { document.documentElement.style.cssText = "--maincolor: rgb(90, 50, 60)"; } catch { }
+        try { document.documentElement.style.cssText = "--maincolor: rgb(115, 51, 64)"; } catch { }
     }
     else if (pollingAverage > -8) {
-        try { document.documentElement.style.cssText = "--maincolor: rgb(95, 50, 55)"; } catch { }
+        try { document.documentElement.style.cssText = "--maincolor: rgb(120, 51, 57)"; } catch { }
     }
     else if (pollingAverage > -10) {
-        try { document.documentElement.style.cssText = "--maincolor: rgb(100, 50, 50)"; } catch { }
+        try { document.documentElement.style.cssText = "--maincolor: rgb(125, 51, 49)"; } catch { }
     }
     else {
         try { document.documentElement.style.cssText = "--maincolor: rgb(150, 50, 50)"; } catch { }

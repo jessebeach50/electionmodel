@@ -141,7 +141,7 @@ function handleClick2020Model() {
 function handleClickResults2020() {
     //console.log("Here");
     statesArray.length = 0;
-    document.documentElement.style.cssText = "--maincolor: rgb(50, 50, 100)";
+    document.documentElement.style.cssText = "--maincolor: rgb(49, 50, 125)";
     // Use Papa Parse to fetch and parse the CSV file
     Papa.parse(csvUrl, {
         download: true,
@@ -182,7 +182,7 @@ function handleClick2016Model() {
 function handleClickResults2016() {
 
     statesArray.length = 0;
-    document.documentElement.style.cssText = "--maincolor: rgb(100, 50, 50)";
+    document.documentElement.style.cssText = "--maincolor: rgb(125, 51, 49)";
     // Use Papa Parse to fetch and parse the CSV file
     Papa.parse(csvUrl, {
         download: true,
@@ -214,7 +214,7 @@ function handleClick2012Model() {
             processStates(results.data, '2012');
             setColorBasedOnChance();
             setBackgroundColor();
-            getPercentDWin()
+            getPercentDWin();
         },
         error: function (error) {
             console.error("Error parsing CSV:", error);
@@ -225,7 +225,7 @@ function handleClick2012Model() {
 function handleClickResults2012() {
 
     statesArray.length = 0;
-    document.documentElement.style.cssText = "--maincolor: rgb(50, 50, 100)";
+    document.documentElement.style.cssText = "--maincolor: rgb(49, 50, 125)";
     // Use Papa Parse to fetch and parse the CSV file
     Papa.parse(csvUrl, {
         download: true,
@@ -235,7 +235,6 @@ function handleClickResults2012() {
         complete: function (results) {
             processStates(results.data, '2012');
             setColorsBasedOnResults('2012');
-            
         },
         error: function (error) {
             console.error("Error parsing CSV:", error);
@@ -449,10 +448,10 @@ function processStates(states, year) {
 
             //Average the above
             //console.log(polls);
-            if (polls != null){
+            if (polls != null) {
                 var neutralProjected = (neutralProjectedOnPolls + neutralProjectedOnShift) / 2
             }
-            else{
+            else {
                 var neutralProjected = neutralProjectedOnShift;
             }
         }
@@ -736,9 +735,9 @@ function setColorBasedOnChance() {
 
         svgState = document.getElementById(stateAbbr);
 
-        if(statePercent > '.50'){
+        if (statePercent > '.50') {
             DVotes = DVotes + stateEV
-        }else{
+        } else {
             RVotes = RVotes + stateEV
         }
 
@@ -840,44 +839,43 @@ function setBackgroundColor() {
         try { document.documentElement.style.cssText = "--maincolor: rgb(50, 50, 150)"; } catch { }
     }
     else if (pollingAverage > 10) {
-        try { document.documentElement.style.cssText = "--maincolor: rgb(50, 50, 100)"; } catch { }
+        try { document.documentElement.style.cssText = "--maincolor: rgb(49, 50, 125)"; } catch { }
     }
     else if (pollingAverage > 8) {
-        try { document.documentElement.style.cssText = "--maincolor: rgb(55, 50, 95)"; } catch { }
+        try { document.documentElement.style.cssText = "--maincolor: rgb(62, 50, 117)"; } catch { }
     }
     else if (pollingAverage > 6) {
-        try { document.documentElement.style.cssText = "--maincolor: rgb(60, 50, 90)"; } catch { }
+        try { document.documentElement.style.cssText = "--maincolor: rgb(73, 50, 110)"; } catch { }
     }
     else if (pollingAverage > 4) {
-        try { document.documentElement.style.cssText = "--maincolor: rgb(65, 50, 85)"; } catch { }
+        try { document.documentElement.style.cssText = "--maincolor: rgb(82, 50, 102)"; } catch { }
     }
     else if (pollingAverage > 2) {
-        try { document.documentElement.style.cssText = "--maincolor: rgb(70, 50, 80)"; } catch { }
+        try { document.documentElement.style.cssText = "--maincolor: rgb(90, 50, 94)"; } catch { }
     }
-    else if (pollingAverage > 0) {
-        try { document.documentElement.style.cssText = "--maincolor: rgb(75, 50, 75)"; } catch { }
+    else if (pollingAverage >= 0) {
+        try { document.documentElement.style.cssText = "--maincolor: rgb(97, 50, 87)"; } catch { }
     }
     else if (pollingAverage > -2) {
-        try { document.documentElement.style.cssText = "--maincolor: rgb(80, 50, 70)"; } catch { }
+        try { document.documentElement.style.cssText = "--maincolor: rgb(103, 50, 79)"; } catch { }
     }
     else if (pollingAverage > -4) {
-        try { document.documentElement.style.cssText = "--maincolor: rgb(85, 50, 65)"; } catch { }
+        try { document.documentElement.style.cssText = "--maincolor: rgb(109, 51, 72)"; } catch { }
     }
     else if (pollingAverage > -6) {
-        try { document.documentElement.style.cssText = "--maincolor: rgb(90, 50, 60)"; } catch { }
+        try { document.documentElement.style.cssText = "--maincolor: rgb(115, 51, 64)"; } catch { }
     }
     else if (pollingAverage > -8) {
-        try { document.documentElement.style.cssText = "--maincolor: rgb(95, 50, 55)"; } catch { }
+        try { document.documentElement.style.cssText = "--maincolor: rgb(120, 51, 57)"; } catch { }
     }
     else if (pollingAverage > -10) {
-        try { document.documentElement.style.cssText = "--maincolor: rgb(100, 50, 50)"; } catch { }
+        try { document.documentElement.style.cssText = "--maincolor: rgb(125, 51, 49)"; } catch { }
     }
     else {
         try { document.documentElement.style.cssText = "--maincolor: rgb(150, 50, 50)"; } catch { }
     }
 
 }
-
 //Drop Down Menu
 
 // Get the select element
@@ -886,7 +884,7 @@ const numberInput = document.getElementById('numberInput');
 
 numberInput.addEventListener('change', changeInputTypeNumber);
 
-function populateDropDown(){
+function populateDropDown() {
     // Array of options
     const optionsArray = [];
     statesArray.forEach(element => {
@@ -910,12 +908,12 @@ function populateDropDown(){
 
 }
 
-function handleClickEnterButton(){
- 
-    if(inputType == "slider"){
+function handleClickEnterButton() {
+
+    if (inputType == "slider") {
         numberInput.value = slider.value;
     }
-    if(inputType == "number"){
+    if (inputType == "number") {
         slider.value = numberInput.value;
     }
 
@@ -932,10 +930,10 @@ function handleClickEnterButton(){
             found = true;
             console.log(statesArray[i]);
             break;
-        }  
+        }
     }
 
-    if(percent <= 100 && percent >= 0){
+    if (percent <= 100 && percent >= 0) {
         console.log(statesArray[i].ChanceOfDWin)
         statesArray[i].ChanceOfDWin = percent / 100
         statesArray[i].InfoBoxString = statesArray[i].State + "\nElection 2020 Results: " + statesArray[i].Election2020Results + "\nProjected2024Result: " + statesArray[i].MedianOutcome + "\nDemocrat Win %: " + (statesArray[i].ChanceOfDWin * 100) + "\n2024 Polling Average: " + statesArray[i].Polls;
@@ -946,7 +944,7 @@ function handleClickEnterButton(){
     getPercentDWin();
 }
 
-function handleClickCallButtonD(){
+function handleClickCallButtonD() {
     const numberInput = document.getElementById('numberInput');
     var percent = numberInput.value || 'None';
     var selectedState = dropdown.value;
@@ -962,7 +960,7 @@ function handleClickCallButtonD(){
             console.log(statesArray[i]);
             break;
         }
-  
+
     }
     console.log(statesArray[i].ChanceOfDWin)
     statesArray[i].ChanceOfDWin = 1000
@@ -972,7 +970,7 @@ function handleClickCallButtonD(){
     setColorBasedOnChance()
     getPercentDWin();
 }
-function handleClickCallButtonR(){
+function handleClickCallButtonR() {
     const numberInput = document.getElementById('numberInput');
     var percent = numberInput.value || 'None';
     var selectedState = dropdown.value;
@@ -988,7 +986,7 @@ function handleClickCallButtonR(){
             console.log(statesArray[i]);
             break;
         }
-  
+
     }
 
     statesArray[i].ChanceOfDWin = -1000
@@ -998,27 +996,27 @@ function handleClickCallButtonR(){
     setColorBasedOnChance()
     getPercentDWin();
 }
-function getPercentDWin(){
+function getPercentDWin() {
     var DEV = 0;
     var DWins = 0;
     var count = 0;
-    
+
     var DemVotesArray = [];
 
-    while (count < 1000){
+    while (count < 1000) {
         DEV = 0;
         for (var i = 0; i < statesArray.length; i++) {
-            currentState = statesArray[i];     
-            
+            currentState = statesArray[i];
+
             var roll = Math.floor(Math.random() * (100 - 0 + 1)) + 0;
 
-            if(roll < (currentState.ChanceOfDWin * 100)){
+            if (roll < (currentState.ChanceOfDWin * 100)) {
                 DEV = DEV + currentState.ElectoralVotes;
             }
 
         }
 
-        if(DEV >= 270){
+        if (DEV >= 270) {
             DWins++;
         }
         DemVotesArray.push(DEV);
@@ -1027,14 +1025,14 @@ function getPercentDWin(){
 
     count = 0;
     sum = 0;
-    while (count < DemVotesArray.length){
+    while (count < DemVotesArray.length) {
         sum = sum + DemVotesArray[count];
         count++;
     }
 
     var average = sum / DemVotesArray.length
     //console.log(statesArray.length)
-    console.log ("Democrats win " + DWins + "/1000 Times \nAverage of " + average + "Elecotral Votes")
+    console.log("Democrats win " + DWins + "/1000 Times \nAverage of " + average + "Elecotral Votes")
 
     let numberElement = document.getElementById('chanceOfDWinState')
     numberElement.innerText = (DWins / 1000) * 100;
@@ -1042,18 +1040,18 @@ function getPercentDWin(){
     let EVElement = document.getElementById('projectedEVsD')
     EVElement.innerText = average
 
-    
+
 }
 
 //Set Drop Down Menu to clicked state
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     // Get all paths in the SVG
     const paths = document.querySelectorAll('svg path');
     const stateDropDown = document.getElementById('stateDropDown');
 
     paths.forEach(path => {
-        path.addEventListener('click', function() {
+        path.addEventListener('click', function () {
             // Set the dropdown value to the clicked path's ID
             console.log(this.id)
             stateDropDown.value = this.id;
@@ -1069,10 +1067,10 @@ var inputType = "number"
 slider.addEventListener('change', handleClickEnterButton);
 slider.addEventListener('input', changeInputTypeSlider);
 
-function changeInputTypeSlider(){
+function changeInputTypeSlider() {
     inputType = "slider"
 }
 
-function changeInputTypeNumber(){
+function changeInputTypeNumber() {
     inputType = "number"
 }

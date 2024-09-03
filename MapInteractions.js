@@ -1,5 +1,4 @@
 // STATE LAYERING FIX
-
 const statePaths = document.querySelectorAll('path');
 
 function handleMouseOver(event) {
@@ -25,26 +24,13 @@ function bringStateToFront(stateAbbr) {
   }
 }
 
-// Zoom and Pan
-
+// ZOOM AND PAN
 const zoomElement = document.querySelector(".zoomspace");
 let zoom = 1;
 const ZOOM_SPEED = 1;
 let isDragging = false;
 let startX, startY;
 let translateX = 0, translateY = 0;
-
-/* document.addEventListener("wheel", function (e) {
-  if (e.deltaY > 0) {
-    if (zoom > 1) {
-      zoom -= ZOOM_SPEED;
-      updateTransform();
-    }
-  } else if (zoom < 8) {
-    zoom += ZOOM_SPEED;
-    updateTransform();
-  }
-}); */
 
 zoomElement.addEventListener('mousedown', startDrag);
 document.addEventListener('mousemove', drag);
@@ -98,11 +84,16 @@ function handleClickZin(event) {
 
 function handleClickReset(event) {
   zoom = 1;
-  resetPosition();
+  translateX = 0;
+  translateY = 0;
+  updateTransform();
 }
 
 function updateTransform() {
   zoomElement.style.transform = `translate(${translateX}px, ${translateY}px) scale(${zoom})`;
+
+  houseStrokeZoom();
+
   if (zoom <= 1) {
     resetPosition();
   }
@@ -111,5 +102,29 @@ function updateTransform() {
 function resetPosition() {
   translateX = 0;
   translateY = 0;
-  updateTransform();
+  zoomElement.style.transform = `translate(0px, 0px) scale(1)`;
+}
+
+// STROKE ADJSUT
+function houseStrokeZoom() {
+  const paths = document.querySelectorAll('.house-model path');
+  const nyDistPaths = document.querySelectorAll('.house-model path.ny-dist');
+
+  let normalStrokeWidth, nyDistStrokeWidth;
+
+  if (zoom >= 5) {
+    normalStrokeWidth = "0.25";
+    nyDistStrokeWidth = "0.55"; // 3 * 0.25
+  } else {
+    normalStrokeWidth = "0.5";
+    nyDistStrokeWidth = "1.25"; // 3 * 0.5
+  }
+
+  paths.forEach(path => {
+    path.style.strokeWidth = normalStrokeWidth;
+  });
+
+  nyDistPaths.forEach(path => {
+    path.style.strokeWidth = nyDistStrokeWidth;
+  });
 }

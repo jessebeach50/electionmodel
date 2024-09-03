@@ -7,16 +7,17 @@
 
 /* General Layout */
 body {
+    height: auto;
     position: relative;
     margin: 0;
     padding: 0;
     display: flex;
+    overflow-x: hidden;
     justify-content: center;
     background-color: var(--maincolor);
     font-family: "Josefin Sans", sans-serif;
     color: var(--seccolor);
     text-align: center;
-    backdrop-filter: saturate(150%);
     filter: hue-rotate(0);
 }
 
@@ -40,6 +41,7 @@ body {
     border-radius: 10px;
     box-shadow: 0 4px 5px inset rgba(0, 0, 0, 0.35);
     backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
 }
 
 /* Specific Layout Elements */
@@ -50,6 +52,7 @@ body {
     justify-content: center;
     align-items: center;
     box-shadow: 0 4px 5px rgba(0, 0, 0, 0.45);
+    border-radius: 10px;
 }
 
 .resultbarbox {
@@ -303,7 +306,7 @@ h2.optiontext {
             transparent 1rem,
             #00000015 1rem,
             #00000010 2rem);
-    background-size: 150% 150%;
+    background-size: 150vw 150vh;
     animation: barberpole 100s linear infinite;
 }
 
@@ -519,9 +522,9 @@ path {
 
 @keyframes dash {
     to {
-      stroke-dashoffset: 1000;
+        stroke-dashoffset: 1000;
     }
-  }
+}
 
 /* Details Box */
 #details-box {
