@@ -1042,16 +1042,16 @@ function processStates(states, year) {
 
         //String that will show when state is hovered over
         if (year == '2024') {
-            infoBoxString = s.State + "\nElection 2020 Results: " + e2020Results + "\nProjected2024Result: " + median + "\nDemocrat Win %: " + percentDWin * 100 + "\n2024 Polling Average: " + s.Polls;
+            infoBoxString = s.State + "\nElection 2020 Results: " + e2020Results + "\nProj. 2024 Result: " + median + "\nDemocrat Win %: " + percentDWin * 100 + "\n2024 Polling Average: " + s.Polls;
         }
         if (year == '2020') {
-            infoBoxString = s.State + "\nActual 2020 Results: " + e2020Results + "\nProjected2020Result: " + median + "\nDemocrat Win %: " + percentDWin * 100 + "\n2020 Polling Average: " + s.Polls2020;
+            infoBoxString = s.State + "\nActual 2020 Results: " + e2020Results + "\nProj. 2020 Result: " + median + "\nDemocrat Win %: " + percentDWin * 100 + "\n2020 Polling Average: " + s.Polls2020;
         }
         if (year == '2016') {
-            infoBoxString = s.State + "\nActual 2016 Results: " + e2016Results + "\nProjected2016Result: " + median + "\nDemocrat Win %: " + percentDWin * 100 + "\n2016 Polling Average: " + s.Polls2016;
+            infoBoxString = s.State + "\nActual 2016 Results: " + e2016Results + "\nProj. 2016 Result: " + median + "\nDemocrat Win %: " + percentDWin * 100 + "\n2016 Polling Average: " + s.Polls2016;
         }
         if (year == '2012') {
-            infoBoxString = s.State + "\nActual 2012 Results: " + e2012Results + "\nProjected2012Result: " + median + "\nDemocrat Win %: " + percentDWin * 100 + "\n2012 Polling Average: " + s.Polls2012;
+            infoBoxString = s.State + "\nActual 2012 Results: " + e2012Results + "\nProj. 2012 Result: " + median + "\nDemocrat Win %: " + percentDWin * 100 + "\n2012 Polling Average: " + s.Polls2012;
         }
         //This is the state data obbject that is put into the array-------------------------------------------------------
         let stateData = {
@@ -1535,7 +1535,7 @@ function handleClickEnterButton(){
     if(percent <= 100 && percent >= 0){
         console.log(senateArray[i].ChanceOfDWin)
         senateArray[i].ChanceOfDWin = percent / 100
-        senateArray[i].InfoBoxString = senateArray[i].State + "\nElection 2020 Results: " + senateArray[i].Election2020Results + "\nProjected2024Result: " + senateArray[i].MedianOutcome + "\nDemocrat Win %: " + senateArray[i].ChanceOfDWin * 100  + "\n2024 Polling Average: " + senateArray[i].Polls;
+        senateArray[i].InfoBoxString = senateArray[i].State + "\nElection 2020 Results: " + senateArray[i].Election2020Results + "\nProj. 2024 Result: " + senateArray[i].MedianOutcome + "\nDemocrat Win %: " + senateArray[i].ChanceOfDWin * 100  + "\n2024 Polling Average: " + senateArray[i].Polls;
         console.log(senateArray[i].ChanceOfDWin)
     }
 
@@ -1563,7 +1563,7 @@ function handleClickCallButtonD(){
     }
 
     senateArray[i].ChanceOfDWin = 1000
-    senateArray[i].InfoBoxString = senateArray[i].State + "\nElection 2020 Results: " + senateArray[i].Election2020Results + "\nProjected2024Result: " + senateArray[i].MedianOutcome + "\nDemocrat Win %: " + senateArray[i].ChanceOfDWin * 100 + "\n2024 Polling Average: " + senateArray[i].Polls;
+    senateArray[i].InfoBoxString = senateArray[i].State + "\nElection 2020 Results: " + senateArray[i].Election2020Results + "\nProj. 2024 Result: " + senateArray[i].MedianOutcome + "\nDemocrat Win %: " + senateArray[i].ChanceOfDWin * 100 + "\n2024 Polling Average: " + senateArray[i].Polls;
 
     setColorBasedOnChance()
     getPercentDWin();
@@ -1587,7 +1587,7 @@ function handleClickCallButtonR(){
     }
 
     senateArray[i].ChanceOfDWin = -1000
-    senateArray[i].InfoBoxString = senateArray[i].State + "\nElection 2020 Results: " + senateArray[i].Election2020Results + "\nProjected2024Result: " + senateArray[i].MedianOutcome + "\nDemocrat Win %: " + senateArray[i].ChanceOfDWin + "\n2024 Polling Average: " + senateArray[i].Polls;
+    senateArray[i].InfoBoxString = senateArray[i].State + "\nElection 2020 Results: " + senateArray[i].Election2020Results + "\nProj. 2024 Result: " + senateArray[i].MedianOutcome + "\nDemocrat Win %: " + senateArray[i].ChanceOfDWin + "\n2024 Polling Average: " + senateArray[i].Polls;
 
     setColorBasedOnChance()
     getPercentDWin();

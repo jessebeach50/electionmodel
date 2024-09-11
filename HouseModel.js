@@ -861,7 +861,7 @@ function sliderInput() {
     if (percent <= 100 && percent >= 0) {
         console.log(statesArray[i].ChanceOfDWin)
         statesArray[i].ChanceOfDWin = percent / 100
-        statesArray[i].InfoBoxString = statesArray[i].State + "\nElection 2020 Results: " + statesArray[i].Election2020Results + "\nProjected2024Result: " + statesArray[i].MedianOutcome + "\nDemocrat Win %: " + (statesArray[i].ChanceOfDWin * 100) + "\n2024 Polling Average: " + statesArray[i].Polls;
+        statesArray[i].InfoBoxString = statesArray[i].State + "\nElection 2020 Results: " + statesArray[i].Election2020Results + "\nProj. 2024 Result: " + statesArray[i].MedianOutcome + "\nDemocrat Win %: " + (statesArray[i].ChanceOfDWin * 100) + "\n2024 Polling Average: " + statesArray[i].Polls;
         console.log("====" + statesArray[i].ChanceOfDWin)
     }
 

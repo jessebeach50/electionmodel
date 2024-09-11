@@ -45,7 +45,7 @@ document.addEventListener('mouseover', function (e) {
         }
 
         //document.getElementById("details-box").innerHTML = stateName + "\n" + stateAbbr + "\n2020 Result: " + hoveredState.Election2020Results;
-        document.getElementById("details-box").innerHTML = hoveredState.InfoBoxString;
+        document.getElementById("details-box").innerHTML = hoveredState.InfoBoxString + "-" + hoveredState.Abbr;
         document.getElementById("details-box").style.opacity = "100%";
     }
     else {
@@ -645,16 +645,16 @@ function processStates(states, year) {
 
         //String that will show when state is hovered over
         if (year == '2024') {
-            infoBoxString = s.State + "\nElection 2020 Results: " + e2020Results + "\nProjected2024Result: " + median + "\nDemocrat Win %: " + percentDWin * 100 + "\n2024 Polling Average: " + s.Polls;
+            infoBoxString = s.State + "\nElection 2020 Results: " + e2020Results + "\nProj. 2024 Result: " + median + "\nDemocrat Win %: " + percentDWin * 100 + "\n2024 Polling Average: " + s.Polls;
         }
         if (year == '2020') {
-            infoBoxString = s.State + "\nActual 2020 Results: " + e2020Results + "\nProjected2020Result: " + median + "\nDemocrat Win %: " + percentDWin * 100 + "\n2020 Polling Average: " + s.Polls2020;
+            infoBoxString = s.State + "\nActual 2020 Results: " + e2020Results + "\nProj. 2020 Result: " + median + "\nDemocrat Win %: " + percentDWin * 100 + "\n2020 Polling Average: " + s.Polls2020;
         }
         if (year == '2016') {
-            infoBoxString = s.State + "\nActual 2016 Results: " + e2016Results + "\nProjected2016Result: " + median + "\nDemocrat Win %: " + percentDWin * 100 + "\n2016 Polling Average: " + s.Polls2016;
+            infoBoxString = s.State + "\nActual 2016 Results: " + e2016Results + "\nProj. 2016 Result: " + median + "\nDemocrat Win %: " + percentDWin * 100 + "\n2016 Polling Average: " + s.Polls2016;
         }
         if (year == '2012') {
-            infoBoxString = s.State + "\nActual 2012 Results: " + e2012Results + "\nProjected2012Result: " + median + "\nDemocrat Win %: " + percentDWin * 100 + "\n2012 Polling Average: " + s.Polls2012;
+            infoBoxString = s.State + "\nActual 2012 Results: " + e2012Results + "\nProj. 2012 Result: " + median + "\nDemocrat Win %: " + percentDWin * 100 + "\n2012 Polling Average: " + s.Polls2012;
         }
         //This is the state data obbject that is put into the array-------------------------------------------------------
         let stateData = {
@@ -936,7 +936,7 @@ function handleClickEnterButton() {
     if (percent <= 100 && percent >= 0) {
         console.log(statesArray[i].ChanceOfDWin)
         statesArray[i].ChanceOfDWin = percent / 100
-        statesArray[i].InfoBoxString = statesArray[i].State + "\nElection 2020 Results: " + statesArray[i].Election2020Results + "\nProjected2024Result: " + statesArray[i].MedianOutcome + "\nDemocrat Win %: " + (statesArray[i].ChanceOfDWin * 100) + "\n2024 Polling Average: " + statesArray[i].Polls;
+        statesArray[i].InfoBoxString = statesArray[i].State + "\nElection 2020 Results: " + statesArray[i].Election2020Results + "\nProj. 2024 Result: " + statesArray[i].MedianOutcome + "\nDemocrat Win %: " + (statesArray[i].ChanceOfDWin * 100) + "\n2024 Polling Average: " + statesArray[i].Polls;
         console.log("====" + statesArray[i].ChanceOfDWin)
     }
 
@@ -964,7 +964,7 @@ function handleClickCallButtonD() {
     }
     console.log(statesArray[i].ChanceOfDWin)
     statesArray[i].ChanceOfDWin = 1000
-    statesArray[i].InfoBoxString = statesArray[i].State + "\nElection 2020 Results: " + statesArray[i].Election2020Results + "\nProjected2024Result: " + statesArray[i].MedianOutcome + "\nDemocrat Win %: " + statesArray[i].ChanceOfDWin * 100 + "\n2024 Polling Average: " + statesArray[i].Polls;
+    statesArray[i].InfoBoxString = statesArray[i].State + "\nElection 2020 Results: " + statesArray[i].Election2020Results + "\nProj. 2024 Result: " + statesArray[i].MedianOutcome + "\nDemocrat Win %: " + statesArray[i].ChanceOfDWin * 100 + "\n2024 Polling Average: " + statesArray[i].Polls;
     console.log(statesArray[i].ChanceOfDWin)
 
     setColorBasedOnChance()
@@ -990,7 +990,7 @@ function handleClickCallButtonR() {
     }
 
     statesArray[i].ChanceOfDWin = -1000
-    statesArray[i].InfoBoxString = statesArray[i].State + "\nElection 2020 Results: " + statesArray[i].Election2020Results + "\nProjected2024Result: " + statesArray[i].MedianOutcome + "\nDemocrat Win %: " + statesArray[i].ChanceOfDWin * 100 + "\n2024 Polling Average: " + statesArray[i].Polls;
+    statesArray[i].InfoBoxString = statesArray[i].State + "\nElection 2020 Results: " + statesArray[i].Election2020Results + "\nProjected 2024 Result: " + statesArray[i].MedianOutcome + "\nDemocrat Win %: " + statesArray[i].ChanceOfDWin * 100 + "\n2024 Polling Average: " + statesArray[i].Polls;
 
 
     setColorBasedOnChance()
