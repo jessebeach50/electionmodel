@@ -1,10 +1,3 @@
-const BGFlatToggle = document.getElementById('background-flat')
-BGFlatToggle.addEventListener('click', handleFlatBG)
-
-function handleFlatBG() {
-  document.body.classList.remove('stripe');
-}
-
 // STATE LAYERING FIX
 const statePaths = document.querySelectorAll('path');
 
@@ -135,3 +128,36 @@ function houseStrokeZoom() {
     path.style.strokeWidth = nyDistStrokeWidth;
   });
 }
+
+document.getElementById('background-flat').addEventListener('change', function() {
+  if (this.checked) {
+      document.body.classList.remove('stripe');
+  } else {
+      document.body.classList.add('stripe');
+  }
+});
+
+document.getElementById('mobile-layout-toggle').addEventListener('change', function() {
+  if (this.checked) {
+      document.body.classList.add('mobile-layout');
+  } else {
+      document.body.classList.remove('mobile-layout');
+  }
+});
+
+const checkbox = document.getElementById('random-color-teams');
+const button = document.getElementById('change-hue-btn');
+
+checkbox.addEventListener('change', function() {
+  if (checkbox.checked) {
+      button.style.display = 'inline-block';
+  } else {
+      button.style.display = 'none';
+      document.documentElement.style.setProperty('--huedegree', '0deg');
+  }
+});
+
+button.addEventListener('click', function() {
+  const randomHue = Math.floor(Math.random() * 361);
+  document.documentElement.style.setProperty('--huedegree', randomHue + 'deg');
+});

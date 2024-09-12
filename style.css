@@ -3,6 +3,8 @@
     --maincolor: rgb(72, 61, 85);
     --seccolor: rgb(255, 255, 255);
     --shadecolor: rgba(0, 0, 0, 0.15);
+
+    --huedegree: 0deg;
 }
 
 /* General Layout */
@@ -18,7 +20,7 @@ body {
     font-family: "Josefin Sans", sans-serif;
     color: var(--seccolor);
     text-align: center;
-    filter: hue-rotate(0);
+    filter: hue-rotate(var(--huedegree));
 }
 
 .container {
@@ -93,6 +95,11 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+.site-settings {
+    text-align: left;
+    padding-left: 55px;
 }
 
 /* Typography */
@@ -622,15 +629,19 @@ path {
     transition: opacity .4s ease;
 }
 
-/* Responsive Design */
+/* Media query for automatic mobile layout when screen width is <= 960px */
 @media screen and (max-width: 960px) {
-    body {
+    .moblay {
+        visibility: hidden;
+    }
+
+    body, body.mobile-layout {
         padding: 20px;
         align-items: flex-start;
         box-sizing: border-box;
     }
 
-    .container {
+    .container, body.mobile-layout .container {
         width: 100%;
         height: auto;
         margin: 0;
@@ -641,45 +652,103 @@ path {
         text-align: center;
     }
 
-    .box {
+    .box, body.mobile-layout .box {
         width: 100%;
         box-sizing: border-box;
     }
 
-    .titlebox {
+    .titlebox, body.mobile-layout .titlebox {
         order: 1;
     }
 
-    .modelpickerbox {
+    .modelpickerbox, body.mobile-layout .modelpickerbox {
         order: 2;
     }
 
-    .resultbarbox {
+    .resultbarbox, body.mobile-layout .resultbarbox {
         order: 3;
         height: 70px;
     }
 
-    .resultbar {
+    .resultbar, body.mobile-layout .resultbar {
         scale: 0.95;
     }
 
-    .mapviewbox {
+    .mapviewbox, body.mobile-layout .mapviewbox {
         order: 4;
         overflow: scroll;
     }
 
-    .optionsbox {
+    .optionsbox, body.mobile-layout .optionsbox {
         order: 6;
     }
 
-    .chartbox {
+    .chartbox, body.mobile-layout .chartbox {
         order: 5;
     }
 
-    #details-box {
+    #details-box, body.mobile-layout #details-box {
         font-size: 14px;
     }
 }
+
+/* Force mobile layout on larger screens when mobile-layout class is active */
+body.mobile-layout {
+    padding: 20px;
+    align-items: flex-start;
+    box-sizing: border-box;
+}
+
+body.mobile-layout .container {
+    width: 50%;
+    height: auto;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    text-align: center;
+}
+
+body.mobile-layout .box {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+body.mobile-layout .titlebox {
+    order: 1;
+}
+
+body.mobile-layout .modelpickerbox {
+    order: 2;
+}
+
+body.mobile-layout .resultbarbox {
+    order: 3;
+    height: 70px;
+}
+
+body.mobile-layout .resultbar {
+    scale: 0.95;
+}
+
+body.mobile-layout .mapviewbox {
+    order: 4;
+    overflow: scroll;
+}
+
+body.mobile-layout .optionsbox {
+    order: 6;
+}
+
+body.mobile-layout .chartbox {
+    order: 5;
+}
+
+body.mobile-layout #details-box {
+    font-size: 14px;
+}
+
 
 @media screen and (max-width: 650px) {
     button {
