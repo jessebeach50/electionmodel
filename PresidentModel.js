@@ -406,7 +406,7 @@ function processStates(states, year) {
         }
 
         if (year == '2024') {
-            var pollingErrorInMonth = 3;
+            var pollingErrorInMonth = 0;
         }
         else {
             var pollingErrorInMonth = 0;
