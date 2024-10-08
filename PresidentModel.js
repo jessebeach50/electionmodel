@@ -45,7 +45,8 @@ document.addEventListener('mouseover', function (e) {
         }
 
         //document.getElementById("details-box").innerHTML = stateName + "\n" + stateAbbr + "\n2020 Result: " + hoveredState.Election2020Results;
-        document.getElementById("details-box").innerHTML = hoveredState.InfoBoxString + "-" + hoveredState.Abbr;
+        document.getElementById("details-box").innerHTML = hoveredState.InfoBoxString 
+        //+ "-" + hoveredState.Abbr;
         document.getElementById("details-box").style.opacity = "100%";
     }
     else {
