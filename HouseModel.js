@@ -1,4 +1,4 @@
-var pollingAverage = 1.4;
+var pollingAverage = 0.45;
 var pollingErrorInMonth = 0;
 var pollingError = 4;
 var maxDemocraticResult = pollingAverage + pollingErrorInMonth + pollingError;
