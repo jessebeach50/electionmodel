@@ -79,12 +79,13 @@ body {
 
 .mapviewbox {
     grid-column: 2 / 3;
-    grid-row: 2 / 4;
+    grid-row: 2 / 5;
     padding-top: 0;
     overflow: hidden;
     background-color: transparent;
     border: 3px dotted var(--seccolor);
     box-shadow: none;
+    flex-grow: 1;
 }
 
 .chartbox {
